@@ -97,7 +97,7 @@ Just like the name, configuring the other information is simple, but it requires
 
 To start, create a `config.json` file in the same folder as your plugin's main file. So in our example, the file would be in `src`. In this configuration file, you can specify more information about your plugin. For example, the contents of the file might look like:
 
-```json
+```jsonc
 // src/config.json
 
 {
@@ -229,7 +229,7 @@ See [Typescript Configuration](#typescript-configuration) for more recommended T
 
 Eventually, BetterDiscord will pass a plugin's meta into the plugin or its constructor for it to access its own metadata. Since this is not implemented yet, every plugin bundled with BundleBD can globally acces a `meta` object, allowing the plugin to access its own metadata. For all of the keys available on the `meta` object, see [here](#meta).
 
-```json
+```jsonc
 // src/config.json
 
 {
@@ -510,7 +510,7 @@ BundleBD includes a built-in Styles module that provides utilities for injecting
 
 The bundler can easily bundle plugins that use Zlibrary. All you need to do is set [zlibrary](#zlibrary) to true in your plugin's `config.json` file:
 
-```json
+```jsonc
 // src/config.json
 
 {
@@ -560,7 +560,7 @@ BundleBD includes typings/autocomplete for ZLibrary. If they are not being detec
 
 Using JSON files is pretty simple as well. Just import the file like normal, and you can access the object stored in it:
 
-```json
+```jsonc
 // src/strings.json
 
 {
@@ -591,7 +591,7 @@ To make sure you have type validation and autocomplete for JSON files, see [here
 
 Plain old text files are also supported, and can be imported as strings:
 
-```json
+```jsonc
 // src/message.txt
 
 Hello World!
@@ -723,7 +723,7 @@ npx bundlebd --development MyAmazingPlugin
 
 If you don't want to type out the command every time, you can create scripts in your package.json file to run instead. For example you can add:
 
-```json
+```jsonc
 // package.json
 
 {
@@ -740,7 +740,7 @@ And now you can use `npm run build PluginName` and `npm run dev PluginName` inst
 
 If you only have one plugin you want to bundle, you can also include the Plugin Name in the script:
 
-```json
+```jsonc
 // package.json
 
 {
@@ -825,7 +825,7 @@ An absolute path to BetterDiscord's main folder. This is used to copy the bundle
 
 ### Example
 
-```json
+```jsonc
 // bundlebd.config.json
 
 {
@@ -847,7 +847,7 @@ The plugin's metadata that will be used to generate the plugin's meta. See [here
 
 **Defaults to:**
 
-```json
+```jsonc
 {
 	"name": "Plugin", // Or the command's Plugin Name argument if passed
 	"author": "Unknown",
@@ -882,7 +882,7 @@ A boolean that determines whether or not to bundle the plugin with [ZeresPluginL
 
 ### Example
 
-```json
+```jsonc
 // MyAmazingPlugin/src/config.json (Using the entry folder from the Bundle Configuration example)
 
 {
@@ -905,7 +905,7 @@ A boolean that determines whether or not to bundle the plugin with [ZeresPluginL
 
 While by no means required, configuring Typescript can solve issues with Typescript not resolving typings, and can make development easier, even when not using Typescript. Thus, it is recommended. To configure Typescript, just add a `tsconfig.json` file in your root folder. Here's an example of a simple TSConfig with some recommended settings for using the bundler:
 
-```json
+```jsonc
 // tsconfig.json
 
 {
@@ -1118,7 +1118,7 @@ export default class Plugin {
 
 If you want, you can also import the locales object from a JSON file:
 
-```json
+```jsonc
 // src/locales.json
 
 {
@@ -1279,7 +1279,7 @@ export default class Plugin {
 
 Using a TSConfig file requires a little extra work, but should automatically detect the bundler's types in _every_ file. Simply make a `tsconfig.json` file in your root folder with the following contents:
 
-```json
+```jsonc
 // tsconfig.json
 
 {
