@@ -63,13 +63,13 @@ By default, the bundler will look in the `src` directory for the plugin's files.
 // src/index.js
 
 export default class MyAmazingPlugin {
-	start() {
-		console.log("Plugin started");
-	}
+    start() {
+        console.log("Plugin started");
+    }
 
-	stop() {
-		console.log("Plugin stopped");
-	}
+    stop() {
+        console.log("Plugin stopped");
+    }
 }
 ```
 
@@ -101,12 +101,12 @@ To start, create a `config.json` file in the same folder as your plugin's main f
 // src/config.json
 
 {
-	"meta": {
-		"name": "MyAmazingPlugin",
-		"author": "Neodymium",
-		"description": "A plugin that does absolutely nothing",
-		"version": "1.0.0"
-	}
+    "meta": {
+        "name": "MyAmazingPlugin",
+        "author": "Neodymium",
+        "description": "A plugin that does absolutely nothing",
+        "version": "1.0.0"
+    }
 }
 ```
 
@@ -122,13 +122,13 @@ Of course, the real appeal of using a bundler is the ability to bundle multiple 
 import { helloWorld } from "./utils";
 
 export default class MyAmazingPlugin {
-	start() {
-		helloWorld();
-	}
+    start() {
+        helloWorld();
+    }
 
-	stop() {
-		console.log("Plugin stopped");
-	}
+    stop() {
+        console.log("Plugin stopped");
+    }
 }
 ```
 
@@ -136,7 +136,7 @@ export default class MyAmazingPlugin {
 // src/utils.js
 
 export function helloWorld() {
-	console.log("Hello world!");
+    console.log("Hello world!");
 }
 ```
 
@@ -152,15 +152,15 @@ Using Typescript is very simple. Just include a Typescript file in your plugin, 
 import { hello } from "./utils";
 
 export default class MyAmazingPlugin {
-	start() {
-		let message: string;
-		message = hello("Neodymium");
-		console.log(message);
-	}
+    start() {
+        let message: string;
+        message = hello("Neodymium");
+        console.log(message);
+    }
 
-	stop() {
-		console.log("Plugin stopped");
-	}
+    stop() {
+        console.log("Plugin stopped");
+    }
 }
 ```
 
@@ -168,7 +168,7 @@ export default class MyAmazingPlugin {
 // src/utils.ts
 
 export function hello(name: string): string {
-	return `Hello ${name}!`;
+    return `Hello ${name}!`;
 }
 ```
 
@@ -184,14 +184,14 @@ Just like Typescript, JSX is very easy to use. Just include some JSX elements in
 // src/index.jsx
 
 export default class MyAmazingPlugin {
-	start() {
-		const element = <div className="class">Hello World!</div>;
-		console.log(element);
-	}
+    start() {
+        const element = <div className="class">Hello World!</div>;
+        console.log(element);
+    }
 
-	stop() {
-		console.log("Plugin stopped");
-	}
+    stop() {
+        console.log("Plugin stopped");
+    }
 }
 ```
 
@@ -217,9 +217,9 @@ import React from "react";
 
 ```json
 {
-	"compilerOptions": {
-		"jsx": "react-jsx"
-	}
+    "compilerOptions": {
+        "jsx": "react-jsx"
+    }
 }
 ```
 
@@ -233,12 +233,12 @@ Eventually, BetterDiscord will pass a plugin's meta into the plugin or its const
 // src/config.json
 
 {
-	"meta": {
-		"name": "MyAmazingPlugin",
-		"author": "Neodymium",
-		"description": "A plugin that does absolutely nothing",
-		"version": "1.0.0"
-	}
+    "meta": {
+        "name": "MyAmazingPlugin",
+        "author": "Neodymium",
+        "description": "A plugin that does absolutely nothing",
+        "version": "1.0.0"
+    }
 }
 ```
 
@@ -246,14 +246,14 @@ Eventually, BetterDiscord will pass a plugin's meta into the plugin or its const
 // src/index.js
 
 export default class MyAmazingPlugin {
-	start() {
-		console.log(meta.name); // "MyAmazingPlugin"
-		console.log(meta.author); // "Neodymium"
-		console.log(meta.description); // "A plugin that does absolutely nothing"
-		console.log(meta.version); // "1.0.0"
-	}
+    start() {
+        console.log(meta.name); // "MyAmazingPlugin"
+        console.log(meta.author); // "Neodymium"
+        console.log(meta.description); // "A plugin that does absolutely nothing"
+        console.log(meta.version); // "1.0.0"
+    }
 
-	stop() {}
+    stop() {}
 }
 ```
 
@@ -267,12 +267,12 @@ Utilizing BdApi is just as easy as it is in a normal BetterDiscord plugin, since
 // src/index.js
 
 export default class MyAmazingPlugin {
-	start() {
-		const UserPopoutBody = BdApi.findModule((m) => m.default?.displayName === "UserPopoutBody");
-		console.log(UserPopoutBody);
-	}
+    start() {
+        const UserPopoutBody = BdApi.findModule((m) => m.default?.displayName === "UserPopoutBody");
+        console.log(UserPopoutBody);
+    }
 
-	stop() {}
+    stop() {}
 }
 ```
 
@@ -290,13 +290,13 @@ As should be expected by this point, stylesheets are also easy to use, but their
 import "./index.css";
 
 export default class MyAmazingPlugin {
-	start() {
-		console.log("Plugin started");
-	}
+    start() {
+        console.log("Plugin started");
+    }
 
-	stop() {
-		console.log("Plugin stopped");
-	}
+    stop() {
+        console.log("Plugin stopped");
+    }
 }
 ```
 
@@ -312,15 +312,15 @@ import "./index.css";
 import Styles from "bundlebd/styles";
 
 export default class MyAmazingPlugin {
-	start() {
-		// Then, when the plugin is started, you can use inject() to inject the styles into Discord.
-		Styles.inject();
-		console.log("Plugin started");
-	}
+    start() {
+        // Then, when the plugin is started, you can use inject() to inject the styles into Discord.
+        Styles.inject();
+        console.log("Plugin started");
+    }
 
-	stop() {
-		console.log("Plugin stopped");
-	}
+    stop() {
+        console.log("Plugin stopped");
+    }
 }
 ```
 
@@ -333,16 +333,16 @@ import "./index.css";
 import Styles from "bundlebd/styles";
 
 export default class MyAmazingPlugin {
-	start() {
-		Styles.inject();
-		console.log("Plugin started");
-	}
+    start() {
+        Styles.inject();
+        console.log("Plugin started");
+    }
 
-	stop() {
-		// Always remember to clear the styles whenever you inject!
-		Styles.clear();
-		console.log("Plugin stopped");
-	}
+    stop() {
+        // Always remember to clear the styles whenever you inject!
+        Styles.clear();
+        console.log("Plugin stopped");
+    }
 }
 ```
 
@@ -361,7 +361,7 @@ When importing CSS modules, the bundler will take the normal stylesheet with loc
 ```css
 /* A local class */
 .class {
-	color: red;
+    color: red;
 }
 ```
 
@@ -370,7 +370,7 @@ And turn it into something like this with global classes:
 ```css
 /* A global class that will be used in the injected stylesheet */
 .Plugin-index-class {
-	color: red;
+    color: red;
 }
 ```
 
@@ -388,7 +388,7 @@ They are automatically loaded just like normal stylesheets, and injected and cle
 /* src/index.module.css */
 
 .redText {
-	color: red;
+    color: red;
 }
 ```
 
@@ -399,17 +399,17 @@ import styleModule from "./index.module.css";
 import Styles from "bundlebd/styles";
 
 export default class MyAmazingPlugin {
-	start() {
-		Styles.inject();
-		// Now the content of the element will be red!
-		const element = <div className={styleModule.redText}>Hello World!</div>;
-		console.log("Plugin started");
-	}
+    start() {
+        Styles.inject();
+        // Now the content of the element will be red!
+        const element = <div className={styleModule.redText}>Hello World!</div>;
+        console.log("Plugin started");
+    }
 
-	stop() {
-		Styles.clear();
-		console.log("Plugin stopped");
-	}
+    stop() {
+        Styles.clear();
+        console.log("Plugin stopped");
+    }
 }
 ```
 
@@ -419,7 +419,7 @@ export default class MyAmazingPlugin {
 /* src/index.css */
 
 .redText {
-	color: red;
+    color: red;
 }
 ```
 
@@ -443,7 +443,7 @@ If for whatever reason you don't want an imported stylesheet or CSS module to be
 
 /* this stylesheet won't be loaded for injection automatically */
 .class {
-	color: red;
+    color: red;
 }
 ```
 
@@ -453,7 +453,7 @@ Whether loaded or not, a stylesheet will export a string containing the contents
 /* src/index.css */
 
 .class {
-	color: red;
+    color: red;
 }
 ```
 
@@ -464,14 +464,14 @@ import stylesheet from "./index.css";
 import styleModule from "./index.css?module";
 
 export default class MyAmazingPlugin {
-	start() {
-		console.log(stylesheet); // will log '.class { color: red; }'
-		console.log(styleModule._content); // will log '.MyAmazingPlugin-index-class { color: red; }'
-	}
+    start() {
+        console.log(stylesheet); // will log '.class { color: red; }'
+        console.log(styleModule._content); // will log '.MyAmazingPlugin-index-class { color: red; }'
+    }
 
-	stop() {
-		console.log("Plugin stopped");
-	}
+    stop() {
+        console.log("Plugin stopped");
+    }
 }
 ```
 
@@ -484,21 +484,21 @@ import stylesheet from "./index.css";
 import otherStyleModule from "./styles.css?module";
 
 export default class MyAmazingPlugin {
-	start() {
-		setTimeout(() => {
-			this.styles = stylesheet;
-			BdApi.injectCSS("MyAmazingPlugin", this.styles);
-		}, 1000);
+    start() {
+        setTimeout(() => {
+            this.styles = stylesheet;
+            BdApi.injectCSS("MyAmazingPlugin", this.styles);
+        }, 1000);
 
-		setTimeout(() => {
-			this.styles += otherStyleModule._content;
-			BdApi.injectCSS("MyAmazingPlugin", this.styles);
-		}, 3000);
-	}
+        setTimeout(() => {
+            this.styles += otherStyleModule._content;
+            BdApi.injectCSS("MyAmazingPlugin", this.styles);
+        }, 3000);
+    }
 
-	stop() {
-		BdApi.clearCSS("MyAmazingPlugin");
-	}
+    stop() {
+        BdApi.clearCSS("MyAmazingPlugin");
+    }
 }
 ```
 
@@ -514,13 +514,13 @@ The bundler can easily bundle plugins that use Zlibrary. All you need to do is s
 // src/config.json
 
 {
-	"meta": {
-		"name": "MyAmazingPlugin",
-		"author": "Neodymium",
-		"description": "A plugin that does absolutely nothing",
-		"version": "1.0.0"
-	},
-	"zlibrary": true
+    "meta": {
+        "name": "MyAmazingPlugin",
+        "author": "Neodymium",
+        "description": "A plugin that does absolutely nothing",
+        "version": "1.0.0"
+    },
+    "zlibrary": true
 }
 ```
 
@@ -535,14 +535,14 @@ import Plugin from "@zlibrary/plugin";
 import { DiscordModules } from "@zlibrary";
 
 export default class MyAmazingPlugin extends Plugin {
-	onStart() {
-		const UserStore = DiscordModules.UserStore;
-		console.log(UserStore.getCurrentUser());
-	}
+    onStart() {
+        const UserStore = DiscordModules.UserStore;
+        console.log(UserStore.getCurrentUser());
+    }
 
-	onStop() {
-		console.log("Plugin stopped");
-	}
+    onStop() {
+        console.log("Plugin stopped");
+    }
 }
 ```
 
@@ -564,8 +564,8 @@ Using JSON files is pretty simple as well. Just import the file like normal, and
 // src/strings.json
 
 {
-	"hello": "Hello World!",
-	"goodbye": "Bye Bye!"
+    "hello": "Hello World!",
+    "goodbye": "Bye Bye!"
 }
 ```
 
@@ -575,13 +575,13 @@ Using JSON files is pretty simple as well. Just import the file like normal, and
 import strings from "./strings.json";
 
 export default class MyAmazingPlugin {
-	start() {
-		console.log(strings.hello); // Will log 'Hello World!'
-	}
+    start() {
+        console.log(strings.hello); // Will log 'Hello World!'
+    }
 
-	stop() {
-		console.log(strings.goodbye); // Will log 'Bye Bye!'
-	}
+    stop() {
+        console.log(strings.goodbye); // Will log 'Bye Bye!'
+    }
 }
 ```
 
@@ -602,11 +602,11 @@ Hello World!
 import message from "./message.txt";
 
 export default class MyAmazingPlugin {
-	start() {
-		console.log(message); // Will log 'Hello World!'
-	}
+    start() {
+        console.log(message); // Will log 'Hello World!'
+    }
 
-	stop() {}
+    stop() {}
 }
 ```
 
@@ -620,11 +620,11 @@ PNG, JPG, and JPEG image are supported as well, and can be imported as Base64 en
 import image from "./image.png";
 
 export default class MyAmazingPlugin {
-	start() {
-		const image = <img src={image} />;
-	}
+    start() {
+        const image = <img src={image} />;
+    }
 
-	stop() {}
+    stop() {}
 }
 ```
 
@@ -634,7 +634,7 @@ This behavior also appies to CSS files:
 /* src/index.css */
 
 .class {
-	background-image: url(./image.png);
+    background-image: url(./image.png);
 }
 ```
 
@@ -648,11 +648,11 @@ SVGs are treated a little differently than normal images. Importing an SVG in a 
 import Icon from "./icon.svg";
 
 export default class MyAmazingPlugin {
-	start() {
-		const svg = <Icon width="18" height="18" />;
-	}
+    start() {
+        const svg = <Icon width="18" height="18" />;
+    }
 
-	stop() {}
+    stop() {}
 }
 ```
 
@@ -664,11 +664,11 @@ If you instead want to import it as a Base64 string, you can use the `?url` reso
 import url from "./icon.svg?url";
 
 export default class MyAmazingPlugin {
-	start() {
-		const image = <img src={url} />;
-	}
+    start() {
+        const image = <img src={url} />;
+    }
 
-	stop() {}
+    stop() {}
 }
 ```
 
@@ -728,10 +728,10 @@ If you don't want to type out the command every time, you can create scripts in 
 {
     // ... Rest of your package.json file ...
 
-	"scripts": {
-		"build": "bundlebd",
-		"dev": "bundlebd --development"
-	}
+    "scripts": {
+        "build": "bundlebd",
+        "dev": "bundlebd --development"
+    }
 }
 ```
 
@@ -745,10 +745,10 @@ If you only have one plugin you want to bundle, you can also include the Plugin 
 {
     // ... Rest of your package.json file ...
 
-	"scripts": {
-		"build": "bundlebd PluginName",
-		"dev": "bundlebd --development PluginName"
-	}
+    "scripts": {
+        "build": "bundlebd PluginName",
+        "dev": "bundlebd --development PluginName"
+    }
 }
 ```
 
@@ -828,11 +828,11 @@ An absolute path to BetterDiscord's main folder. This is used to copy the bundle
 // bundlebd.config.json
 
 {
-	"entry": "[plugin]/src",
-	"output": "[plugin]/dist",
-	"filename": "[plugin].plugin.js",
-	"readme": "[plugin]",
-	"bdPath": "C:/Users/Neodymium/AppData/Roaming/BetterDiscord"
+    "entry": "[plugin]/src",
+    "output": "[plugin]/dist",
+    "filename": "[plugin].plugin.js",
+    "readme": "[plugin]",
+    "bdPath": "C:/Users/Neodymium/AppData/Roaming/BetterDiscord"
 }
 ```
 
@@ -848,10 +848,10 @@ The plugin's metadata that will be used to generate the plugin's meta. See [here
 
 ```jsonc
 {
-	"name": "Plugin", // Or the command's Plugin Name argument if passed
-	"author": "Unknown",
-	"description": "Plugin bundled with BundleBD",
-	"version": "1.0.0"
+    "name": "Plugin", // Or the command's Plugin Name argument if passed
+    "author": "Unknown",
+    "description": "Plugin bundled with BundleBD",
+    "version": "1.0.0"
 }
 ```
 
@@ -885,18 +885,18 @@ A boolean that determines whether or not to bundle the plugin with [ZeresPluginL
 // MyAmazingPlugin/src/config.json (Using the entry folder from the Bundle Configuration example)
 
 {
-	"meta": {
-		"name": "MyAmazingPlugin",
-		"author": "Neodymium",
-		"description": "A plugin that does absolutely nothing",
-		"version": "1.0.0"
-	},
-	"changelog": [
-		{ "title": "Added", "items": ["Added stuff"] },
-		{ "title": "Fixed", "type": "fixed", "items": ["Fixed a bug", "Fixed another bug"] }
-	],
-	"entry": "main.js",
-	"zlibrary": true
+    "meta": {
+        "name": "MyAmazingPlugin",
+        "author": "Neodymium",
+        "description": "A plugin that does absolutely nothing",
+        "version": "1.0.0"
+    },
+    "changelog": [
+        { "title": "Added", "items": ["Added stuff"] },
+        { "title": "Fixed", "type": "fixed", "items": ["Fixed a bug", "Fixed another bug"] }
+    ],
+    "entry": "main.js",
+    "zlibrary": true
 }
 ```
 
@@ -908,12 +908,12 @@ While by no means required, configuring Typescript can solve issues with Typescr
 // tsconfig.json
 
 {
-	"compilerOptions": {
-		"types": ["node", "bundlebd"],
-		"resolveJsonModule": true,
-		"allowSyntheticDefaultImports": true,
-		"jsx": "react-jsx"
-	}
+    "compilerOptions": {
+        "types": ["node", "bundlebd"],
+        "resolveJsonModule": true,
+        "allowSyntheticDefaultImports": true,
+        "jsx": "react-jsx"
+    }
 }
 ```
 
@@ -987,36 +987,36 @@ An example of the Settings module in action.
 import Settings from "bundlebd/settings";
 
 export default class Plugin {
-	start() {
-		// Sets the default settings.
-		Settings.setDefaults({ color: "red", checked: true });
+    start() {
+        // Sets the default settings.
+        Settings.setDefaults({ color: "red", checked: true });
 
-		// Gets the value of the 'color' setting. Since no value is saved, returns the default of 'red'.
-		const red = Settings.get("color");
+        // Gets the value of the 'color' setting. Since no value is saved, returns the default of 'red'.
+        const red = Settings.get("color");
 
-		// Gets the value of the 'color' setting. Since no value is saved, and a defaultValue parameter is passed, returns 'blue'.
-		const blue = Settings.get("color", "blue");
+        // Gets the value of the 'color' setting. Since no value is saved, and a defaultValue parameter is passed, returns 'blue'.
+        const blue = Settings.get("color", "blue");
 
-		// Sets the value of the 'color' setting to 'green' and saves it to the plugin's config file.
-		Settings.set("color", "green");
+        // Sets the value of the 'color' setting to 'green' and saves it to the plugin's config file.
+        Settings.set("color", "green");
 
-		// Gets the value of the 'color' setting. Since a value is saved, returns 'green'.
-		// Since a value is now saved to the plugin's config file, even when the plugin is restarted, each variable will be set to saved value of 'green'.
-		const green = Settings.get("color");
+        // Gets the value of the 'color' setting. Since a value is saved, returns 'green'.
+        // Since a value is now saved to the plugin's config file, even when the plugin is restarted, each variable will be set to saved value of 'green'.
+        const green = Settings.get("color");
 
-		// Will log when any setting is changed and what its new value is.
-		const remove = Settings.addListener((key, value) => {
-			console.log(`${key} changed to ${value}!`);
-		});
+        // Will log when any setting is changed and what its new value is.
+        const remove = Settings.addListener((key, value) => {
+            console.log(`${key} changed to ${value}!`);
+        });
 
-		// This would the previously added listener.
-		// remove();
-	}
+        // This would the previously added listener.
+        // remove();
+    }
 
-	stop() {
-		// Removes all listeners. Always be sure to remove listeners when the plugin is stopped if you've added any.
-		Settings.clearListeners();
-	}
+    stop() {
+        // Removes all listeners. Always be sure to remove listeners when the plugin is stopped if you've added any.
+        Settings.clearListeners();
+    }
 }
 ```
 
@@ -1024,10 +1024,10 @@ export default class Plugin {
 
 ```jsx
 export default function MyComponent(props) {
-	// Now whenever the value of the 'color' setting changes, the component will be updated.
-	const color = Settings.useSettingState("color", "red");
+    // Now whenever the value of the 'color' setting changes, the component will be updated.
+    const color = Settings.useSettingState("color", "red");
 
-	return <div style={{ color }}>This text is colored!</div>;
+    return <div style={{ color }}>This text is colored!</div>;
 }
 ```
 
@@ -1079,39 +1079,39 @@ An example of the Strings module in action.
 import Strings from "bundlebd/strings";
 
 const locales = {
-	"en-US": {
-		HELLO: "Hello",
-		HELLO_WORLD: "Hello world!"
-	},
-	de: {
-		HELLO: "Hallo"
-	}
+    "en-US": {
+        HELLO: "Hello",
+        HELLO_WORLD: "Hello world!"
+    },
+    de: {
+        HELLO: "Hallo"
+    }
 };
 
 export default class Plugin {
-	start() {
-		// Sets the default locale to 'en-US'. It already is by default, but this is just to demonstrate usage of the method.
-		Strings.setDefaultLocale("en-US");
+    start() {
+        // Sets the default locale to 'en-US'. It already is by default, but this is just to demonstrate usage of the method.
+        Strings.setDefaultLocale("en-US");
 
-		// Initializes Strings with the locales object.
-		Strings.initialize(locales);
+        // Initializes Strings with the locales object.
+        Strings.initialize(locales);
 
-		// Gets the string at key 'HELLO' for Discord's selected locale (Let's say its English for now). So it will return 'Hello'.
-		let hello = Strings.get("HELLO");
+        // Gets the string at key 'HELLO' for Discord's selected locale (Let's say its English for now). So it will return 'Hello'.
+        let hello = Strings.get("HELLO");
 
-		// Now let's say the user changes their locale to German...
+        // Now let's say the user changes their locale to German...
 
-		// It will return 'Hallo' since the string is defined for the selected locale.
-		hello = Strings.get("HELLO");
+        // It will return 'Hallo' since the string is defined for the selected locale.
+        hello = Strings.get("HELLO");
 
-		// Since there is no string for the key 'HELLO_WORLD' for German, it will return the string for the key 'HELLO_WORLD' for the default locale, or in this case, English. So it will return 'Hello world!'.
-		hello = Strings.get("HELLO_WORLD");
-	}
+        // Since there is no string for the key 'HELLO_WORLD' for German, it will return the string for the key 'HELLO_WORLD' for the default locale, or in this case, English. So it will return 'Hello world!'.
+        hello = Strings.get("HELLO_WORLD");
+    }
 
-	stop() {
-		// Unsubscribes from locale changes for cleanup.
-		Strings.unsubscribe();
-	}
+    stop() {
+        // Unsubscribes from locale changes for cleanup.
+        Strings.unsubscribe();
+    }
 }
 ```
 
@@ -1121,13 +1121,13 @@ If you want, you can also import the locales object from a JSON file:
 // src/locales.json
 
 {
-	"en-US": {
-		"HELLO": "Hello",
-		"HELLO_WORLD": "Hello world!"
-	},
-	"de": {
-		"HELLO": "Hallo"
-	}
+    "en-US": {
+        "HELLO": "Hello",
+        "HELLO_WORLD": "Hello world!"
+    },
+    "de": {
+        "HELLO": "Hallo"
+    }
 }
 ```
 
@@ -1138,13 +1138,13 @@ import Strings from "bundlebd/strings";
 import locales from "./locales.json";
 
 export default class Plugin {
-	start() {
-		Strings.initialize(locales);
-	}
+    start() {
+        Strings.initialize(locales);
+    }
 
-	stop() {
-		Strings.unsubscribe();
-	}
+    stop() {
+        Strings.unsubscribe();
+    }
 }
 ```
 
@@ -1197,30 +1197,30 @@ import "./index.css";
 import Styles from "bundlebd/styles";
 
 export default class Plugin {
-	start() {
-		// Injects all automatically loaded stylesheets (any imported stylesheets without an 'ignoreLoad' comment).
-		// In this case will inject the contents of 'index.css' (as long as it does not have 'ignoreLoad').
-		Styles.inject();
+    start() {
+        // Injects all automatically loaded stylesheets (any imported stylesheets without an 'ignoreLoad' comment).
+        // In this case will inject the contents of 'index.css' (as long as it does not have 'ignoreLoad').
+        Styles.inject();
 
-		// Adds the given string along with previously injected CSS (the imported stylesheets).
-		Styles.add(".blue { color: blue; }");
+        // Adds the given string along with previously injected CSS (the imported stylesheets).
+        Styles.add(".blue { color: blue; }");
 
-		const css = "div { color: red; }";
+        const css = "div { color: red; }";
 
-		// Adds the css string along with previously injected CSS.
-		// If we kept adding different strings, all of them would be added on to the injected styles.
-		Styles.add(css);
+        // Adds the css string along with previously injected CSS.
+        // If we kept adding different strings, all of them would be added on to the injected styles.
+        Styles.add(css);
 
-		// Removes the 'css' string that was previously added (but keeps everythig else).
-		Styles.remove(css);
+        // Removes the 'css' string that was previously added (but keeps everythig else).
+        Styles.remove(css);
 
-		// Now that we removed the 'css' string, the only styles currently injected are the contents of 'index.css' and '.blue { color: blue; }'.
-	}
+        // Now that we removed the 'css' string, the only styles currently injected are the contents of 'index.css' and '.blue { color: blue; }'.
+    }
 
-	stop() {
-		// Clears all injected styles.
-		Styles.clear();
-	}
+    stop() {
+        // Clears all injected styles.
+        Styles.clear();
+    }
 }
 ```
 
@@ -1246,11 +1246,11 @@ This one is pretty self explanatory. Adding a reference directive to the top of 
 /// <reference types="bundlebd" />
 
 export default class Plugin {
-	start() {
-		console.log("No more type issues!");
-	}
+    start() {
+        console.log("No more type issues!");
+    }
 
-	stop() {}
+    stop() {}
 }
 ```
 
@@ -1263,14 +1263,14 @@ import Styles from "bundlebd/styles";
 import "./index.css";
 
 export default class Plugin {
-	start() {
-		Styles.inject();
-		console.log("No more type issues!");
-	}
+    start() {
+        Styles.inject();
+        console.log("No more type issues!");
+    }
 
-	stop() {
-		Styles.clear();
-	}
+    stop() {
+        Styles.clear();
+    }
 }
 ```
 
@@ -1282,9 +1282,9 @@ Using a TSConfig file requires a little extra work, but should automatically det
 // tsconfig.json
 
 {
-	"compilerOptions": {
-		"types": ["node", "bundlebd"]
-	}
+    "compilerOptions": {
+        "types": ["node", "bundlebd"]
+    }
 }
 ```
 
