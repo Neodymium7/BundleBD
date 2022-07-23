@@ -10,6 +10,6 @@ npm i bundlebd -D
 
 ## Documentation
 
-### For documentation on usage, features, and more, see the [Wiki](https://github.com/Neodymium7/BundleBD/wiki).
+**For documentation on usage, features, and more, see the [Wiki](https://github.com/Neodymium7/BundleBD/wiki).**
 
-### Also be sure to take a look at the [FAQ](https://github.com/Neodymium7/BundleBD/wiki/FAQ).
+**Also be sure to take a look at the [FAQ](https://github.com/Neodymium7/BundleBD/wiki/FAQ).**
