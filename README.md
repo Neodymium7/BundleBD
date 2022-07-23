@@ -591,9 +591,8 @@ To make sure you have type validation and autocomplete for JSON files, see [here
 
 Plain old text files are also supported, and can be imported as strings:
 
-```jsonc
-// src/message.txt
-
+src/message.txt:
+```txt
 Hello World!
 ```
 
@@ -727,7 +726,7 @@ If you don't want to type out the command every time, you can create scripts in 
 // package.json
 
 {
-    ... Rest of your package.json file ...
+    // ... Rest of your package.json file ...
 
 	"scripts": {
 		"build": "bundlebd",
@@ -744,7 +743,7 @@ If you only have one plugin you want to bundle, you can also include the Plugin 
 // package.json
 
 {
-    ... Rest of your package.json file ...
+    // ... Rest of your package.json file ...
 
 	"scripts": {
 		"build": "bundlebd PluginName",
