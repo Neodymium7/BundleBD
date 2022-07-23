@@ -1,4 +1,10 @@
-# BundleBD [![npm](https://img.shields.io/npm/v/bundlebd)](https://www.npmjs.com/package/bundlebd) [![Issues](https://img.shields.io/github/issues/Neodymium7/BundleBD?logo=GitHub)](https://github.com/Neodymium7/BundleBD/issues)
+# BundleBD [![npm][npm-badge]][npm-link] [![Quality][lgtm-badge]][lgtm-link]
+
+[npm-badge]: https://img.shields.io/npm/v/bundlebd?color=%23d53639
+[npm-link]: https://www.npmjs.com/package/bundlebd
+
+[lgtm-badge]: https://img.shields.io/lgtm/grade/javascript/github/Neodymium7/BundleBD?label=code%20quality
+[lgtm-link]: https://lgtm.com/projects/g/Neodymium7/BundleBD/context:javascript
 
 A simple bundler for BetterDiscord plugins. Uses Webpack to bundle plugins composed of multiple files/modules. Allows for the use of Typescript, JSX, CSS and Sass files, and more.
 
