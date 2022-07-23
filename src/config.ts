@@ -99,7 +99,7 @@ export default function getConfigs(): [webpack.Configuration, pluginConfiguratio
 		loader: "esbuild-loader",
 		options: {
 			loader: loader,
-			target: "es2018"
+			target: "es2020"
 		}
 	});
 	const svgLoader = {
