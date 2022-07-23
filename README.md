@@ -2,16 +2,14 @@
 
 A simple bundler for BetterDiscord plugins. Uses Webpack to bundle plugins composed of multiple files/modules. Allows for the use of Typescript, JSX, CSS and Sass files, and more.
 
-# Installation
+## Installation
 
 ```
 npm i bundlebd -D
 ```
 
-# Documentation
+## Documentation
 
 ### For documentation on usage, features, and more, see the [Wiki](https://github.com/Neodymium7/BundleBD/wiki).
 
-# [FAQ](https://github.com/Neodymium7/BundleBD/wiki/FAQ)
-
-See here for any potential questions.
+### Also be sure to take a look at the [FAQ](https://github.com/Neodymium7/BundleBD/wiki/FAQ).
