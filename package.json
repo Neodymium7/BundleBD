@@ -6,7 +6,7 @@
 		"betterdiscord",
 		"betterdiscord-plugins"
 	],
-	"homepage": "https://github.com/Neodymium7/BundleBD#readme",
+	"homepage": "https://github.com/Neodymium7/BundleBD/wiki",
 	"repository": "github:Neodymium7/BundleBD",
 	"bugs": "https://github.com/Neodymium7/BundleBD/issues",
 	"license": "MIT",
@@ -26,7 +26,8 @@
 	"scripts": {
 		"build": "node scripts/build.js",
 		"dev": "node scripts/build.js watch",
-		"prepublishOnly": "node scripts/build.js"
+		"prepublishOnly": "node scripts/build.js",
+		"postversion": "git push --follow-tags"
 	},
 	"devDependencies": {
 		"@types/js-beautify": "^1.13.3",
