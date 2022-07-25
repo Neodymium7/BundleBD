@@ -72,7 +72,7 @@ webpack(webpackConfig, (err, stats) => {
 	Logger.log(`Done! Plugin '${pluginConfig.meta.name}' bundled successfully`);
 
 	// Readme parse and copy
-	if (bundleConfig.readme) {
+	if (bundleConfig.readme && !argv.development) {
 		const entryDir = path.join(process.cwd(), parseString(bundleConfig.entry, { plugin: argv.plugin }));
 		const readmePath = path.join(entryDir, "README.md");
 		if (!fs.existsSync(readmePath)) Logger.warn(`Cannot find file ${readmePath}`);
@@ -92,7 +92,7 @@ webpack(webpackConfig, (err, stats) => {
 	if (argv.development) {
 		if (!bundleConfig.bdPath) {
 			Logger.warn(
-				"Cannot find property 'bdPath' in bundle.config.json: Bundled plugin will not be copied to BetterDiscord"
+				"Cannot find property 'bdPath' in bundlebd.config.json: Bundled plugin will not be copied to BetterDiscord"
 			);
 		} else if (bundleConfig.bdPath !== "none" && !checkDirExists(path.resolve(bundleConfig.bdPath))) {
 			Logger.warn(
