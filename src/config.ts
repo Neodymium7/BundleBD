@@ -8,6 +8,7 @@ import Logger from "./logger";
 interface bundleConfiguration {
 	entry: string;
 	output: string;
+	devOutput?: string;
 	filename: string;
 	bdPath?: string;
 	readme?: boolean | string;
@@ -154,7 +155,12 @@ export default function getConfigs(): [webpack.Configuration, pluginConfiguratio
 		entry: pluginConfig.entry ? path.join(entryDir, pluginConfig.entry) : entryDir,
 		output: {
 			filename: parseString(bundleConfig.filename, parseOptions),
-			path: path.join(process.cwd(), parseString(bundleConfig.output, parseOptions)),
+			path: path.resolve(
+				parseString(
+					argv.development ? bundleConfig.devOutput ?? bundleConfig.output : bundleConfig.output,
+					parseOptions
+				)
+			),
 			library: pluginConfig.zlibrary
 				? {
 						type: "assign",

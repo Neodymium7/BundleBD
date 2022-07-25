@@ -1,7 +1,9 @@
-# BundleBD [![npm][npm-badge]][npm-link] [![Quality][lgtm-badge]][lgtm-link]
+# BundleBD [![npm][npm-badge]][npm-link] [![Downloads][downloads-badge]][npm-link] [![Quality][lgtm-badge]][lgtm-link]
 
 [npm-badge]: https://img.shields.io/npm/v/bundlebd?color=%23d53639
 [npm-link]: https://www.npmjs.com/package/bundlebd
+
+[downloads-badge]: https://img.shields.io/npm/dt/bundlebd?color=%238956ff
 
 [lgtm-badge]: https://img.shields.io/lgtm/grade/javascript/github/Neodymium7/BundleBD?label=code%20quality
 [lgtm-link]: https://lgtm.com/projects/g/Neodymium7/BundleBD/context:javascript
