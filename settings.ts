@@ -8,7 +8,7 @@ type listener = (key?: string, value?: any) => void;
  * Simple utilities for managing and using a plugin's settings.
  */
 export default class Settings {
-	private static settings: Record<string, any> = BdApi.loadData(meta.name, "settings");
+	private static settings: Record<string, any> = BdApi.loadData(meta.name, "settings") || {};
 	private static defaultSettings: Record<string, any>;
 	private static listeners: Set<listener> = new Set();
 
@@ -27,7 +27,7 @@ export default class Settings {
 	 * @returns The value of the setting at `key`.
 	 */
 	static get(key: string, defaultValue?: any) {
-		return this.settings[key] ?? defaultValue ?? this.defaultSettings[key];
+		return this.settings?.[key] ?? defaultValue ?? this.defaultSettings?.[key];
 	}
 
 	/**
