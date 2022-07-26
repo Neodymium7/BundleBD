@@ -9,7 +9,7 @@ export const argv = (() => {
 	const argv = process.argv.slice(2);
 	const options = argv.filter((arg) => arg.startsWith("-"));
 	const development = options.includes("--development") || options.includes("-D");
-	const plugin = argv.filter((arg) => !arg.startsWith("-"))[0] || "Plugin";
+	const plugin = argv.filter((arg) => !arg.startsWith("-"))[0].replace(/\s/g, "");
 	return { plugin, development };
 })();
 

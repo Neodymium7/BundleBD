@@ -72,8 +72,8 @@ webpack(webpackConfig, (err, stats) => {
 	Logger.log(`Done! Plugin '${pluginConfig.meta.name}' bundled successfully`);
 
 	// Readme parse and copy
-	if (bundleConfig.readme && !argv.development) {
-		const entryDir = path.join(process.cwd(), parseString(bundleConfig.entry, { plugin: argv.plugin }));
+	if (pluginConfig.readme && !argv.development) {
+		const entryDir = path.join(process.cwd(), bundleConfig.entry);
 		const readmePath = path.join(entryDir, "README.md");
 		if (!fs.existsSync(readmePath)) Logger.warn(`Cannot find file ${readmePath}`);
 		else {
@@ -81,8 +81,8 @@ webpack(webpackConfig, (err, stats) => {
 			const parsedReadme = parseString(readme, pluginConfig.meta, { open: "{{", close: "}}" });
 
 			let readmeOutputPath = outputPath;
-			if (typeof bundleConfig.readme === "string") {
-				readmeOutputPath = path.join(process.cwd(), parseString(bundleConfig.readme, { plugin: argv.plugin }));
+			if (bundleConfig.readmeOutput) {
+				readmeOutputPath = path.join(process.cwd(), bundleConfig.readmeOutput);
 			}
 			fs.writeFileSync(path.join(readmeOutputPath, "README.md"), parsedReadme);
 		}

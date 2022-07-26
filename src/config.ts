@@ -8,10 +8,9 @@ import Logger from "./logger";
 interface bundleConfiguration {
 	entry: string;
 	output: string;
+	readmeOutput?: string;
 	devOutput?: string;
-	filename: string;
 	bdPath?: string;
-	readme?: boolean | string;
 }
 
 interface pluginConfiguration {
@@ -35,20 +34,32 @@ interface pluginConfiguration {
 	}>;
 	entry?: string;
 	zlibrary?: boolean;
+	readme?: boolean;
 }
 
 function getBundleConfig(): bundleConfiguration {
 	const configPath = path.join(process.cwd(), "bundlebd.config.json");
-	const defaultConfig = { entry: "src", output: "dist", filename: "[plugin].plugin.js" };
-	return Object.assign(
+	const defaultConfig = { entry: "src", output: "dist" };
+	const config: bundleConfiguration = Object.assign(
 		defaultConfig,
 		fs.existsSync(configPath) ? JSON.parse(fs.readFileSync(configPath, "utf-8")) : {}
 	);
+	for (const key in config) {
+		if (config[key].inclues("[plugin]")) {
+			if (!argv.plugin) {
+				Logger.error(
+					`The Bundler Configuration option '${key}' contains '[plugin],' but no Plugin argument was provided`
+				);
+			}
+			config[key] = parseString(config[key], { plugin: argv.plugin });
+		}
+	}
+	return config;
 }
 
 function getPluginConfig(entry: string): pluginConfiguration {
 	const defaultMeta = {
-		name: argv.plugin,
+		name: "Plugin",
 		author: "Unknown",
 		description: "Plugin bundled with BundleBD",
 		version: "1.0.0"
@@ -87,10 +98,9 @@ function getPluginConfig(entry: string): pluginConfiguration {
 }
 
 export default function getConfigs(): [webpack.Configuration, pluginConfiguration, bundleConfiguration] {
-	const parseOptions = { plugin: argv.plugin };
 	const bundleConfig = getBundleConfig();
 
-	const entryDir = path.join(process.cwd(), parseString(bundleConfig.entry, parseOptions));
+	const entryDir = path.join(process.cwd(), bundleConfig.entry);
 	ensureDirExists(entryDir, `Cannot find entry directory '${entryDir}'`);
 
 	const pluginConfig = getPluginConfig(entryDir);
@@ -154,13 +164,8 @@ export default function getConfigs(): [webpack.Configuration, pluginConfiguratio
 		target: "node",
 		entry: pluginConfig.entry ? path.join(entryDir, pluginConfig.entry) : entryDir,
 		output: {
-			filename: parseString(bundleConfig.filename, parseOptions),
-			path: path.resolve(
-				parseString(
-					argv.development ? bundleConfig.devOutput ?? bundleConfig.output : bundleConfig.output,
-					parseOptions
-				)
-			),
+			filename: pluginConfig.meta.name.replace(/\s/g, "") + ".plugin.js",
+			path: path.resolve(argv.development ? bundleConfig.devOutput ?? bundleConfig.output : bundleConfig.output),
 			library: pluginConfig.zlibrary
 				? {
 						type: "assign",

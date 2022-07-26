@@ -27,7 +27,7 @@ export default class Settings {
 	 * @returns The value of the setting at `key`.
 	 */
 	static get(key: string, defaultValue?: any) {
-		return this.settings?.[key] ?? defaultValue ?? this.defaultSettings?.[key];
+		return this.settings[key] ?? defaultValue ?? this.defaultSettings?.[key];
 	}
 
 	/**
@@ -38,7 +38,7 @@ export default class Settings {
 	static set(key: string, value: any) {
 		this.settings[key] = value;
 		BdApi.saveData(meta.name, "settings", this.settings);
-		this.listeners.forEach((listener) => listener(key, value));
+		for (const listener of this.listeners) listener(key, value);
 	}
 
 	/**
