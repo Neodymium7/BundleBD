@@ -84,7 +84,8 @@ webpack(webpackConfig, (err, stats) => {
 			if (bundleConfig.readmeOutput) {
 				readmeOutputPath = path.join(process.cwd(), bundleConfig.readmeOutput);
 			}
-			fs.writeFileSync(path.join(readmeOutputPath, "README.md"), parsedReadme);
+			fs.mkdirSync(readmeOutputPath, { recursive: true });
+			fs.writeFileSync(path.join(readmeOutputPath, "README.md"), parsedReadme, {});
 		}
 	}
 

@@ -45,13 +45,14 @@ function getBundleConfig(): bundleConfiguration {
 		fs.existsSync(configPath) ? JSON.parse(fs.readFileSync(configPath, "utf-8")) : {}
 	);
 	for (const key in config) {
-		if (config[key].inclues("[plugin]")) {
+		if (config[key].includes("[plugin]")) {
 			if (!argv.plugin) {
 				Logger.error(
 					`The Bundler Configuration option '${key}' contains '[plugin],' but no Plugin argument was provided`
 				);
+			} else {
+				config[key] = parseString(config[key], { plugin: argv.plugin });
 			}
-			config[key] = parseString(config[key], { plugin: argv.plugin });
 		}
 	}
 	return config;

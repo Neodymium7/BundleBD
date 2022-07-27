@@ -5,11 +5,11 @@ function escape(string: string) {
 	return string.replace(/[[\]{}()*+?.\\^$|]/g, "\\$&");
 }
 
-export const argv = (() => {
+export const argv: { development: boolean; plugin?: string } = (() => {
 	const argv = process.argv.slice(2);
 	const options = argv.filter((arg) => arg.startsWith("-"));
 	const development = options.includes("--development") || options.includes("-D");
-	const plugin = argv.filter((arg) => !arg.startsWith("-"))[0].replace(/\s/g, "");
+	const plugin = argv.filter((arg) => !arg.startsWith("-"))[0]?.replace(/\s/g, "");
 	return { plugin, development };
 })();
 
