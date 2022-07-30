@@ -9,7 +9,8 @@ const main = {
 	outfile: "bin/index.js",
 	bundle: true,
 	external: [...Object.keys(dependencies), "terser-webpack-plugin"],
-	platform: "node"
+	platform: "node",
+	banner: { js: "#!/usr/bin/env node\n" }
 };
 
 const loaders = {
