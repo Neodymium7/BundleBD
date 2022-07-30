@@ -14,7 +14,7 @@ module.exports = function style(content) {
 		: "export default ___CSS_LOADER_EXPORT___.toString();";
 	return ignoreLoad
 		? content.replace("export default ___CSS_LOADER_EXPORT___;", exportString)
-		: `import Styles from "bundlebd/styles";\n ${content.replace(
+		: `import { Styles } from "bundlebd";\n ${content.replace(
 				"export default ___CSS_LOADER_EXPORT___;",
 				"Styles._load(___CSS_LOADER_EXPORT___.toString());" + exportString
 		  )}`;

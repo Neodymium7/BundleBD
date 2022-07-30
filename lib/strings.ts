@@ -1,5 +1,3 @@
-/// <reference path="./types/index.d.ts" />
-
 /**
  * A locale availbe in Discord.
  */
@@ -48,33 +46,27 @@ const Dispatcher = Library ? Library.DiscordModules.Dispatcher : BdApi.findModul
 const LocaleManager = Library ? Library.DiscordModules.LocaleManager : BdApi.findModule((m) => m.Messages.CLOSE);
 
 /**
- * Utilities for handling localization and strings.
+ * A class for handling localization and strings.
  */
-export default class Strings {
-	private static strings: Record<string, string>;
-	private static defaultLocale: localeCode = "en-US";
-	private static locales: localesObject;
-
-	private static setLocale() {
-		this.strings = this.locales[LocaleManager.getLocale()] || this.locales[this.defaultLocale];
-	}
+export default class StringsManager<T extends localesObject> {
+	private strings: T[keyof T];
+	private defaultLocale: keyof T;
+	private locales: T;
 
 	/**
-	 * Sets the locale used as the fallback when strings for Discord's selected locale are not defined (defaults to `"en-US"`).
-	 * @param locale The code of the locale to set as the default.
-	 */
-	static setDefaultLocale(locale: localeCode) {
-		this.defaultLocale = locale;
-	}
-
-	/**
-	 * Initializes `Strings` with the given locales object. Should be run on plugin start.
+	 * Creates a `StringsManager` object with the given locales object.
 	 * @param locales An object containing the strings for each locale.
+	 * @param [defaultLocale] The code of the locale to use as a fallback when strings for Discord's selected locale are not defined (defaults to `"en-US"`).
 	 */
-	static initialize(locales: localesObject) {
+	constructor(locales: T, defaultLocale?: keyof T) {
 		this.locales = locales;
+		this.defaultLocale = defaultLocale || "en-US";
 		this.setLocale();
 		Dispatcher.subscribe("I18N_LOAD_SUCCESS", this.setLocale);
+	}
+
+	private setLocale() {
+		this.strings = this.locales[LocaleManager.getLocale()] || this.locales[this.defaultLocale];
 	}
 
 	/**
@@ -82,14 +74,14 @@ export default class Strings {
 	 * @param key The key of the string.
 	 * @returns The string at `key` in the selected locale.
 	 */
-	static get(key: string) {
-		return this.strings[key] || (this.locales[this.defaultLocale] as Record<string, string>)[key];
+	get(key: keyof typeof this.strings) {
+		return this.strings[key] || this.locales[this.defaultLocale][key];
 	}
 
 	/**
-	 * Unsubscribes from Discord's locale changes. Used to clean up from {@link Strings.initialize}. Should be run on plugin stop.
+	 * Unsubscribes from Discord's locale changes. Should be run on plugin stop.
 	 */
-	static unsubscribe() {
+	unsubscribe() {
 		Dispatcher.unsubscribe("I18N_LOAD_SUCCESS", this.setLocale);
 	}
 }

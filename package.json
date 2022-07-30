@@ -15,14 +15,14 @@
 		"url": "https://www.neodymium.dev"
 	},
 	"bin": "bin/index.js",
+	"main": "lib/index.js",
 	"types": "types/index.d.ts",
 	"files": [
 		"bin",
 		"types",
-		"settings.ts",
-		"strings.ts",
-		"styles.ts"
+		"lib"
 	],
+	"sideEffects": false,
 	"scripts": {
 		"build": "node scripts/build.js",
 		"dev": "node scripts/build.js watch",

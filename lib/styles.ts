@@ -1,4 +1,4 @@
-/// <reference path="./types/index.d.ts" />
+/// <reference path="../types/global.d.ts" />
 
 /**
  * Utilities for managing and injecting styles. Will be included by default in any plugin that automatically loads a stylesheet.
