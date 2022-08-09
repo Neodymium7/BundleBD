@@ -223,12 +223,12 @@ export default function getConfigs(): [webpack.Configuration, pluginConfiguratio
 			react: "var BdApi.React",
 			"react-dom": "var BdApi.ReactDOM",
 			"@zlibrary": "var Library",
-			"@zlibrary/plugin": "var BasePlugin"
+			"@zlibrary/plugin": "var BasePlugin",
+			pluginName: `var "${pluginConfig.meta.name}"`
 		},
 		plugins: [
 			new ProvidePlugin({
-				React: "react",
-				pluginName: pluginConfig.meta.name
+				React: "react"
 			}),
 			new ProgressPlugin()
 		],

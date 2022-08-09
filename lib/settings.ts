@@ -1,6 +1,8 @@
 /// <reference path="../types/global.d.ts" />
 
 import { useEffect, useState } from "react";
+//@ts-ignore
+import name from "pluginName";
 
 /** A callback that is run when a setting is changed. */
 type Listener<T> = (key: keyof T, value: T[keyof T]) => void;
@@ -19,8 +21,7 @@ export default class SettingsManager<T extends Record<string, any>> {
 	 */
 	constructor(defaultSettings: T) {
 		this.defaultSettings = defaultSettings;
-		// @ts-ignore
-		this.settings = BdApi.loadData(pluginName, "settings") || {};
+		this.settings = BdApi.loadData(name, "settings") || {};
 		this.listeners = new Set();
 	}
 
@@ -41,8 +42,7 @@ export default class SettingsManager<T extends Record<string, any>> {
 	 */
 	set<K extends keyof T>(key: K, value: T[K]) {
 		this.settings[key] = value;
-		// @ts-ignore
-		BdApi.saveData(pluginName, "settings", this.settings);
+		BdApi.saveData(name, "settings", this.settings);
 		for (const listener of this.listeners) listener(key, value);
 	}
 

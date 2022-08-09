@@ -1,5 +1,8 @@
 /// <reference path="../types/global.d.ts" />
 
+// @ts-ignore
+import name from "pluginName";
+
 /**
  * Utilities for managing and injecting styles. Will be included by default in any plugin that automatically loads a stylesheet.
  */
@@ -18,8 +21,7 @@ export default class Styles {
 	 * Injects styles from all imported stylesheets. Should be run on plugin start.
 	 */
 	static inject() {
-		// @ts-ignore
-		BdApi.injectCSS(pluginName, this.styles);
+		BdApi.injectCSS(name, this.styles);
 	}
 
 	/**
@@ -28,8 +30,7 @@ export default class Styles {
 	 */
 	static add(css: string) {
 		this.added.push(css);
-		// @ts-ignore
-		BdApi.injectCSS(pluginName, this.styles + this.added.join("\n"));
+		BdApi.injectCSS(name, this.styles + this.added.join("\n"));
 	}
 
 	/**
@@ -38,16 +39,14 @@ export default class Styles {
 	 */
 	static remove(css: string) {
 		this.added = this.added.filter((c) => c !== css);
-		// @ts-ignore
-		BdApi.injectCSS(pluginName, this.styles + this.added.join("\n"));
+		BdApi.injectCSS(name, this.styles + this.added.join("\n"));
 	}
 
 	/**
 	 * Clears all CSS and stylesheets that were previously injected. Should be run on plugin stop.
 	 */
 	static clear() {
-		// @ts-ignore
-		BdApi.clearCSS(pluginName);
+		BdApi.clearCSS(name);
 		this.added = [];
 	}
 }
