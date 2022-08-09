@@ -227,7 +227,8 @@ export default function getConfigs(): [webpack.Configuration, pluginConfiguratio
 		},
 		plugins: [
 			new ProvidePlugin({
-				React: "react"
+				React: "react",
+				pluginName: pluginConfig.meta.name
 			}),
 			new ProgressPlugin()
 		],

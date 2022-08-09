@@ -18,7 +18,8 @@ export default class Styles {
 	 * Injects styles from all imported stylesheets. Should be run on plugin start.
 	 */
 	static inject() {
-		BdApi.injectCSS(meta.name, this.styles);
+		// @ts-ignore
+		BdApi.injectCSS(pluginName, this.styles);
 	}
 
 	/**
@@ -27,7 +28,8 @@ export default class Styles {
 	 */
 	static add(css: string) {
 		this.added.push(css);
-		BdApi.injectCSS(meta.name, this.styles + this.added.join("\n"));
+		// @ts-ignore
+		BdApi.injectCSS(pluginName, this.styles + this.added.join("\n"));
 	}
 
 	/**
@@ -36,14 +38,16 @@ export default class Styles {
 	 */
 	static remove(css: string) {
 		this.added = this.added.filter((c) => c !== css);
-		BdApi.injectCSS(meta.name, this.styles + this.added.join("\n"));
+		// @ts-ignore
+		BdApi.injectCSS(pluginName, this.styles + this.added.join("\n"));
 	}
 
 	/**
 	 * Clears all CSS and stylesheets that were previously injected. Should be run on plugin stop.
 	 */
 	static clear() {
-		BdApi.clearCSS(meta.name);
+		// @ts-ignore
+		BdApi.clearCSS(pluginName);
 		this.added = [];
 	}
 }

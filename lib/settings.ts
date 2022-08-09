@@ -19,7 +19,8 @@ export default class SettingsManager<T extends Record<string, any>> {
 	 */
 	constructor(defaultSettings: T) {
 		this.defaultSettings = defaultSettings;
-		this.settings = BdApi.loadData(meta.name, "settings") || {};
+		// @ts-ignore
+		this.settings = BdApi.loadData(pluginName, "settings") || {};
 		this.listeners = new Set();
 	}
 
@@ -40,7 +41,8 @@ export default class SettingsManager<T extends Record<string, any>> {
 	 */
 	set<K extends keyof T>(key: K, value: T[K]) {
 		this.settings[key] = value;
-		BdApi.saveData(meta.name, "settings", this.settings);
+		// @ts-ignore
+		BdApi.saveData(pluginName, "settings", this.settings);
 		for (const listener of this.listeners) listener(key, value);
 	}
 

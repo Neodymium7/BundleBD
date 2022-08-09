@@ -1,20 +1,6 @@
 /// <reference path="bdapi.d.ts" />
 /// <reference path="zlibrary.d.ts" />
 
-declare const meta: {
-	readonly name: string;
-	readonly author: string;
-	readonly description: string;
-	readonly version: string;
-	readonly invite?: string;
-	readonly authorId?: string;
-	readonly authorLink?: string;
-	readonly donate?: string;
-	readonly patreon?: string;
-	readonly website?: string;
-	readonly source?: string;
-};
-
 declare module "*.module.css" {
 	/**
 	 * An object containing the CSS module's classes and a string of the module's content.

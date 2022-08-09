@@ -32,10 +32,6 @@ webpack(webpackConfig, (err, stats) => {
 
 	let packed = fs.readFileSync(path.join(outputPath, outputFilename), "utf8");
 
-	// Add meta object
-	const metaObject = JSON.stringify(pluginConfig.meta).replace(/"([^"]+)":/g, "$1:");
-	packed = packed.slice(0, 6) + `const meta = ${metaObject};` + packed.slice(6);
-
 	const importsZlib = packed.includes("external_Library_namespaceObject");
 	const importsBasePlugin = packed.includes("external_BasePlugin_namespaceObject");
 
