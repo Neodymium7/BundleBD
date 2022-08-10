@@ -178,7 +178,10 @@ export default function getConfigs(): [webpack.Configuration, pluginConfiguratio
 				  }
 		},
 		resolve: {
-			extensions: [".js", ".jsx", ".ts", ".tsx"]
+			extensions: [".js", ".jsx", ".ts", ".tsx"],
+			alias: {
+				styles: path.resolve(__dirname, "modules/styles")
+			}
 		},
 		module: {
 			rules: [
