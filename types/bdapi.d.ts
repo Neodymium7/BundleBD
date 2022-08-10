@@ -593,7 +593,7 @@ declare namespace BdApi {
 		/**
 		 * Finds a module using a filter function.
 		 * @param filter A function to use to filter modules. It is given exports, module, and moduleID. Return true to signify match.
-		 * @param [options] Options object.
+		 * @param [options] Set of options to customize the search.
 		 * @param [options.first] Whether to return only the first matching module.
 		 * @param [options.defaultExport] Whether to return default export when matching the default export.
 		 * @return The found module.
@@ -626,7 +626,7 @@ declare namespace BdApi {
 		/**
 		 * Finds a module that lazily loaded.
 		 * @param filter A function to use to filter modules. It is given exports. Return true to signify match.
-		 * @param [options] Options object.
+		 * @param [options] Set of options to customize the search.
 		 * @param [options.signal] AbortSignal of an AbortController to cancel the promise
 		 * @param [options.defaultExport] Whether to return default export when matching the default export
 		 * @returns A promise that resolves to the found module.
