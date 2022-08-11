@@ -1,3 +1,5 @@
+/// <reference path="../types/global.d.ts" />
+
 import { useEffect, useState } from "react";
 //@ts-ignore
 import name from "pluginName";

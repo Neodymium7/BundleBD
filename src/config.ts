@@ -225,8 +225,8 @@ export default function getConfigs(): [webpack.Configuration, pluginConfiguratio
 		externals: {
 			react: "var BdApi.React",
 			"react-dom": "var BdApi.ReactDOM",
-			"@zlibrary": "var Library",
-			"@zlibrary/plugin": "var BasePlugin",
+			zlibrary: "var Library",
+			"zlibrary/plugin": "var BasePlugin",
 			pluginName: `var "${pluginConfig.meta.name}"`,
 			betterdiscord: "var BdApi"
 		},

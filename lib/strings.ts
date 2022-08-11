@@ -1,3 +1,5 @@
+/// <reference path="../types/global.d.ts" />
+
 import { Webpack } from "betterdiscord";
 
 /**
