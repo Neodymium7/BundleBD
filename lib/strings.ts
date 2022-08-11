@@ -1,3 +1,5 @@
+import { Webpack } from "betterdiscord";
+
 /**
  * A locale availbe in Discord.
  */
@@ -41,9 +43,9 @@ type localesObject = {
 };
 
 // @ts-ignore
-const Dispatcher = Library ? Library.DiscordModules.Dispatcher : BdApi.findModuleByProps("dirtyDispatch");
+const Dispatcher = Library ? Library.DiscordModules.Dispatcher : Webpack.getModule(Webpack.Filters.byProps("dirtyDispatch"));
 // @ts-ignore
-const LocaleManager = Library ? Library.DiscordModules.LocaleManager : BdApi.findModule((m) => m.Messages.CLOSE);
+const LocaleManager = Library ? Library.DiscordModules.LocaleManager : Webpack.getModule((m) => m.Messages.CLOSE);
 
 /**
  * A class for handling localization and strings.
