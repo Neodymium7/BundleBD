@@ -1,125 +1,124 @@
 /* Information and Documentation from https://github.com/BetterDiscord/BetterDiscord/blob/main/renderer/src/modules/pluginapi.js */
 
-type react = typeof React;
-type reactDOM = typeof ReactDOM;
+declare module "betterdiscord" {
+	import react from "react";
+	import reactDOM from "react-dom";
 
-type BDPlugin = {
-	added: number;
-	author: string;
-	description: string;
-	exports: any;
-	filename: string;
-	format: string;
-	id: string;
-	instance: any;
-	modified: number;
-	name: string;
-	size: number;
-	version: string;
-	[key: string]: any;
-};
+	type Plugin = {
+		added: number;
+		author: string;
+		description: string;
+		exports: any;
+		filename: string;
+		format: string;
+		id: string;
+		instance: any;
+		modified: number;
+		name: string;
+		size: number;
+		version: string;
+		[key: string]: any;
+	};
 
-type BDTheme = {
-	added: number;
-	author: string;
-	css: string;
-	description: string;
-	filename: string;
-	format: string;
-	id: string;
-	modified: number;
-	name: string;
-	size: number;
-	version: string;
-	[key: string]: any;
-};
+	type Theme = {
+		added: number;
+		author: string;
+		css: string;
+		description: string;
+		filename: string;
+		format: string;
+		id: string;
+		modified: number;
+		name: string;
+		size: number;
+		version: string;
+		[key: string]: any;
+	};
 
-type AddonAPI<T> = {
-	/**
-	 * The path to the addon folder.
-	 */
-	folder: string;
+	type AddonAPI<T> = {
+		/**
+		 * The path to the addon folder.
+		 */
+		folder: string;
 
-	/**
-	 * Determines if a particular addon is enabled.
-	 * @param idOrFile Addon ID or filename.
-	 * @returns Whether the addon is enabled.
-	 */
-	isEnabled(idOrFile: string): boolean;
+		/**
+		 * Determines if a particular addon is enabled.
+		 * @param idOrFile Addon ID or filename.
+		 * @returns Whether the addon is enabled.
+		 */
+		isEnabled(idOrFile: string): boolean;
 
-	/**
-	 * Enables the given addon.
-	 * @param idOrFile Addon ID or filename.
-	 */
-	enable(idOrFile: string): void;
+		/**
+		 * Enables the given addon.
+		 * @param idOrFile Addon ID or filename.
+		 */
+		enable(idOrFile: string): void;
 
-	/**
-	 * Disables the given addon.
-	 * @param idOrFile Addon ID or filename.
-	 */
-	disable(idOrFile: string): void;
+		/**
+		 * Disables the given addon.
+		 * @param idOrFile Addon ID or filename.
+		 */
+		disable(idOrFile: string): void;
 
-	/**
-	 * Toggles the given addon.
-	 * @param idOrFile Addon ID or filename.
-	 */
-	toggle(idOrFile: string): void;
+		/**
+		 * Toggles the given addon.
+		 * @param idOrFile Addon ID or filename.
+		 */
+		toggle(idOrFile: string): void;
 
-	/**
-	 * Reloads the given addon.
-	 * @param idOrFile Addon ID or filename.
-	 */
-	reload(idOrFile: string): void;
+		/**
+		 * Reloads the given addon.
+		 * @param idOrFile Addon ID or filename.
+		 */
+		reload(idOrFile: string): void;
 
-	/**
-	 * Gets a particular addon.
-	 * @param idOrFile Addon ID or filename.
-	 * @returns Addon instance.
-	 */
-	get(idOrFile: string): T;
+		/**
+		 * Gets a particular addon.
+		 * @param idOrFile Addon ID or filename.
+		 * @returns Addon instance.
+		 */
+		get(idOrFile: string): T;
 
-	/**
-	 * Gets all addons of this type.
-	 * @returns Array of all addon instances.
-	 */
-	getAll(): T[];
-};
-
-declare namespace BdApi {
+		/**
+		 * Gets all addons of this type.
+		 * @returns Array of all addon instances.
+		 */
+		getAll(): T[];
+	};
 	/**
 	 * The React module being used inside Discord.
 	 */
-	const React: react;
+	export const React: typeof react;
 
 	/**
 	 * The ReactDOM module being used inside Discord.
 	 */
-	const ReactDOM: reactDOM;
+	export const ReactDOM: typeof reactDOM;
 
 	/**
 	 * A reference object to BetterDiscord's settings.
 	 * @deprecated
 	 */
-	const settings: any;
+	export const settings: any;
 
 	/**
 	 * A reference object to BetterDiscord's emotes.
 	 * @deprecated
 	 */
-	const emotes: any;
+	export const emotes: any;
 
 	/**
 	 * Adds a `<style>` to the document with the given ID.
 	 * @param id ID to use for style element.
 	 * @param css CSS to apply to the document.
 	 */
-	function injectCSS(id: string, css: string): void;
+	export function injectCSS(id: string, css: string): void;
 
 	/**
 	 * Removes a `<style>` from the document corresponding to the given ID.
 	 * @param id ID used for the style element.
 	 */
-	function clearCSS(id: string): void;
+	export function clearCSS(id: string): void;
 
 	/**
 	 * Automatically creates and links a remote JS script.
@@ -128,21 +127,24 @@ declare namespace BdApi {
 	 * @returns Promise resolved upon onload event.
 	 * @deprecated
 	 */
-	function linkJS(id: string, url: string): Promise<void>;
+	export function linkJS(id: string, url: string): Promise<void>;
 
 	/**
 	 * Removes a remotely linked JS script.
 	 * @param id ID of the script element.
 	 * @deprecated
 	 */
-	function unlinkJS(id: string): void;
+	export function unlinkJS(id: string): void;
 
 	/**
 	 * Shows a generic but very customizable modal.
 	 * @param title Title of the modal.
 	 * @param content Content to display in the modal.
 	 */
-	function alert(title: string, content: string | React.ReactElement | Array<string | React.ReactElement>): void;
+	export function alert(
+		title: string,
+		content: string | React.ReactElement | Array<string | React.ReactElement>
+	): void;
 
 	/**
 	 * Shows a generic but very customizable confirmation modal with optional confirm and cancel callbacks.
@@ -155,7 +157,7 @@ declare namespace BdApi {
 	 * @param [options.onConfirm] Callback to occur when clicking the submit button.
 	 * @param [options.onCancel] Callback to occur when clicking the cancel button.
 	 */
-	function showConfirmationModal(
+	export function showConfirmationModal(
 		title: string,
 		content: string | React.ReactElement | Array<string | React.ReactElement>,
 		options?: {
@@ -176,7 +178,7 @@ declare namespace BdApi {
 	 * @param [options.timeout] Adjusts the time (in ms) the toast should be shown for before disappearing automatically. Default: 3000.
 	 * @param [options.forceShow] Whether to force showing the toast and ignore the BetterDiscord Setting. Default: false.
 	 */
-	function showToast(
+	export function showToast(
 		content: string,
 		options?: {
 			type?: "info" | "success" | "error" | "warning";
@@ -212,7 +214,7 @@ declare namespace BdApi {
 	 * @returns Either the matching module or `undefined`.
 	 * @deprecated Use {@link Webpack} instead.
 	 */
-	function findModule(filter: (module: any) => boolean): any;
+	export function findModule(filter: (module: any) => boolean): any;
 
 	/**
 	 * Finds multple Webpack modules using a filter.
@@ -220,7 +222,7 @@ declare namespace BdApi {
 	 * @returns Either an array of matching modules or an empty array.
 	 * @deprecated Use {@link Webpack} instead.
 	 */
-	function findAllModules(filter: (module: any) => boolean): any[];
+	export function findAllModules(filter: (module: any) => boolean): any[];
 
 	/**
 	 * Finds a Webpack module by own properties.
@@ -228,7 +230,7 @@ declare namespace BdApi {
 	 * @returns Either the matching module or `undefined`.
 	 * @deprecated Use {@link Webpack} instead.
 	 */
-	function findModuleByProps(...props: string[]): any;
+	export function findModuleByProps(...props: string[]): any;
 
 	/**
 	 * Finds a Webpack module by own prototypes.
@@ -236,7 +238,7 @@ declare namespace BdApi {
 	 * @returns Either the matching module or `undefined`.
 	 * @deprecated Use {@link Webpack} instead.
 	 */
-	function findModuleByPrototypes(...protos: string[]): any;
+	export function findModuleByPrototypes(...protos: string[]): any;
 
 	/**
 	 * Finds a Webpack module by displayName property.
@@ -244,14 +246,14 @@ declare namespace BdApi {
 	 * @returns Either the matching module or `undefined`.
 	 * @deprecated Use {@link Webpack} instead.
 	 */
-	function findModuleByDisplayName(name: string): any;
+	export function findModuleByDisplayName(name: string): any;
 
 	/**
 	 * Get the internal React data of a specified node.
 	 * @param node Node to get the React data from.
 	 * @returns Either the found data or `undefined`.
 	 */
-	function getInternalInstance(node: HTMLElement): any;
+	export function getInternalInstance(node: HTMLElement): any;
 
 	/**
 	 * Loads previously stored data.
@@ -259,7 +261,7 @@ declare namespace BdApi {
 	 * @param key Which piece of data to load.
 	 * @returns The stored data.
 	 */
-	function loadData(pluginName: string, key: string): any;
+	export function loadData(pluginName: string, key: string): any;
 
 	/**
 	 * Loads previously stored data.
@@ -267,7 +269,7 @@ declare namespace BdApi {
 	 * @param key Which piece of data to load.
 	 * @returns The stored data.
 	 */
-	const getData: typeof loadData;
+	export const getData: typeof loadData;
 
 	/**
 	 * Saves JSON-serializable data.
@@ -275,7 +277,7 @@ declare namespace BdApi {
 	 * @param key Which piece of data to store.
 	 * @param data The data to be saved.
 	 */
-	function saveData(pluginName: string, key: string, data: any): void;
+	export function saveData(pluginName: string, key: string, data: any): void;
 
 	/**
 	 * Saves JSON-serializable data.
@@ -283,14 +285,14 @@ declare namespace BdApi {
 	 * @param key Which piece of data to store.
 	 * @param data The data to be saved.
 	 */
-	const setData: typeof saveData;
+	export const setData: typeof saveData;
 
 	/**
 	 * Deletes a piece of stored data, this is different than saving as null or undefined.
 	 * @param pluginName Name of the plugin deleting data.
 	 * @param key Which piece of data to delete.
 	 */
-	function deleteData(pluginName: string, key: string): void;
+	export function deleteData(pluginName: string, key: string): void;
 
 	/**
 	 * This function monkey-patches a method on an object. The patching callback may be run before, after or instead of target method.
@@ -307,7 +309,7 @@ declare namespace BdApi {
 	 * @returns A function that cancels the monkey-patch.
 	 * @deprecated
 	 */
-	function monkeyPatch(
+	export function monkeyPatch(
 		what: any,
 		methodName: string,
 		options: {
@@ -324,7 +326,7 @@ declare namespace BdApi {
 	 * @param node Node to be observed.
 	 * @param callback Callback function to run when fired.
 	 */
-	function onRemoved(node: HTMLElement, callback: () => void): void;
+	export function onRemoved(node: HTMLElement, callback: () => void): void;
 
 	/**
 	 * Wraps a given function in a `try..catch` block.
@@ -333,7 +335,7 @@ declare namespace BdApi {
 	 * @returns The mew wrapped function.
 	 * @deprecated
 	 */
-	function suppressErrors(method: Function, message: string): Function;
+	export function suppressErrors(method: Function, message: string): Function;
 
 	/**
 	 * Tests a given object to determine if it is valid JSON.
@@ -341,7 +343,7 @@ declare namespace BdApi {
 	 * @returns Result of the test.
 	 * @deprecated
 	 */
-	function testJSON(data: any): boolean;
+	export function testJSON(data: any): boolean;
 
 	/**
 	 * Gets a specific setting's status from BetterDiscord.
@@ -351,7 +353,7 @@ declare namespace BdApi {
 	 * @returns If the setting is enabled.
 	 * @deprecated
 	 */
-	function isSettingEnabled(collection: string, category: string, id: string): boolean;
+	export function isSettingEnabled(collection: string, category: string, id: string): boolean;
 
 	/**
 	 * Gets a specific setting's status from BetterDiscord.
@@ -360,7 +362,7 @@ declare namespace BdApi {
 	 * @returns If the setting is enabled.
 	 * @deprecated
 	 */
-	function isSettingEnabled(category: string, id: string): boolean;
+	export function isSettingEnabled(category: string, id: string): boolean;
 
 	/**
 	 * Enables a BetterDiscord setting by IDs.
@@ -369,7 +371,7 @@ declare namespace BdApi {
 	 * @param id Setting ID in the category.
 	 * @deprecated
 	 */
-	function enableSetting(collection: string, category: string, id: string): void;
+	export function enableSetting(collection: string, category: string, id: string): void;
 
 	/**
 	 * Enables a BetterDiscord setting by IDs.
@@ -377,7 +379,7 @@ declare namespace BdApi {
 	 * @param id Setting ID in the category.
 	 * @deprecated
 	 */
-	function enableSetting(category: string, id: string): void;
+	export function enableSetting(category: string, id: string): void;
 
 	/**
 	 * Disables a BetterDiscord setting by IDs.
@@ -386,7 +388,7 @@ declare namespace BdApi {
 	 * @param id Setting ID in the category.
 	 * @deprecated
 	 */
-	function disableSetting(collection: string, category: string, id: string): void;
+	export function disableSetting(collection: string, category: string, id: string): void;
 
 	/**
 	 * Disables a BetterDiscord setting by IDs.
@@ -394,7 +396,7 @@ declare namespace BdApi {
 	 * @param id Setting ID in the category.
 	 * @deprecated
 	 */
-	function disableSetting(category: string, id: string): void;
+	export function disableSetting(category: string, id: string): void;
 
 	/**
 	 * Toggle a BetterDiscord setting by IDs.
@@ -403,7 +405,7 @@ declare namespace BdApi {
 	 * @param id Setting ID in the category.
 	 * @deprecated
 	 */
-	function toggleSetting(collection: string, category: string, id: string): void;
+	export function toggleSetting(collection: string, category: string, id: string): void;
 
 	/**
 	 * Toggle a BetterDiscord setting by IDs.
@@ -411,7 +413,7 @@ declare namespace BdApi {
 	 * @param id Setting ID in the category.
 	 * @deprecated
 	 */
-	function toggleSetting(category: string, id: string): void;
+	export function toggleSetting(category: string, id: string): void;
 
 	/**
 	 * Gets some data in BetterDiscord's misc data.
@@ -419,7 +421,7 @@ declare namespace BdApi {
 	 * @returns The stored data.
 	 * @deprecated
 	 */
-	function getBDData(key: string): any;
+	export function getBDData(key: string): any;
 
 	/**
 	 * Sets some data in BetterDiscord's misc data.
@@ -427,7 +429,7 @@ declare namespace BdApi {
 	 * @param data Data to store.
 	 * @deprecated
 	 */
-	function setBDData(key: string, data: any): void;
+	export function setBDData(key: string, data: any): void;
 
 	/**
 	 * Gives access to Electron's Dialog API. See {@link https://www.electronjs.org/docs/latest/api/dialog}.
@@ -446,7 +448,7 @@ declare namespace BdApi {
 	 * @param [options.modal] Whether the dialog should act as a modal to the main window.
 	 * @returns A `Promise` that resolves to an `object` that has a `boolean` cancelled and a `filePath` string for saving and a `filePaths` string array for opening.
 	 */
-	function openDialog(options: {
+	export function openDialog(options: {
 		mode?: "open" | "save";
 		defaultPath?: string;
 		filters?: Array<Record<string, string[]>>;
@@ -464,18 +466,18 @@ declare namespace BdApi {
 	/**
 	 * An instance of {@link AddonAPI} to access plugins.
 	 */
-	const Plugins: AddonAPI<BDPlugin>;
+	export const Plugins: AddonAPI<Plugin>;
 
 	/**
 	 * An instance of {@link AddonAPI} to access themes.
 	 */
-	const Themes: AddonAPI<BDTheme>;
+	export const Themes: AddonAPI<Theme>;
 
 	/**
 	 * `Patcher` is a utility class for modifying existing functions.
 	 * This is extremely useful for modifying the internals of Discord by adjusting return value or React renders, or arguments of internal functions.
 	 */
-	const Patcher: {
+	export class Patcher {
 		/**
 		 * This method patches onto another function, allowing your code to run beforehand.
 		 * Using this, you are also able to modify the incoming arguments before the original method is run.
@@ -485,7 +487,7 @@ declare namespace BdApi {
 		 * @param callback Function to run before the original method. The function is given the `this` context and the `arguments` of the original function.
 		 * @returns Function that cancels the original patch.
 		 */
-		before(
+		static before(
 			caller: string,
 			module: object,
 			method: string,
@@ -501,7 +503,7 @@ declare namespace BdApi {
 		 * @param callback Function to run before the original method. The function is given the `this` context, `arguments` of the original function, and also the original function.
 		 * @returns Function that cancels the original patch.
 		 */
-		instead(
+		static instead(
 			caller: string,
 			module: object,
 			method: string,
@@ -517,7 +519,7 @@ declare namespace BdApi {
 		 * @param callback callback Function to run after the original method. The function is given the `this` context, the `arguments` of the original function, and the `return` value of the original function.
 		 * @returns Function that cancels the original patch.
 		 */
-		after(
+		static after(
 			caller: string,
 			module: object,
 			method: string,
@@ -529,24 +531,24 @@ declare namespace BdApi {
 		 * @param caller ID of the original patches.
 		 * @returns Array of all the patch objects.
 		 */
-		getPatchesByCaller(caller: string): Array<Function>;
+		static getPatchesByCaller(caller: string): Array<Function>;
 
 		/**
 		 * Automatically cancels all patches created with a specific ID.
 		 * @param caller ID of the original patches.
 		 */
-		unpatchAll(caller: string): void;
-	};
+		static unpatchAll(caller: string): void;
+	}
 
 	/**
 	 * `Webpack` is a utility class for getting internal Webpack modules.
 	 * This is extremely useful for interacting with the internals of Discord.
 	 */
-	const Webpack: {
+	export class Webpack {
 		/**
 		 * Series of Filters to be used for finding Webpack modules.
 		 */
-		Filters: {
+		static Filters: {
 			/**
 			 * Generates a function that filters by a set of properties.
 			 * @param props List of property names.
@@ -598,7 +600,7 @@ declare namespace BdApi {
 		 * @param [options.defaultExport] Whether to return default export when matching the default export.
 		 * @return The found module.
 		 */
-		getModule(
+		static getModule(
 			filter: (module: any) => boolean,
 			options?: {
 				first?: boolean;
@@ -615,7 +617,7 @@ declare namespace BdApi {
 		 * @param [queries.defaultExport] Whether to return default export when matching the default export
 		 * @return The found modules.
 		 */
-		getBulk(
+		static getBulk(
 			...queries: {
 				filter: (module: any) => boolean;
 				first?: boolean;
@@ -631,12 +633,12 @@ declare namespace BdApi {
 		 * @param [options.defaultExport] Whether to return default export when matching the default export
 		 * @returns A promise that resolves to the found module.
 		 */
-		waitForModule(
+		static waitForModule(
 			filter: (module: any) => boolean,
 			options?: {
 				signal?: AbortSignal;
 				defaultExport?: boolean;
 			}
 		): Promise<any>;
-	};
+	}
 }

@@ -1,7 +1,7 @@
 /* Information and Documentation from https://rauenzi.github.io/BDPluginLibrary/docs/ */
 
-declare module "@zlibrary/plugin" {
-	import { Settings } from "@zlibrary";
+declare module "zlibrary/plugin" {
+	import { Settings } from "zlibrary";
 
 	/** The Library's base Plugin class */
 	export default class Plugin {
@@ -32,7 +32,7 @@ declare module "@zlibrary/plugin" {
 	}
 }
 
-declare module "@zlibrary" {
+declare module "zlibrary" {
 	import * as React from "react";
 	import * as ReactDOM from "react-dom";
 

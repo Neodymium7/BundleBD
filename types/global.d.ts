@@ -1,38 +1,52 @@
 /// <reference path="bdapi.d.ts" />
 /// <reference path="zlibrary.d.ts" />
 
+declare module "styles" {
+	/**
+	 * A function that returns a string of all imported styles.
+	 */
+	export default function styles(): string;
+}
+
 declare module "*.module.css" {
 	/**
-	 * An object containing the CSS module's classes and a string of the module's content.
+	 * An object containing the CSS module's classes.
 	 */
-	const content: {
+	const classNames: {
 		[className: string]: string;
-		/**
-		 * A string containing the contents of the CSS module.
-		 */
-		_content: string;
 	};
-	export default content;
+
+	/**
+	 * A string of the CSS module's content.
+	 */
+	export const content: string;
+
+	export default classNames;
 }
 
 declare module "*.css?module" {
 	export { default as default } from "*.module.css";
+	export { content } from "*.module.css";
 }
 
 declare module "*.module.scss" {
 	export { default as default } from "*.module.css";
+	export { content } from "*.module.css";
 }
 
 declare module "*.scss?module" {
 	export { default as default } from "*.module.css";
+	export { content } from "*.module.css";
 }
 
 declare module "*.module.sass" {
 	export { default as default } from "*.module.css";
+	export { content } from "*.module.css";
 }
 
 declare module "*.sass?module" {
 	export { default as default } from "*.module.css";
+	export { content } from "*.module.css";
 }
 
 declare module "*.css" {

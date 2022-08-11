@@ -178,7 +178,10 @@ export default function getConfigs(): [webpack.Configuration, pluginConfiguratio
 				  }
 		},
 		resolve: {
-			extensions: [".js", ".jsx", ".ts", ".tsx"]
+			extensions: [".js", ".jsx", ".ts", ".tsx"],
+			alias: {
+				styles: path.resolve(__dirname, "modules/styles")
+			}
 		},
 		module: {
 			rules: [
@@ -222,9 +225,10 @@ export default function getConfigs(): [webpack.Configuration, pluginConfiguratio
 		externals: {
 			react: "var BdApi.React",
 			"react-dom": "var BdApi.ReactDOM",
-			"@zlibrary": "var Library",
-			"@zlibrary/plugin": "var BasePlugin",
-			pluginName: `var "${pluginConfig.meta.name}"`
+			zlibrary: "var Library",
+			"zlibrary/plugin": "var BasePlugin",
+			pluginName: `var "${pluginConfig.meta.name}"`,
+			betterdiscord: "var BdApi"
 		},
 		plugins: [
 			new ProvidePlugin({
