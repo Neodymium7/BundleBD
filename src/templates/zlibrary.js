@@ -58,7 +58,7 @@ function buildPlugin([BasePlugin, Library]) {
 	return Plugin;
 }
 
-module.exports = global.ZeresPluginLibrary ? buildPlugin(global.ZeresPluginLibrary.buildPlugin(config)) : { start: () => {}, stop: () => {} };
+module.exports = global.ZeresPluginLibrary ? buildPlugin(global.ZeresPluginLibrary.buildPlugin(config)) : class { start() {}; stop() {} };
 
 /*@end@*/`;
 }
