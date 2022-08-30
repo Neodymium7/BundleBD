@@ -51,26 +51,18 @@ declare module "*.sass?module" {
 
 declare module "*.css" {
 	/**
-	 * A string containing the contents of the CSS file.
+	 * A string containing the contents of the stylesheet.
 	 */
 	const content: string;
 	export default content;
 }
 
 declare module "*.scss" {
-	/**
-	 * A string containing the contents of the compiled SCSS file.
-	 */
-	const content: string;
-	export default content;
+	export { default as default } from "*.css";
 }
 
 declare module "*.sass" {
-	/**
-	 * A string containing the contents of the compiled Sass file.
-	 */
-	const content: string;
-	export default content;
+	export { default as default } from "*.css";
 }
 
 declare module "*.txt" {
