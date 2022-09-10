@@ -268,7 +268,7 @@ declare module "zlibrary" {
 		 * @param [config.noBlurEvent=false] - No clue
 		 */
 		static openContextMenu(
-			event: MouseEvent,
+			event: MouseEvent | React.MouseEvent,
 			menuComponent: Function,
 			config?: {
 				position?: string;

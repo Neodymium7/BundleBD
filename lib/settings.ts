@@ -13,17 +13,28 @@ type Listener<T> = (key: keyof T, value: T[keyof T]) => void;
  */
 export default class SettingsManager<T extends Record<string, any>> {
 	private settings: T;
-	private defaultSettings: T;
 	private listeners: Set<Listener<T>>;
+
+	/**
+	 * An array of all the settings keys.
+	 */
+	keys: (keyof T)[];
 
 	/**
 	 * Creates a new `SettingsManager` object with the given default settings.
 	 * @param defaultSettings An object containing the default settings.
 	 */
 	constructor(defaultSettings: T) {
-		this.defaultSettings = defaultSettings;
-		this.settings = loadData(name, "settings") || {};
+		this.settings = loadData(name, "settings");
+		if (!this.settings) {
+			saveData(name, "settings", defaultSettings);
+			this.settings = defaultSettings;
+		}
+		if (Object.keys(this.settings) !== Object.keys(defaultSettings)) {
+			this.settings = { ...defaultSettings, ...this.settings };
+		}
 		this.listeners = new Set();
+		this.keys = Object.keys(this.settings);
 	}
 
 	/**
@@ -32,8 +43,7 @@ export default class SettingsManager<T extends Record<string, any>> {
 	 * @returns The value of the setting at `key`.
 	 */
 	get<K extends keyof T>(key: K): T[K] {
-		const value = this.settings[key] ?? this.defaultSettings?.[key];
-		return value!;
+		return this.settings[key];
 	}
 
 	/**
@@ -70,6 +80,7 @@ export default class SettingsManager<T extends Record<string, any>> {
 	 * A React hook that gets a setting as a stateful variable.
 	 * @param key The key of the setting.
 	 * @returns The value of the setting at `key` as a stateful value.
+	 * @deprecated
 	 */
 	useSettingState<K extends keyof T>(key: K): T[K] {
 		const [setting, setSetting] = useState(this.get(key));
@@ -79,5 +90,19 @@ export default class SettingsManager<T extends Record<string, any>> {
 			});
 		}, []);
 		return setting;
+	}
+
+	/**
+	 * A React hook that gets a the settings object as a stateful variable.
+	 * @returns The settings object  as a stateful value.
+	 */
+	useSettingsState(): T {
+		const [settings, setSettings] = useState(this.settings);
+		useEffect(() => {
+			return this.addListener((changedKey, value) => {
+				setSettings((prevSettings) => ({ ...prevSettings, [changedKey]: value }));
+			});
+		}, []);
+		return settings;
 	}
 }

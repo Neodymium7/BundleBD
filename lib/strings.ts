@@ -65,12 +65,18 @@ export default class StringsManager<T extends localesObject> {
 	constructor(locales: T, defaultLocale?: keyof T) {
 		this.locales = locales;
 		this.defaultLocale = defaultLocale || "en-US";
-		this.setLocale();
-		Dispatcher.subscribe("I18N_LOAD_SUCCESS", this.setLocale);
 	}
 
 	private setLocale() {
 		this.strings = this.locales[LocaleManager.getLocale()] || this.locales[this.defaultLocale];
+	}
+
+	/**
+	 * Subscribes to Discord's locale changes. Should be run on plugin start.
+	 */
+	subscribe() {
+		this.setLocale();
+		Dispatcher.subscribe("I18N_LOAD_SUCCESS", this.setLocale);
 	}
 
 	/**
