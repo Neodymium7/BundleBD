@@ -65,6 +65,7 @@ export default class StringsManager<T extends localesObject> {
 	constructor(locales: T, defaultLocale?: keyof T) {
 		this.locales = locales;
 		this.defaultLocale = defaultLocale || "en-US";
+		this.setLocale = this.setLocale.bind(this);
 	}
 
 	private setLocale() {
