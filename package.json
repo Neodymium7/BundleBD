@@ -1,6 +1,6 @@
 {
 	"name": "bundlebd",
-	"version": "2.1.1",
+	"version": "2.2.0",
 	"description": "A simple bundler for BetterDiscord plugins. Uses Webpack to bundle plugins composed of multiple files/modules. Allows for the use of Typescript, JSX, CSS and Sass files, and more.",
 	"keywords": [
 		"betterdiscord",
