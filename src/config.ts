@@ -111,7 +111,12 @@ export default function getConfigs(): [webpack.Configuration, pluginConfiguratio
 		loader: "esbuild-loader",
 		options: {
 			loader: loader,
-			target: "es2020"
+			target: "es2020",
+			tsconfigRaw: {
+				compilerOptions: {
+					jsx: "react"
+				}
+			}
 		}
 	});
 	const svgLoader = {

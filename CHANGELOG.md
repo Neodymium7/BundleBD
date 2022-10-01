@@ -1,3 +1,9 @@
+# v2.1.3
+
+## Bundler
+
+-   Fixed inconsistent JSX processing.
+
 # v2.1.2
 
 ## Library
