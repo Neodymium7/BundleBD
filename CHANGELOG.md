@@ -1,3 +1,9 @@
+# v2.1.2
+
+## Library
+
+-   Fixed after Discord's recent update.
+
 # v2.1.1
 
 ## Library

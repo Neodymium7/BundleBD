@@ -45,9 +45,9 @@ type localesObject = {
 };
 
 // @ts-ignore
-const Dispatcher = Library ? Library.DiscordModules.Dispatcher : Webpack.getModule(Webpack.Filters.byProps("dirtyDispatch"));
+const Dispatcher = Library ? Library.DiscordModules.Dispatcher : Webpack.getModule(Webpack.Filters.byProps("dispatch", "subscribe"));
 // @ts-ignore
-const LocaleManager = Library ? Library.DiscordModules.LocaleManager : Webpack.getModule((m) => m.Messages.CLOSE);
+const LocaleManager = Library ? Library.DiscordModules.LocaleManager : Webpack.getModule((m) => m.Messages?.CLOSE);
 
 /**
  * A class for handling localization and strings.

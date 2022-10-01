@@ -80,7 +80,7 @@ export default class SettingsManager<T extends Record<string, any>> {
 	 * A React hook that gets a setting as a stateful variable.
 	 * @param key The key of the setting.
 	 * @returns The value of the setting at `key` as a stateful value.
-	 * @deprecated
+	 * @deprecated Use {@link useSettingsState} instead.
 	 */
 	useSettingState<K extends keyof T>(key: K): T[K] {
 		const [setting, setSetting] = useState(this.get(key));

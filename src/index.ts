@@ -38,7 +38,7 @@ webpack(webpackConfig, (err, stats) => {
 	// Warn if importing zlib without building with zlib support
 	if ((importsZlib || importsBasePlugin) && !pluginConfig.zlibrary) {
 		Logger.warn(
-			"It appears the plugin imports ZLibrary, but is not being built with ZLibrary support. Did you mean to set 'build.zlibrary' to true in the plugin's configuration?"
+			"It appears the plugin imports ZLibrary, but is not being built with ZLibrary support. Did you mean to set 'zlibrary' to true in the plugin's configuration?"
 		);
 	}
 
