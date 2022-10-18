@@ -1,8 +1,26 @@
-export default function zlibTemplate(packed, meta, changelog) {
+export default function zlibTemplate(packed, pluginConfig) {
+    meta = pluginConfig.meta;
+    info = pluginConfig.info;
+    changelog = pluginConfig.changelog;
+    defaultConfig = pluginConfig.defaultConfig;
+
+    if (!info) {
+        info = {
+            name: meta.name,
+            authors: [
+                {name: meta.author}
+            ],
+            version: meta.version,
+            description: meta.description,
+            github: meta.source,
+            github_raw: meta.updateUrl
+        };
+    }
+
 	return `
 /*@cc_on
 @if (@_jscript)
-    
+
     // Offer to self-install for clueless users that try to run this directly.
 	var shell = WScript.CreateObject("WScript.Shell");
 	var fs = new ActiveXObject("Scripting.FileSystemObject");
@@ -25,16 +43,9 @@ export default function zlibTemplate(packed, meta, changelog) {
 @else@*/
 
 const config = {
-    info: {
-        name: "${meta.name}",
-        authors: [{
-            name: "${meta.author}",
-        }],
-        version: "${meta.version}",
-        description: "${meta.description}",
-        github: "${meta.source}",
-        github_raw: "${meta.updateUrl}"
-    }${changelog ? `, changelog: ${JSON.stringify(changelog).replace(/"([^"]+)":/g, "$1:")}` : ""}
+    info: ${JSON.stringify(info).replace(/"([^"]+)":/g, "$1:")}
+    ${changelog ? `, changelog: ${JSON.stringify(changelog).replace(/"([^"]+)":/g, "$1:")}` : ""}
+    ${defaultConfig ? `, defaultConfig: ${JSON.stringify(defaultConfig).replace(/"([^"]+)":/g, "$1:")}` : ""}
 };
 
 if (!global.ZeresPluginLibrary) {
