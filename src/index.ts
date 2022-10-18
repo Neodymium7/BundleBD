@@ -50,7 +50,7 @@ webpack(webpackConfig, (err, stats) => {
 	}
 
 	// Build with zlib
-	if (pluginConfig.zlibrary) packed = zlibTemplate(packed, pluginConfig.meta, pluginConfig.changelog);
+	if (pluginConfig.zlibrary) packed = zlibTemplate(packed, pluginConfig);
 
 	// Add meta to packed file
 	const meta = `/**\n${Object.keys(pluginConfig.meta).reduce(
