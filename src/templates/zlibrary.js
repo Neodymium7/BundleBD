@@ -1,5 +1,6 @@
 export default function zlibTemplate(packed, pluginConfig) {
-    const { meta, info, changelog, defaultConfig } = pluginConfig;
+    const { meta, changelog, defaultConfig } = pluginConfig;
+    let { info } = pluginConfig;
 
     if (!info) {
         info = {
