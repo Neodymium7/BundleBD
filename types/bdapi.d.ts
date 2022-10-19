@@ -598,6 +598,7 @@ declare module "betterdiscord" {
 		 * @param [options] Set of options to customize the search.
 		 * @param [options.first] Whether to return only the first matching module.
 		 * @param [options.defaultExport] Whether to return default export when matching the default export.
+		 * @param [options.searchExports] Whether to execute the filter on webpack export getters.
 		 * @return The found module.
 		 */
 		static getModule(
@@ -605,6 +606,7 @@ declare module "betterdiscord" {
 			options?: {
 				first?: boolean;
 				defaultExport?: boolean;
+				searchExports?: boolean;
 			}
 		): any;
 
@@ -615,6 +617,7 @@ declare module "betterdiscord" {
 		 * @param queries.filter A function to use to filter modules
 		 * @param [queries.first] Whether to return only the first matching module
 		 * @param [queries.defaultExport] Whether to return default export when matching the default export
+		 * @param [options.searchExports] Whether to execute the filter on webpack export getters.
 		 * @return The found modules.
 		 */
 		static getBulk(
@@ -622,6 +625,7 @@ declare module "betterdiscord" {
 				filter: (module: any) => boolean;
 				first?: boolean;
 				defaultExport?: boolean;
+				searchExports?: boolean;
 			}[]
 		): any[];
 
@@ -631,6 +635,7 @@ declare module "betterdiscord" {
 		 * @param [options] Set of options to customize the search.
 		 * @param [options.signal] AbortSignal of an AbortController to cancel the promise
 		 * @param [options.defaultExport] Whether to return default export when matching the default export
+		 * @param [options.searchExports] Whether to execute the filter on webpack export getters.
 		 * @returns A promise that resolves to the found module.
 		 */
 		static waitForModule(
@@ -638,6 +643,7 @@ declare module "betterdiscord" {
 			options?: {
 				signal?: AbortSignal;
 				defaultExport?: boolean;
+				searchExports?: boolean;
 			}
 		): Promise<any>;
 	}

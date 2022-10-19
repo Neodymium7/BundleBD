@@ -1,3 +1,13 @@
+# v2.1.4
+
+## Bundler
+
+-   [Added better support for Zlibrary config options](https://github.com/Neodymium7/BundleBD/pull/1)
+
+## General
+
+-   Fixed some more minor issues with typings
+
 # v2.1.3
 
 ## Bundler

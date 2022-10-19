@@ -5,6 +5,8 @@ declare module "zlibrary/plugin" {
 
 	/** The Library's base Plugin class */
 	export default class Plugin {
+		defaultSettings: any;
+		settings: any;
 		constructor();
 		getName(): string;
 		getDescription(): string;
@@ -1903,14 +1905,14 @@ declare module "zlibrary" {
 		 * @param node - node to obtain state nodes of
 		 * @return list of found state nodes
 		 */
-		static getStateNodes(node: HTMLElement): Function[];
+		static getStateNodes(node: HTMLElement): any[];
 
 		/**
 		 * Grabs the react internal component tree of a specific node.
 		 * @param node - node to obtain react components of
 		 * @return list of found react components
 		 */
-		static getComponents(node: HTMLElement): Function[];
+		static getComponents(node: HTMLElement): any[];
 
 		/**
 		 * Creates and renders a react element that wraps dom elements.
