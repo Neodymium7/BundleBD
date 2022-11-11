@@ -2764,5 +2764,3 @@ declare module "zlibrary" {
 
 	export {};
 }
-
-/* Damn that's a lot of typings */

@@ -1,4 +1,4 @@
 node_modules
 bin.js
 index.js
-types
+*.d.ts

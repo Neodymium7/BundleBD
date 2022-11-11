@@ -17,8 +17,4 @@ export default class Logger {
 			process.exit(1);
 		}
 	}
-
-	static break() {
-		console.log("\n");
-	}
 }

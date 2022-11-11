@@ -1,5 +1,16 @@
-/// <reference path="bdapi.d.ts" />
 /// <reference path="zlibrary.d.ts" />
+
+declare module "betterdiscord" {
+	import type { BoundBdApi } from "bdapi";
+	const BdApi: BoundBdApi;
+	export = BdApi;
+}
+
+declare module "meta" {
+	import { Meta } from "bdapi";
+	const meta: Meta;
+	export default meta;
+}
 
 declare module "styles" {
 	/**
@@ -19,42 +30,37 @@ declare module "*.module.css" {
 	/**
 	 * A string of the CSS module's content.
 	 */
-	export const content: string;
+	export const css: string;
 
 	export default classNames;
 }
 
-declare module "*.css?module" {
-	export { default as default } from "*.module.css";
-	export { content } from "*.module.css";
-}
-
 declare module "*.module.scss" {
 	export { default as default } from "*.module.css";
-	export { content } from "*.module.css";
-}
-
-declare module "*.scss?module" {
-	export { default as default } from "*.module.css";
-	export { content } from "*.module.css";
+	export { css } from "*.module.css";
 }
 
 declare module "*.module.sass" {
 	export { default as default } from "*.module.css";
-	export { content } from "*.module.css";
+	export { css } from "*.module.css";
 }
 
-declare module "*.sass?module" {
+declare module "*.module.less" {
 	export { default as default } from "*.module.css";
-	export { content } from "*.module.css";
+	export { css } from "*.module.css";
+}
+
+declare module "*.module.styl" {
+	export { default as default } from "*.module.css";
+	export { css } from "*.module.css";
 }
 
 declare module "*.css" {
 	/**
 	 * A string containing the contents of the stylesheet.
 	 */
-	const content: string;
-	export default content;
+	const css: string;
+	export default css;
 }
 
 declare module "*.scss" {
@@ -62,6 +68,14 @@ declare module "*.scss" {
 }
 
 declare module "*.sass" {
+	export { default as default } from "*.css";
+}
+
+declare module "*.less" {
+	export { default as default } from "*.css";
+}
+
+declare module "*.styl" {
 	export { default as default } from "*.css";
 }
 
@@ -75,13 +89,9 @@ declare module "*.txt" {
 
 declare module "*.svg" {
 	/**
-	 * A React Component cotaining the SVG. Any props will be passed to the SVG.
+	 * A React Component containing the SVG. Any props will be passed to the SVG.
 	 */
-	const Component: React.FunctionComponent<Record<string, any>>;
-	export default Component;
-}
-
-declare module "*.svg?url" {
+	export const Component: React.FunctionComponent<Record<string, any>>;
 	export { default as default } from "*.png";
 }
 

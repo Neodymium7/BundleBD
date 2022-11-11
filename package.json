@@ -1,7 +1,7 @@
 {
 	"name": "bundlebd",
 	"version": "2.1.4",
-	"description": "A simple bundler for BetterDiscord plugins. Uses Webpack to bundle plugins composed of multiple files/modules. Allows for the use of Typescript, JSX, CSS and Sass files, and more.",
+	"description": "A simple bundler for BetterDiscord plugins. Bundles plugins composed of multiple files/modules. Allows for the use of Typescript, JSX, CSS, CSS preprocessors, and more.",
 	"keywords": [
 		"betterdiscord",
 		"betterdiscord-plugins"
@@ -14,15 +14,12 @@
 		"name": "Neodymium",
 		"url": "https://www.neodymium.dev"
 	},
-	"bin": "bin/index.js",
-	"main": "lib/index.js",
+	"bin": "bin.js",
+	"main": "index.js",
 	"types": "types/index.d.ts",
 	"files": [
-		"bin",
-		"types",
-		"lib"
+		"types"
 	],
-	"sideEffects": false,
 	"scripts": {
 		"build": "node scripts/build.js",
 		"dev": "node scripts/build.js watch",
@@ -30,20 +27,25 @@
 		"postversion": "git push --follow-tags"
 	},
 	"devDependencies": {
-		"@types/js-beautify": "^1.13.3",
+		"@typescript-eslint/eslint-plugin": "^5.40.1",
+		"@typescript-eslint/parser": "^5.40.1",
 		"esbuild": "^0.14.49",
+		"eslint": "^8.25.0",
 		"prettier": "^2.7.1",
-		"typescript": "^4.7.4"
+		"typescript": "^4.8.4"
 	},
 	"dependencies": {
-		"@svgr/webpack": "^6.3.0",
-		"@types/react": "^18.0.15",
-		"@types/react-dom": "^18.0.6",
-		"css-loader": "^6.7.1",
-		"esbuild-loader": "^2.19.0",
-		"js-beautify": "^1.14.4",
+		"@rollup/plugin-image": "^3.0.0",
+		"@rollup/plugin-json": "^4.1.0",
+		"@rollup/plugin-node-resolve": "^14.1.0",
+		"@rollup/plugin-replace": "^4.0.0",
+		"@svgr/rollup": "^6.4.0",
+		"@types/bdapi": "github:zerthox/betterdiscord-types",
+		"less": "^4.1.3",
+		"rollup": "^2.79.1",
+		"rollup-plugin-esbuild": "^4.10.1",
+		"rollup-plugin-styles": "^4.0.0",
 		"sass": "^1.53.0",
-		"sass-loader": "^13.0.2",
-		"webpack": "^5.73.0"
+		"stylus": "^0.59.0"
 	}
 }
