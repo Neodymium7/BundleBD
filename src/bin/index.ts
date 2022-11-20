@@ -1,5 +1,6 @@
 import path from "path";
 import fs from "fs";
+import { homedir } from "os";
 import { rollup, watch as rollupWatch, OutputOptions, RollupBuild } from "rollup";
 import packageInfo from "../../package.json";
 import getPluginConfig from "./config/plugin";
@@ -27,16 +28,13 @@ const defaultOptions: BundleBDOptions = { input: "src", output: "dist", dev: fal
 
 switch (process.platform) {
 	case "win32":
-		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-		defaultOptions.bdPath = path.join(process.env.USERPROFILE!, "AppData", "Roaming", "BetterDiscord");
+		defaultOptions.bdPath = path.join(homedir(), "AppData", "Roaming", "BetterDiscord");
 		break;
 	case "darwin":
-		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-		defaultOptions.bdPath = path.join(process.env.HOME!, "Library", "Application Support", "BetterDiscord");
+		defaultOptions.bdPath = path.join(homedir(), "Library", "Application Support", "BetterDiscord");
 		break;
 	case "linux":
-		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-		defaultOptions.bdPath = path.join(process.env.HOME!, ".config", "BetterDiscord");
+		defaultOptions.bdPath = path.join(homedir(), ".config", "BetterDiscord");
 }
 
 const argv = process.argv.slice(2);
@@ -75,7 +73,7 @@ const configOptions = (() => {
 	let config = require(configPath);
 
 	if (typeof config === "function") {
-		config = config(argOptions.plugin);
+		config = config(argOptions.plugin, argOptions.dev || false);
 	}
 
 	for (const key in config) {
@@ -159,7 +157,7 @@ function watch() {
 			event.result?.close();
 		}
 		if (event.code === "ERROR") {
-			Logger.error(event.error.message);
+			Logger.error(event.error.message, false);
 			event.result?.close();
 		}
 	});
