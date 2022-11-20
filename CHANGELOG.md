@@ -1,3 +1,10 @@
+# v3.1.0
+
+## Bundler
+
+-   Added argument to bundler configuration function for `dev` option status.
+-   Should no longer stop watching for changes on errors.
+
 # v3.0.0
 
 **BundleBD v3.0.0 has been basically rewritten, so many things will have changed that may not be included in the changelog. Check the [Wiki](https://github.com/Neodymium7/BundleBD/wiki) for more detailed, up to date documentation.**
