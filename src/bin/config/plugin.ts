@@ -23,13 +23,13 @@ const defaultPluginMeta = {
 	name: "Plugin",
 	author: "Unknown",
 	description: "Plugin bundled with BundleBD",
-	version: "1.0.0"
+	version: "1.0.0",
 };
 
 const defaultPluginConfig = {
 	entry: "index",
 	installScript: true,
-	zlibrary: false
+	zlibrary: false,
 };
 
 const metaKeys = [
@@ -43,15 +43,15 @@ const metaKeys = [
 	"donate",
 	"patreon",
 	"website",
-	"source"
+	"source",
 ];
 
 const pluginConfigKeys = ["entry", "installScript", "zlibrary"];
 
-export default function getPluginConfig(input: string) {
+export default function getPluginConfig(input: string, required = false) {
 	const pluginConfigPath = path.join(process.cwd(), input, "plugin.json");
 
-	const pluginConfig: PluginConfiguration = defaultPluginConfig;
+	const pluginConfig: PluginConfiguration = required ? ({} as PluginConfiguration) : defaultPluginConfig;
 	const pluginMeta: Meta = defaultPluginMeta;
 
 	if (fs.existsSync(pluginConfigPath)) {
@@ -66,7 +66,19 @@ export default function getPluginConfig(input: string) {
 				Logger.warn(`Unknown key '${key}' in plugin.json`);
 			}
 		}
-	} else Logger.warn("No plugin.json found. Using default configuration.");
+	} else if (required) {
+		Logger.error(
+			"No plugin.json found. A plugin configuration is required. Disable the 'require-config' option to use a default configuration instead."
+		);
+	} else {
+		Logger.warn("No plugin.json found. Using default configuration.");
+	}
+
+	if (required) {
+		for (const key in defaultPluginMeta) {
+			if (!(key in pluginMeta)) Logger.error(`Missing required configuration option '${key}' in plugin.json.`);
+		}
+	}
 
 	return { pluginConfig, pluginMeta };
 }

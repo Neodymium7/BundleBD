@@ -15,9 +15,17 @@ export interface BundleBDOptions {
 	input: string;
 	output: string;
 	dev: boolean;
+	requireConfig?: boolean;
 	bdPath?: string;
 	plugin?: string;
 	postcssPlugins?: any[];
+}
+
+const argv = process.argv.slice(2);
+
+if (argv[0] === "--version") {
+	console.log(`v${packageInfo.version}`);
+	process.exit(0);
 }
 
 const universalOptionKeys = ["input", "output", "bdPath"];
@@ -35,13 +43,6 @@ switch (process.platform) {
 		break;
 	case "linux":
 		defaultOptions.bdPath = path.join(homedir(), ".config", "BetterDiscord");
-}
-
-const argv = process.argv.slice(2);
-
-if (argv[0] === "--version") {
-	console.log(`v${packageInfo.version}`);
-	process.exit(0);
 }
 
 const argOptions = argv.reduce<any>((obj, curr, i) => {
@@ -90,7 +91,7 @@ const configOptions = (() => {
 
 const options: BundleBDOptions = { ...defaultOptions, ...configOptions, ...argOptions };
 
-const { pluginConfig, pluginMeta } = getPluginConfig(options.input);
+const { pluginConfig, pluginMeta } = getPluginConfig(options.input, options.requireConfig);
 
 const { rollupConfig } = getRollupConfig(options, pluginConfig, pluginMeta);
 
