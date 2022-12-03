@@ -16,8 +16,22 @@ export default function styleLoader(options: StyleLoaderOptions) {
 		},
 		load(id: string) {
 			if (id === "styles") {
-				return 'let _styles = "";\nexport function _loadStyle(path, css) {\n\t_styles += "/*" + path + "*/\\n" + css + "\\n";\n}\nexport default function styles() {\n\treturn _styles;\n}';
+				return `
+import { DOM } from "betterdiscord";
+let _styles = "";
+export function _loadStyle(path, css) {
+	_styles += "/*" + path + "*/\\n" + css + "\\n";
+}
+export function addStyles() {
+	DOM.addStyle(_styles);
+}
+export function removeStyles() {
+	DOM.removeStyle();
+}
+export default function styles() {
+	return _styles;
+}`;
 			}
-		}
+		},
 	};
 }
