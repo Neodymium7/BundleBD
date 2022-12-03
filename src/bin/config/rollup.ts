@@ -6,6 +6,7 @@ import { checkDirExists, ensureDirExists, ensureFileExists, stringify } from "..
 import { BundleBDOptions } from "..";
 import { PluginConfiguration } from "./plugin";
 
+import alias from "@rollup/plugin-alias";
 import image from "@rollup/plugin-image";
 import json from "@rollup/plugin-json";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
@@ -31,7 +32,7 @@ const polyfilled = [
 	"vm",
 	"module",
 	"buffer",
-	"crypto"
+	"crypto",
 ];
 
 const stylesRegex = /(\.css$)|(\.s[ac]ss$)|(\.less$)|(\.styl$)/;
@@ -39,7 +40,7 @@ const stylesRegex = /(\.css$)|(\.s[ac]ss$)|(\.less$)|(\.styl$)/;
 const createReplaced = (globals: Record<string, string>): RollupReplaceOptions => {
 	const replaced = {
 		delimiters: ["= ", ";"] as [string, string],
-		preventAssignment: true
+		preventAssignment: true,
 	};
 	for (const key in globals) {
 		replaced[`require('${key}')`] = replaced.delimiters[0] + globals[key] + replaced.delimiters[1];
@@ -55,7 +56,7 @@ export default function getRollupConfig(options: BundleBDOptions, pluginConfig: 
 		"zlibrary/plugin": "BasePlugin",
 		react: "BdApi.React",
 		"react-dom": "BdApi.ReactDOM",
-		lodash: "_"
+		lodash: "_",
 	};
 
 	const entryDir = path.join(process.cwd(), options.input);
@@ -78,9 +79,9 @@ export default function getRollupConfig(options: BundleBDOptions, pluginConfig: 
 	const stylesOptions = {
 		mode: [
 			"inject",
-			(varname: string, id: string) => `_loadStyle("${path.basename(id)}", ${varname});`
+			(varname: string, id: string) => `_loadStyle("${path.basename(id)}", ${varname});`,
 		] as StylesMode,
-		plugins: options.postcssPlugins
+		plugins: options.postcssPlugins,
 	};
 
 	const rollupConfig: RollupOptions = {
@@ -91,26 +92,26 @@ export default function getRollupConfig(options: BundleBDOptions, pluginConfig: 
 			exports: "default",
 			globals: {
 				...globals,
-				...polyfilled.reduce((prev, curr) => ({ ...prev, [curr]: `require('${curr}')` }), {})
+				...polyfilled.reduce((prev, curr) => ({ ...prev, [curr]: `require('${curr}')` }), {}),
 			},
 			name: "Plugin",
-			interop: "default"
+			interop: "default",
 		},
 		external: [...Object.keys(globals), ...polyfilled],
 		plugins: [
 			nodeResolve({ extensions: resolveExtensions }),
 			styles({
 				exclude: /\.module\.\S+$/,
-				...stylesOptions
+				...stylesOptions,
 			}),
 			styles({
 				include: /\.module\.\S+$/,
 				modules: {
 					generateScopedName(name, file) {
 						return meta.name + "-" + path.basename(file).split(".")[0] + "-" + name;
-					}
+					},
 				},
-				...stylesOptions
+				...stylesOptions,
 			}),
 			styleLoader({ regex: stylesRegex }),
 			text(),
@@ -119,7 +120,7 @@ export default function getRollupConfig(options: BundleBDOptions, pluginConfig: 
 			svgr({
 				namedExport: "Component",
 				jsxRuntime: "automatic",
-				babel: false
+				babel: false,
 			}),
 			esbuild({
 				target: "es2022",
@@ -128,13 +129,14 @@ export default function getRollupConfig(options: BundleBDOptions, pluginConfig: 
 				loaders: {
 					".js": "jsx",
 					".ts": "tsx",
-					".svg": "jsx"
+					".svg": "jsx",
 				},
-				jsx: "transform"
+				jsx: "transform",
 			}),
 			replace(createReplaced(globals)),
-			moduleComments({ root: entryDir })
-		]
+			moduleComments({ root: entryDir }),
+			options.importAliases && alias({ entries: options.importAliases }),
+		],
 	};
 
 	return { rollupConfig };

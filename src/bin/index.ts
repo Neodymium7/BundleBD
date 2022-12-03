@@ -18,6 +18,7 @@ export interface BundleBDOptions {
 	requireConfig?: boolean;
 	bdPath?: string;
 	plugin?: string;
+	importAliases?: Record<string, string>;
 	postcssPlugins?: any[];
 }
 
@@ -28,8 +29,8 @@ if (argv[0] === "--version") {
 	process.exit(0);
 }
 
-const universalOptionKeys = ["input", "output", "bdPath"];
-const configOptionKeys = [...universalOptionKeys, "postcssPlugins"];
+const universalOptionKeys = ["input", "output", "requireConfig", "bdPath"];
+const configOptionKeys = [...universalOptionKeys, "importAliases", "postcssPlugins"];
 const argOptionKeys = [...universalOptionKeys, "dev", "plugin"];
 
 const defaultOptions: BundleBDOptions = { input: "src", output: "dist", dev: false };
