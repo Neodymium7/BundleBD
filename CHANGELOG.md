@@ -1,3 +1,15 @@
+# v3.2.0
+
+## Bundler
+
+-   Added `requireConfig` option, which, when true, does not use default meta options and instead requires that a `plugin.json` file is present.
+-   Added `importAliases` option to the config file, which allows for defining import aliases that are replaced when bundling.
+
+## Library
+
+-   Added `addStyles` and `removeStyles` functions to the `styles` module. Both are simply shortcuts for adding the styles (`DOM.addStyle(styles())`) and removing them (`DOM.removeStyle()`).
+-   Fixed crashing when falling back to the default locale in `createStrings`.
+
 # v3.1.0
 
 ## Bundler
