@@ -42,7 +42,7 @@ export function createStrings<T extends LocalesObject, D extends keyof T>(locale
 	let strings: T[D] = locales[defaultLocale];
 
 	const setLocale = () => {
-		strings = locales[LocaleManager.getLocale() || defaultLocale];
+		strings = locales[LocaleManager.getLocale()] || locales[defaultLocale];
 	};
 
 	const stringsManager: StringsManager = {
@@ -52,7 +52,7 @@ export function createStrings<T extends LocalesObject, D extends keyof T>(locale
 		},
 		unsubscribe() {
 			Dispatcher.unsubscribe("I18N_LOAD_SUCCESS", setLocale);
-		}
+		},
 	};
 
 	for (const key in strings) {
@@ -61,7 +61,7 @@ export function createStrings<T extends LocalesObject, D extends keyof T>(locale
 				return strings[key] || this.locales[this.defaultLocale][key];
 			},
 			enumerable: true,
-			configurable: false
+			configurable: false,
 		});
 	}
 
