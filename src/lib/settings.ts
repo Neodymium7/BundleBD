@@ -9,9 +9,7 @@ type KeysOfType<O, T> = {
 	[K in keyof O]: O[K] extends T ? K : never;
 }[keyof O];
 
-type JSONValue = string | number | boolean | { [key: string]: JSONValue } | JSONValue[];
-
-type SettingsObject = Record<string, JSONValue>;
+type SettingsObject = Record<string, any>;
 
 /** A callback that is run when a setting is changed. */
 type Listener<T> = (key: keyof T, value: ValueOf<T>) => void;
@@ -83,7 +81,7 @@ export function createSettings<T extends SettingsObject>(defaultSettings: T) {
 				});
 			}, []);
 			return state;
-		}
+		},
 	};
 
 	for (const key in settings) {
@@ -97,7 +95,7 @@ export function createSettings<T extends SettingsObject>(defaultSettings: T) {
 				for (const listener of listeners) listener(key, value);
 			},
 			enumerable: true,
-			configurable: false
+			configurable: false,
 		});
 	}
 
