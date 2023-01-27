@@ -1,3 +1,9 @@
+# v3.2.1
+
+## Library
+
+-   Fixed boolean settings being set to `true` or `false` types instead of `boolean`.
+
 # v3.2.0
 
 ## Bundler
