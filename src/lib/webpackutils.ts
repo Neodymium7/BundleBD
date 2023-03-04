@@ -1,6 +1,22 @@
 import { Webpack } from "betterdiscord";
+import Logger from "./logger";
+import { SearchOptions } from "bdapi";
 
 type Filter = (e: any, m: any, i: string) => boolean;
+
+/**
+ * Options for the `expectModule` function. Takes all options for a normal `getModule` query as well as:
+ * - `name`: The name of the module (for error logging)
+ * - `fatal`: Whether or not to stop plugin execution when the module is not found
+ * - `fallback`: A fallback value to use when the module is not found
+ * - `onError`: A callback function that is run when the module is not found
+ */
+type ExpectModuleOptions<T> = {
+	name?: string;
+	fatal?: boolean;
+	fallback?: T;
+	onError?: () => void;
+} & SearchOptions<boolean>;
 
 export const WebpackUtils = {
 	/**
@@ -9,7 +25,7 @@ export const WebpackUtils = {
 	 * @returns The generated filter.
 	 */
 	store(name: string) {
-		return (m: any) => m.getName?.() === name;
+		return (m: any) => m._dispatchToken && m.getName() === name;
 	},
 
 	/**
@@ -68,5 +84,26 @@ export const WebpackUtils = {
 			}
 		}
 		return [target.exports, key];
-	}
+	},
+
+	/**
+	 * Finds a module using a filter function, and handles the error if the module is not found.
+	 * @param filter A function to use to filter modules.
+	 * @param options Options for the module search and error handling.
+	 * @returns The found module or the fallback if the module cannot be found.
+	 */
+	expectModule<T>(filter: Filter, options?: ExpectModuleOptions<T>): T {
+		const found = Webpack.getModule(filter, options);
+		if (found) return found;
+
+		const name = options.name ? `'${options.name}'` : `query with filter '${filter.toString()}'`;
+		const fallbackMessage = !options.fatal && options.fallback ? " Using fallback value instead." : "";
+		const errorMessage = `Module ${name} not found.${fallbackMessage}\n\nContact the plugin developer to inform them of this error.`;
+
+		Logger.error(errorMessage);
+		options.onError?.();
+		if (options.fatal) throw new Error(errorMessage);
+
+		return options.fallback;
+	},
 };
