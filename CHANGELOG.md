@@ -1,3 +1,10 @@
+# v3.3.0
+
+## Library
+
+-   Added new `Logger` class for error, warning, and message logging.
+-   Added `expectModule` function to `WebpackUtils` for handling errors when a module is not found.
+
 # v3.2.1
 
 ## Library
