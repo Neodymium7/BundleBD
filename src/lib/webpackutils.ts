@@ -20,9 +20,19 @@ type ExpectModuleOptions<T> = {
 
 export const WebpackUtils = {
 	/**
+	 * Gets a Flux store by its name.
+	 * @param name The name of the store.
+	 * @returns The found store.
+	 */
+	getStore(name: string) {
+		return Webpack.getModule((m: any) => m._dispatchToken && m.getName() === name);
+	},
+
+	/**
 	 * Generates a Webpack filter to get a Flux store by its name.
 	 * @param name The name of the store.
 	 * @returns The generated filter.
+	 * @deprecated use `getStore` instead.
 	 */
 	store(name: string) {
 		return (m: any) => m._dispatchToken && m.getName() === name;
