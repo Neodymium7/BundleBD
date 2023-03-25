@@ -22,3 +22,7 @@ npm i bundlebd -D
 2.  [Why are typings/autocomplete not working?](https://github.com/Neodymium7/BundleBD/wiki/FAQ#2-why-are-typingsautocomplete-not-working)
 3.  [I have a feature/change suggestion or bug to report, what should I do?](https://github.com/Neodymium7/BundleBD/wiki/FAQ#3-i-have-a-featurechange-suggestion-or-bug-to-report-what-should-i-do)
 4.  [Why are there not any built in Discord Module references?](https://github.com/Neodymium7/BundleBD/wiki/FAQ#4-why-are-there-not-any-built-in-discord-module-references)
+
+## Dontate
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/neodymium7)
