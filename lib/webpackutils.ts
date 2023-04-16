@@ -110,7 +110,7 @@ export class WebpackUtils {
 	 * @returns An object of classes.
 	 */
 	static getClasses<T extends string>(name: string, classes: T[]) {
-		return this.expectModule({
+		return WebpackUtils.expectModule({
 			filter: Webpack.Filters.byProps(...classes),
 			name,
 			fallback: classes.reduce((obj, key) => {
@@ -127,7 +127,7 @@ export class WebpackUtils {
 	 * @returns An object of selectors.
 	 */
 	static getSelectors<T extends string, U extends { [key in T]: string }>(name: string, classes: T[]) {
-		const module = this.expectModule({
+		const module = WebpackUtils.expectModule({
 			filter: Webpack.Filters.byProps(...classes),
 			name,
 			fallback: {}, // Use empty object to print "using fallback" message
