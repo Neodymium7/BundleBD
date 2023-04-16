@@ -2,7 +2,7 @@ import path from "path";
 import fs from "fs";
 import { homedir } from "os";
 import { rollup, watch as rollupWatch, OutputOptions, RollupBuild } from "rollup";
-import packageInfo from "../../package.json";
+import packageInfo from "../package.json";
 import getPluginConfig from "./config/plugin";
 import getRollupConfig from "./config/rollup";
 import Logger from "./logger";

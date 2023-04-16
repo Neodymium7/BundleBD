@@ -11,7 +11,7 @@ const externalPlugin = {
 	setup(build) {
 		let filter = /^[^./]|^\.[^./]|^\.\.[^/]/;
 		build.onResolve({ filter }, (args) => ({ path: args.path, external: true }));
-	}
+	},
 };
 
 const noCommentsPlugin = {
@@ -23,7 +23,7 @@ const noCommentsPlugin = {
 			const content = fs.readFileSync("index.js", "utf8");
 			fs.writeFileSync("index.js", content.replace(/\n?\/\/.*\n/g, ""));
 		});
-	}
+	},
 };
 
 const declarationPlugin = {
@@ -34,13 +34,13 @@ const declarationPlugin = {
 			execSync("tsc");
 
 			if (!fs.existsSync("types/global")) fs.mkdirSync("types/global");
-			fs.readdirSync("src/lib/global").forEach((file) => {
-				fs.copyFileSync(`src/lib/global/${file}`, `types/global/${file}`);
+			fs.readdirSync("lib/global").forEach((file) => {
+				fs.copyFileSync(`lib/global/${file}`, `types/global/${file}`);
 			});
 			const content = fs.readFileSync("types/index.d.ts", "utf8");
-			fs.writeFileSync("types/index.d.ts", content.replace("../src/lib/global/", "global/"));
+			fs.writeFileSync("types/index.d.ts", content.replace("../lib/global/", "global/"));
 		});
-	}
+	},
 };
 
 const formatOptions = {
@@ -49,32 +49,32 @@ const formatOptions = {
 	useTabs: true,
 	trailingComma: "none",
 	endOfLine: "lf",
-	parser: "babel"
+	parser: "babel",
 };
 
 const builds = [
 	{
 		name: "bin",
 		options: {
-			entryPoints: ["src/bin/index.ts"],
+			entryPoints: ["bin/index.ts"],
 			outfile: "bin.js",
 			bundle: true,
 			external: [...Object.keys(dependencies)],
 			platform: "node",
-			banner: { js: "#!/usr/bin/env node\n" }
-		}
+			banner: { js: "#!/usr/bin/env node\n" },
+		},
 	},
 	{
 		name: "lib",
 		options: {
-			entryPoints: ["src/lib/index.ts"],
+			entryPoints: ["lib/index.ts"],
 			outfile: "index.js",
 			bundle: true,
 			platform: "node",
 			format: "esm",
-			plugins: [externalPlugin, declarationPlugin, noCommentsPlugin]
-		}
-	}
+			plugins: [externalPlugin, declarationPlugin, noCommentsPlugin],
+		},
+	},
 ];
 
 const format = (file) => {
@@ -92,7 +92,7 @@ if (process.argv.slice(2)[0] === "watch") {
 				if (error) return;
 				format(options.outfile);
 				console.log(`Built ${name}`);
-			}
+			},
 		};
 	}
 }
