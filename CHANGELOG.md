@@ -1,3 +1,11 @@
+# v3.4.0
+
+## Library
+
+-   Added overload to `expectModule` for passing a single settings object.
+-   Added `getStore` method (`store` is now deprecated).
+-   Added `getClasses` and `getSelectors` methods to `WebpackUtils`.
+
 # v3.3.0
 
 ## Library
