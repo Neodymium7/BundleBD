@@ -1,5 +1,5 @@
 import { Webpack } from "betterdiscord";
-import Logger from "./logger";
+import { Logger } from "./logger";
 import { SearchOptions } from "bdapi";
 
 type Filter = (e: any, m: any, i: string) => boolean;
