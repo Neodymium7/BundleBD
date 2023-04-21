@@ -15,7 +15,6 @@
 		"url": "https://www.neodymium.dev"
 	},
 	"bin": "bin.js",
-	"main": "index.js",
 	"types": "types/index.d.ts",
 	"files": [
 		"types"
