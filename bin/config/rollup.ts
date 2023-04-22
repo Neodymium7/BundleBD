@@ -130,6 +130,7 @@ export default function getRollupConfig(options: BundleBDOptions, pluginConfig: 
 			text(),
 			json({
 				preferConst: true,
+				indent: options.format.indent,
 			}),
 			image(),
 			svgr({

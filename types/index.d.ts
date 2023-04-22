@@ -4,6 +4,10 @@ type ConfigObject = {
 	input?: string;
 	output?: string;
 	requireConfig?: boolean;
+	moduleComments?: boolean;
+	format?: {
+		indent?: string;
+	};
 	bdPath?: string;
 	importAliases?: Record<string, string>;
 	postcssPlugins?: any[];

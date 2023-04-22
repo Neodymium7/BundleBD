@@ -1,7 +1,7 @@
-export default function installScript(code: string) {
-	return `/*@cc_on
+export default function installScript(code: string, indent: string) {
+	return `${`/*@cc_on
 @if (@_jscript)
-    
+
     // Offer to self-install for clueless users that try to run this directly.
     var shell = WScript.CreateObject("WScript.Shell");
     var fs = new ActiveXObject("Scripting.FileSystemObject");
@@ -21,7 +21,7 @@ export default function installScript(code: string) {
     }
     WScript.Quit();
 
-@else@*/
+@else@*/`.replace(/ {4}/g, indent)}
 
 ${code}
 

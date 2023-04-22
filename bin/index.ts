@@ -31,12 +31,12 @@ async function bundle(bundle?: RollupBuild) {
 
 		let code = output[0].code
 			.trimEnd()
-			.replace(/(?<=^| {2}|\t) {2}/gm, "\t")
+			.replace(/(?<=^| {2}|\t) {2}/gm, options.format.indent)
 			.replace(/\/\* @__PURE__ \*\/ /g, "")
 			.replace("\nrequire('react');\n", "\n");
 
 		if (pluginConfig.zlibrary) code = zlibrary(code, pluginMeta, pluginConfig.zlibrary);
-		if (pluginConfig.installScript) code = installScript(code);
+		if (pluginConfig.installScript) code = installScript(code, options.format.indent);
 		code = meta(code, pluginMeta);
 
 		const importsZlib = /\nvar \S+ = Library;\n/.test(code);

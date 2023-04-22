@@ -9,6 +9,9 @@ export interface BundleBDOptions {
 	dev: boolean;
 	requireConfig: boolean;
 	moduleComments: boolean;
+	format: {
+		indent: string;
+	};
 	bdPath?: string;
 	plugin?: string;
 	importAliases?: Record<string, string>;
@@ -17,8 +20,8 @@ export interface BundleBDOptions {
 
 const configFileName = "bundlebd.config.js";
 
-const universalOptionKeys = ["input", "output", "requireConfig", "bdPath"];
-const configOptionKeys = [...universalOptionKeys, "importAliases", "postcssPlugins"];
+const universalOptionKeys = ["input", "output", "requireConfig", "moduleComments", "bdPath"];
+const configOptionKeys = [...universalOptionKeys, "format", "importAliases", "postcssPlugins"];
 const argOptionKeys = [...universalOptionKeys, "dev", "plugin"];
 
 const defaultOptions: BundleBDOptions = {
@@ -27,6 +30,9 @@ const defaultOptions: BundleBDOptions = {
 	dev: false,
 	requireConfig: false,
 	moduleComments: true,
+	format: {
+		indent: "\t",
+	},
 };
 
 switch (process.platform) {

@@ -7,4 +7,7 @@ module.exports = defineConfig({
 		"@lib/*": "./lib/*",
 		"@lib": "./lib",
 	},
+	format: {
+		indent: "  ",
+	},
 });
