@@ -1,7 +1,7 @@
 import path from "path";
 import fs from "fs";
 import { rollup, watch as rollupWatch, OutputOptions, RollupBuild } from "rollup";
-import packageInfo from "../package.json";
+import { version } from "../package.json";
 import getBundlerOptions from "./config/bundler";
 import getPluginConfig from "./config/plugin";
 import getRollupConfig from "./config/rollup";
@@ -14,7 +14,7 @@ import zlibrary from "./templates/zlibrary";
 const argv = process.argv.slice(2);
 
 if (argv[0] === "--version") {
-	console.log(`v${packageInfo.version}`);
+	console.log(`v${version}`);
 	process.exit(0);
 }
 
