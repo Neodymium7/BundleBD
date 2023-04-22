@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import Logger from "../logger";
 import { Meta } from "bdapi";
+import { BundleBDOptions } from "./bundler";
 
 export interface ZLibraryConfig {
 	info?: any;
@@ -18,6 +19,8 @@ export interface PluginConfiguration {
 	installScript: boolean;
 	zlibrary: boolean | ZLibraryConfig;
 }
+
+const pluginConfigFileName = "plugin.json";
 
 const defaultPluginMeta = {
 	name: "Plugin",
@@ -48,10 +51,10 @@ const metaKeys = [
 
 const pluginConfigKeys = ["entry", "installScript", "zlibrary"];
 
-export default function getPluginConfig(input: string, required = false) {
-	const pluginConfigPath = path.join(process.cwd(), input, "plugin.json");
+export default function getPluginConfig(options: BundleBDOptions) {
+	const pluginConfigPath = path.join(process.cwd(), options.input, pluginConfigFileName);
 
-	const pluginConfig: PluginConfiguration = required ? ({} as PluginConfiguration) : defaultPluginConfig;
+	const pluginConfig: PluginConfiguration = options.requireConfig ? ({} as PluginConfiguration) : defaultPluginConfig;
 	const pluginMeta: Meta = defaultPluginMeta;
 
 	if (fs.existsSync(pluginConfigPath)) {
@@ -63,20 +66,21 @@ export default function getPluginConfig(input: string, required = false) {
 			} else if (pluginConfigKeys.includes(key)) {
 				pluginConfig[key] = config[key];
 			} else {
-				Logger.warn(`Unknown key '${key}' in plugin.json`);
+				Logger.warn(`Unknown key '${key}' in ${pluginConfigFileName}`);
 			}
 		}
-	} else if (required) {
+	} else if (options.requireConfig) {
 		Logger.error(
-			"No plugin.json found. A plugin configuration is required. Disable the 'require-config' option to use a default configuration instead."
+			`No ${pluginConfigFileName} found. A plugin configuration is required. Disable the 'require-config' option to use a default configuration instead.`
 		);
 	} else {
-		Logger.warn("No plugin.json found. Using default configuration.");
+		Logger.warn(`No ${pluginConfigFileName} found. Using default configuration.`);
 	}
 
-	if (required) {
+	if (options.requireConfig) {
 		for (const key in defaultPluginMeta) {
-			if (!(key in pluginMeta)) Logger.error(`Missing required configuration option '${key}' in plugin.json.`);
+			if (!(key in pluginMeta))
+				Logger.error(`Missing required configuration option '${key}' in ${pluginConfigFileName}.`);
 		}
 	}
 

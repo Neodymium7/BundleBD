@@ -3,7 +3,7 @@ import path from "path";
 import { RollupOptions } from "rollup";
 import { Meta } from "bdapi";
 import { checkDirExists, ensureDirExists, ensureFileExists, stringify } from "../utils";
-import { BundleBDOptions } from "..";
+import { BundleBDOptions } from "./bundler";
 import { PluginConfiguration } from "./plugin";
 
 import alias from "@rollup/plugin-alias";
@@ -17,6 +17,8 @@ import styles from "rollup-plugin-styles";
 import styleLoader from "../plugins/styleloader";
 import text from "../plugins/text";
 import moduleComments from "../plugins/modulecomments";
+
+type AliasEntry = { find: RegExp; replacement: string };
 
 const resolveExtensions = [".js", ".ts", ".jsx", ".tsx"];
 
@@ -46,6 +48,17 @@ const createReplaced = (globals: Record<string, string>): RollupReplaceOptions =
 		replaced[`require('${key}')`] = replaced.delimiters[0] + globals[key] + replaced.delimiters[1];
 	}
 	return replaced;
+};
+
+const createAliases = (aliases: Record<string, string>) => {
+	const entries: AliasEntry[] = [];
+	for (const key in aliases) {
+		entries.push({
+			find: new RegExp(`^${key.replace("*", "(.*)")}`),
+			replacement: path.resolve(aliases[key].replace("*", "$1")),
+		});
+	}
+	return entries;
 };
 
 export default function getRollupConfig(options: BundleBDOptions, pluginConfig: PluginConfiguration, meta: Meta) {
@@ -134,10 +147,13 @@ export default function getRollupConfig(options: BundleBDOptions, pluginConfig: 
 				jsx: "transform",
 			}),
 			replace(createReplaced(globals)),
-			moduleComments({ root: entryDir }),
-			options.importAliases && alias({ entries: options.importAliases }),
+			options.moduleComments && moduleComments({ root: entryDir }),
+			options.importAliases &&
+				alias({
+					entries: createAliases(options.importAliases),
+				}),
 		],
 	};
 
-	return { rollupConfig };
+	return rollupConfig;
 }
