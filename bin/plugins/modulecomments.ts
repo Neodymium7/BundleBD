@@ -2,6 +2,7 @@ import path from "path";
 
 interface ModuleCommentsOptions {
 	root: string;
+	aliases?: Record<string, string>;
 }
 
 export default function moduleComments(options: ModuleCommentsOptions) {
@@ -12,9 +13,19 @@ export default function moduleComments(options: ModuleCommentsOptions) {
 				id = path.relative(options.root, id).replace(/\\/g, "/");
 			} else if (id.includes("node_modules")) {
 				id = id.slice(id.indexOf("node_modules") + 13).split(path.sep)[0];
-			} else id = id.split(path.sep).pop() || id;
+			} else if (options.aliases) {
+				for (const [alias, replace] of Object.entries(options.aliases)) {
+					const regex = new RegExp(`^${path.resolve(replace).replace("*", "(.*)")}`);
+					if (regex.test(id)) {
+						id = id.replace(regex, `${alias.replace("*", "")}$1`);
+						break;
+					}
+				}
+			} else {
+				id = id.split(path.sep).pop() || id;
+			}
 
 			return `// ${id}\n${code}`;
-		}
+		},
 	};
 }

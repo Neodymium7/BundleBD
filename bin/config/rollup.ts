@@ -128,7 +128,9 @@ export default function getRollupConfig(options: BundleBDOptions, pluginConfig: 
 			}),
 			styleLoader({ regex: stylesRegex }),
 			text(),
-			json(),
+			json({
+				preferConst: true,
+			}),
 			image(),
 			svgr({
 				namedExport: "Component",
@@ -147,7 +149,7 @@ export default function getRollupConfig(options: BundleBDOptions, pluginConfig: 
 				jsx: "transform",
 			}),
 			replace(createReplaced(globals)),
-			options.moduleComments && moduleComments({ root: entryDir }),
+			options.moduleComments && moduleComments({ root: entryDir, aliases: options.importAliases }),
 			options.importAliases &&
 				alias({
 					entries: createAliases(options.importAliases),
