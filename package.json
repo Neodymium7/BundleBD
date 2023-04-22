@@ -23,7 +23,7 @@
 	"scripts": {
 		"build": "node scripts/build.js",
 		"dev": "node scripts/build.js watch",
-		"test": "node scripts/build.js && cd ./tests/TestPlugin && node ../../bin.js",
+		"test": "node scripts/build.js && cd ./test && node ../bin.js",
 		"lint": "eslint . --ext .ts,.js",
 		"prepublishOnly": "node scripts/build.js",
 		"postversion": "git push --follow-tags"

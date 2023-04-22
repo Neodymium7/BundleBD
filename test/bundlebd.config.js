@@ -1,4 +1,4 @@
-const { defineConfig } = require("../..");
+const { defineConfig } = require("..");
 
 module.exports = defineConfig({
 	input: "src",
