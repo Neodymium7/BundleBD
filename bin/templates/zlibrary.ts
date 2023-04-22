@@ -2,22 +2,22 @@ import { Meta } from "bdapi";
 import { stringify } from "../utils";
 import { ZLibraryConfig } from "../config/plugin";
 
-export default function zlibrary(code: string, meta: Meta, zlibraryConfig: boolean | ZLibraryConfig) {
+export default function zlibrary(code: string, meta: Meta, zlibraryConfig: boolean | ZLibraryConfig, indent: string) {
 	const defaultInfo = {
 		name: meta.name,
 		authors: [
 			{
-				name: meta.author
-			}
+				name: meta.author,
+			},
 		],
 		version: meta.version,
 		description: meta.description,
-		github: meta.source
+		github: meta.source,
 	};
 
 	if (typeof zlibraryConfig === "boolean") {
 		zlibraryConfig = {
-			info: defaultInfo
+			info: defaultInfo,
 		};
 	} else {
 		zlibraryConfig.info = { ...defaultInfo, ...zlibraryConfig.info };
@@ -27,7 +27,7 @@ export default function zlibrary(code: string, meta: Meta, zlibraryConfig: boole
 
 	return `const config = ${stringify({ info, changelog, defaultConfig, ...others })};
 
-if (!global.ZeresPluginLibrary) {
+${`if (!global.ZeresPluginLibrary) {
     BdApi.UI.showConfirmationModal("Library Missing", \`The library plugin needed for \${config.info.name} is missing. Please click Download Now to install it.\`, {
         confirmText: "Download Now",
         cancelText: "Cancel",
@@ -38,12 +38,12 @@ if (!global.ZeresPluginLibrary) {
             });
         }
     });
-}
+}`.replace(/ {4}/g, indent)}
 
 function buildPlugin([BasePlugin, Library]) {
-    ${code.replace(/\n/g, "\n\t")}
+${indent}${code.replace(/\n/g, `\n${indent}`)}
 
-	return Plugin;
+${indent}return Plugin;
 }
 
 module.exports = global.ZeresPluginLibrary ? buildPlugin(global.ZeresPluginLibrary.buildPlugin(config)) : class { start() {}; stop() {} };`;

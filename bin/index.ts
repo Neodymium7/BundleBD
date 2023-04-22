@@ -35,7 +35,7 @@ async function bundle(bundle?: RollupBuild) {
 			.replace(/\/\* @__PURE__ \*\/ /g, "")
 			.replace("\nrequire('react');\n", "\n");
 
-		if (pluginConfig.zlibrary) code = zlibrary(code, pluginMeta, pluginConfig.zlibrary);
+		if (pluginConfig.zlibrary) code = zlibrary(code, pluginMeta, pluginConfig.zlibrary, options.format.indent);
 		if (pluginConfig.installScript) code = installScript(code, options.format.indent);
 		code = meta(code, pluginMeta);
 
