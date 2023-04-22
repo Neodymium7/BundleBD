@@ -1,9 +1,9 @@
-name: Check test status
+name: Test
 
 on: [push, pull_request]
 
 jobs:
-  check-build:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
