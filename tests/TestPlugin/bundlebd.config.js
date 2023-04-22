@@ -5,5 +5,6 @@ module.exports = defineConfig({
 	output: "dist",
 	importAliases: {
 		"@lib/*": "./lib/*",
+		"@lib": "./lib",
 	},
 });

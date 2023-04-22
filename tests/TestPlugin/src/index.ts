@@ -9,12 +9,14 @@ import stylus from "./styles/styles.styl";
 import module, { css as moduleCss } from "./styles/styles.module.css";
 import strings from "./strings.json";
 import text from "./text.txt";
+import { doSomething } from "@lib";
 import { doThings } from "@lib/utils";
 
 export default class TestPlugin {
 	start() {
 		console.log(start, strings.hello, text);
 		doThings();
+		doSomething();
 
 		const Module = Webpack.getModule((m) => m);
 		console.log("Wow this is a pretty cool module: ", Module);
