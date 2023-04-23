@@ -110,3 +110,11 @@ declare module "*.jpg" {
 declare module "*.jpeg" {
 	export { default as default } from "*.png";
 }
+
+declare module "*.gif" {
+	export { default as default } from "*.png";
+}
+
+declare module "*.webp" {
+	export { default as default } from "*.png";
+}

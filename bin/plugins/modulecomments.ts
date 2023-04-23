@@ -1,11 +1,12 @@
 import path from "path";
+import { Plugin } from "rollup";
 
 interface ModuleCommentsOptions {
 	root: string;
 	aliases?: Record<string, string>;
 }
 
-export default function moduleComments(options: ModuleCommentsOptions) {
+export default function moduleComments(options: ModuleCommentsOptions): Plugin {
 	return {
 		name: "module-comments",
 		transform(code: string, id: string) {

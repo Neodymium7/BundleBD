@@ -18,6 +18,7 @@ import styles from "rollup-plugin-styles";
 import styleLoader from "../plugins/styleloader";
 import text from "../plugins/text";
 import moduleComments from "../plugins/modulecomments";
+import constPlugin from "../plugins/const";
 
 type AliasEntry = { find: RegExp; replacement: string };
 
@@ -39,6 +40,7 @@ const polyfilled = [
 ];
 
 const stylesRegex = /(\.css$)|(\.s[ac]ss$)|(\.less$)|(\.styl$)/;
+const constRegex = new RegExp(stylesRegex.source + "|(\\.svg$)|(\\.png$)|(\\.jpg$)|(\\.jpeg$)|(\\.gif$)|(\\.webp$)");
 
 const createReplaced = (globals: Record<string, string>): RollupReplaceOptions => {
 	const replaced = {
@@ -155,6 +157,7 @@ export default function getRollupConfig(options: BundleBDOptions, pluginConfig: 
 				},
 				jsx: "transform",
 			}),
+			constPlugin({ regex: constRegex }),
 			replace(createReplaced(globals)),
 			options.moduleComments && moduleComments({ root: entryDir, aliases: options.importAliases }),
 			options.importAliases &&
