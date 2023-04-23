@@ -3,6 +3,7 @@ import path from "path";
 import { RollupOptions } from "rollup";
 import { Meta } from "bdapi";
 import { checkDirExists, ensureDirExists, ensureFileExists, stringify } from "../utils";
+import Logger from "../logger";
 import { BundleBDOptions } from "./bundler";
 import { PluginConfiguration } from "./plugin";
 
@@ -54,8 +55,8 @@ const createAliases = (aliases: Record<string, string>) => {
 	const entries: AliasEntry[] = [];
 	for (const key in aliases) {
 		entries.push({
-			find: new RegExp(`^${key.replace("*", "(.*)")}`),
-			replacement: path.resolve(aliases[key].replace("*", "$1")),
+			find: new RegExp(`^${key.replace("/*", "(.*)")}$`),
+			replacement: path.resolve(aliases[key].replace("/*", "$1")),
 		});
 	}
 	return entries;
@@ -109,6 +110,11 @@ export default function getRollupConfig(options: BundleBDOptions, pluginConfig: 
 			},
 			name: "Plugin",
 			interop: "default",
+			generatedCode: {
+				constBindings: true,
+				objectShorthand: true,
+				arrowFunctions: true,
+			},
 		},
 		external: [...Object.keys(globals), ...polyfilled],
 		plugins: [
@@ -156,6 +162,7 @@ export default function getRollupConfig(options: BundleBDOptions, pluginConfig: 
 					entries: createAliases(options.importAliases),
 				}),
 		],
+		onwarn: ({ message }) => Logger.warn(message),
 	};
 
 	return rollupConfig;

@@ -9,19 +9,26 @@ export default function moduleComments(options: ModuleCommentsOptions) {
 	return {
 		name: "module-comments",
 		transform(code: string, id: string) {
+			// Plugin files
 			if (id.startsWith(options.root)) {
 				id = path.relative(options.root, id).replace(/\\/g, "/");
-			} else if (id.includes("node_modules")) {
+			}
+			// Node modules
+			else if (id.includes("node_modules")) {
 				id = id.slice(id.indexOf("node_modules") + 13).split(path.sep)[0];
-			} else if (options.aliases) {
-				for (const [alias, replace] of Object.entries(options.aliases)) {
-					const regex = new RegExp(`^${path.resolve(replace).replace("*", "(.*)")}`);
+			}
+			// Import aliases
+			else if (options.aliases) {
+				for (const key in options.aliases) {
+					const regex = new RegExp(`^${path.resolve(options.aliases[key]).replace("*", "")}(.*)$`);
 					if (regex.test(id)) {
-						id = id.replace(regex, `${alias.replace("*", "")}$1`);
+						id = id.replace(regex, `${key.replace("*", "")}$1`);
 						break;
 					}
 				}
-			} else {
+			}
+			// Unknown
+			else {
 				id = id.split(path.sep).pop() || id;
 			}
 
