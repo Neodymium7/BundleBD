@@ -41,7 +41,7 @@ ${`if (!global.ZeresPluginLibrary) {
 }`.replace(/ {4}/g, indent)}
 
 function buildPlugin([BasePlugin, Library]) {
-${indent}${code.replace(/\n/g, `\n${indent}`)}
+${indent}${code.replace("var", "const").replace(/\n/g, `\n${indent}`)}
 
 ${indent}return Plugin;
 }

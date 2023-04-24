@@ -60,8 +60,11 @@ export default function getBundlerOptions(argv: string[]): BundleBDOptions {
 				.join("");
 			const next = argv[i + 1];
 
-			if (argOptionKeys.includes(key as keyof BundleBDOptions) && next && !next.startsWith("--")) obj[key] = next;
-			else if (argOptionKeys.includes(key as keyof BundleBDOptions)) obj[key] = true;
+			if (argOptionKeys.includes(key as keyof BundleBDOptions) && next && !next.startsWith("--")) {
+				if (next === "true") obj[key] = true;
+				else if (next === "false") obj[key] = false;
+				else obj[key] = next;
+			} else if (argOptionKeys.includes(key as keyof BundleBDOptions)) obj[key] = true;
 			else Logger.warn(`Unknown command option '${option}'`);
 		}
 
