@@ -9,7 +9,7 @@ declare module "betterdiscord" {
 declare module "meta" {
 	import { Meta } from "bdapi";
 	const meta: Meta;
-	export default meta;
+	export = meta;
 }
 
 declare module "styles" {

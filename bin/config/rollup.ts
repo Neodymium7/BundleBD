@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import { RollupOptions } from "rollup";
 import { Meta } from "bdapi";
-import { checkDirExists, ensureDirExists, ensureFileExists, stringify } from "../utils";
+import { checkDirExists, ensureDirExists, ensureFileExists } from "../utils";
 import Logger from "../logger";
 import { BundleBDOptions } from "./bundler";
 import { PluginConfiguration } from "./plugin";
@@ -19,6 +19,7 @@ import styleLoader from "../plugins/styleloader";
 import text from "../plugins/text";
 import moduleComments from "../plugins/modulecomments";
 import constPlugin from "../plugins/const";
+import meta from "../plugins/meta";
 
 type AliasEntry = { find: RegExp; replacement: string };
 
@@ -64,10 +65,9 @@ const createAliases = (aliases: Record<string, string>) => {
 	return entries;
 };
 
-export default function getRollupConfig(options: BundleBDOptions, pluginConfig: PluginConfiguration, meta: Meta) {
+export default function getRollupConfig(options: BundleBDOptions, pluginConfig: PluginConfiguration, pluginMeta: Meta) {
 	const globals = {
-		betterdiscord: `new BdApi("${meta.name}")`,
-		meta: stringify(meta),
+		betterdiscord: `new BdApi("${pluginMeta.name}")`,
 		zlibrary: "Library",
 		"zlibrary/plugin": "BasePlugin",
 		react: "BdApi.React",
@@ -88,7 +88,7 @@ export default function getRollupConfig(options: BundleBDOptions, pluginConfig: 
 	const outputDir = path.join(process.cwd(), options.output);
 	if (!checkDirExists(outputDir)) fs.mkdirSync(outputDir, { recursive: true });
 
-	const outputPath = path.join(outputDir, meta.name.replace(/\s/g, "") + ".plugin.js");
+	const outputPath = path.join(outputDir, pluginMeta.name.replace(/\s/g, "") + ".plugin.js");
 
 	// To stop ts from complaining
 	type StylesMode = ["inject", (varname: string, id: string) => string];
@@ -129,7 +129,7 @@ export default function getRollupConfig(options: BundleBDOptions, pluginConfig: 
 				include: /\.module\.\S+$/,
 				modules: {
 					generateScopedName(name, file) {
-						return meta.name + "-" + path.basename(file).split(".")[0] + "-" + name;
+						return pluginMeta.name + "-" + path.basename(file).split(".")[0] + "-" + name;
 					},
 				},
 				...stylesOptions,
@@ -159,6 +159,7 @@ export default function getRollupConfig(options: BundleBDOptions, pluginConfig: 
 			}),
 			constPlugin({ regex: constRegex }),
 			replace(createReplaced(globals)),
+			meta(pluginMeta),
 			options.moduleComments && moduleComments({ root: entryDir, aliases: options.importAliases }),
 			options.importAliases &&
 				alias({

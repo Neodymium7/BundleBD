@@ -1,5 +1,6 @@
 import { createElement } from "react";
 import { DOM, Webpack } from "betterdiscord";
+import { name } from "meta";
 import { start, stop } from "./utils";
 import { Component } from "./component";
 import css from "./styles/styles.css";
@@ -17,6 +18,7 @@ export default class TestPlugin {
 		console.log(start, strings.hello, text);
 		doThings();
 		doSomething();
+		console.log(name);
 
 		const Module = Webpack.getModule((m) => m);
 		console.log("Wow this is a pretty cool module: ", Module);

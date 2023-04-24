@@ -25,7 +25,7 @@ export default function zlibrary(code: string, meta: Meta, zlibraryConfig: boole
 
 	const { info, changelog, defaultConfig, ...others } = zlibraryConfig;
 
-	return `const config = ${stringify({ info, changelog, defaultConfig, ...others })};
+	return `const config = ${stringify({ info, changelog, defaultConfig, ...others }, indent)};
 
 ${`if (!global.ZeresPluginLibrary) {
     BdApi.UI.showConfirmationModal("Library Missing", \`The library plugin needed for \${config.info.name} is missing. Please click Download Now to install it.\`, {
