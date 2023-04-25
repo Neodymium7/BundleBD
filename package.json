@@ -25,6 +25,7 @@
 		"dev": "node scripts/build.js watch",
 		"test": "node scripts/build.js && cd ./test && node ../bin.js",
 		"lint": "eslint . --ext .ts,.js",
+		"check": "tsc --noEmit",
 		"prepublishOnly": "node scripts/build.js",
 		"postversion": "git push --follow-tags"
 	},
