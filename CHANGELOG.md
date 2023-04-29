@@ -1,3 +1,13 @@
+# v4.0.0
+
+-   Removed library.
+-   Added `defineConfig` function for autocomplete and types for config files.
+-   Fixed import aliases not working properly and updated their usage (See Wiki).
+-   Added `module-comments` option.
+-   Added `format` option to configure formatting such as indentation.
+-   Removed `reuire-config` option. The bundler will now always require configuration files.
+-   Many other minor fixes
+
 # v3.4.0
 
 ## Library
