@@ -9,7 +9,7 @@ declare module "betterdiscord" {
 declare module "meta" {
 	import { Meta } from "bdapi";
 	const meta: Meta;
-	export default meta;
+	export = meta;
 }
 
 declare module "styles" {
@@ -108,5 +108,13 @@ declare module "*.jpg" {
 }
 
 declare module "*.jpeg" {
+	export { default as default } from "*.png";
+}
+
+declare module "*.gif" {
+	export { default as default } from "*.png";
+}
+
+declare module "*.webp" {
 	export { default as default } from "*.png";
 }

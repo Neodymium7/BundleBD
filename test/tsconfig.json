@@ -1,0 +1,12 @@
+{
+	"compilerOptions": {
+		"jsx": "react-jsx",
+		"types": ["node", "../.."],
+		"resolveJsonModule": true,
+		"esModuleInterop": true,
+		"paths": {
+			"@lib": ["./lib"],
+			"@lib/*": ["./lib/*"]
+		}
+	}
+}

@@ -2,8 +2,9 @@ import fs from "fs";
 import path from "path";
 import { RollupOptions } from "rollup";
 import { Meta } from "bdapi";
-import { checkDirExists, ensureDirExists, ensureFileExists, stringify } from "../utils";
-import { BundleBDOptions } from "..";
+import { checkDirExists, ensureDirExists, ensureFileExists } from "../utils";
+import Logger from "../logger";
+import { BundleBDOptions } from "./bundler";
 import { PluginConfiguration } from "./plugin";
 
 import alias from "@rollup/plugin-alias";
@@ -17,6 +18,10 @@ import styles from "rollup-plugin-styles";
 import styleLoader from "../plugins/styleloader";
 import text from "../plugins/text";
 import moduleComments from "../plugins/modulecomments";
+import constPlugin from "../plugins/const";
+import meta from "../plugins/meta";
+
+type AliasEntry = { find: RegExp; replacement: string };
 
 const resolveExtensions = [".js", ".ts", ".jsx", ".tsx"];
 
@@ -36,6 +41,7 @@ const polyfilled = [
 ];
 
 const stylesRegex = /(\.css$)|(\.s[ac]ss$)|(\.less$)|(\.styl$)/;
+const constRegex = new RegExp(stylesRegex.source + "|(\\.svg$)|(\\.png$)|(\\.jpg$)|(\\.jpeg$)|(\\.gif$)|(\\.webp$)");
 
 const createReplaced = (globals: Record<string, string>): RollupReplaceOptions => {
 	const replaced = {
@@ -48,10 +54,20 @@ const createReplaced = (globals: Record<string, string>): RollupReplaceOptions =
 	return replaced;
 };
 
-export default function getRollupConfig(options: BundleBDOptions, pluginConfig: PluginConfiguration, meta: Meta) {
+const createAliases = (aliases: Record<string, string>) => {
+	const entries: AliasEntry[] = [];
+	for (const key in aliases) {
+		entries.push({
+			find: new RegExp(`^${key.replace("/*", "(.*)")}$`),
+			replacement: path.resolve(aliases[key].replace("/*", "$1")),
+		});
+	}
+	return entries;
+};
+
+export default function getRollupConfig(options: BundleBDOptions, pluginConfig: PluginConfiguration, pluginMeta: Meta) {
 	const globals = {
-		betterdiscord: `new BdApi("${meta.name}")`,
-		meta: stringify(meta),
+		betterdiscord: `new BdApi("${pluginMeta.name}")`,
 		zlibrary: "Library",
 		"zlibrary/plugin": "BasePlugin",
 		react: "BdApi.React",
@@ -72,7 +88,7 @@ export default function getRollupConfig(options: BundleBDOptions, pluginConfig: 
 	const outputDir = path.join(process.cwd(), options.output);
 	if (!checkDirExists(outputDir)) fs.mkdirSync(outputDir, { recursive: true });
 
-	const outputPath = path.join(outputDir, meta.name.replace(/\s/g, "") + ".plugin.js");
+	const outputPath = path.join(outputDir, pluginMeta.name.replace(/\s/g, "") + ".plugin.js");
 
 	// To stop ts from complaining
 	type StylesMode = ["inject", (varname: string, id: string) => string];
@@ -96,6 +112,11 @@ export default function getRollupConfig(options: BundleBDOptions, pluginConfig: 
 			},
 			name: "Plugin",
 			interop: "default",
+			generatedCode: {
+				constBindings: true,
+				objectShorthand: true,
+				arrowFunctions: true,
+			},
 		},
 		external: [...Object.keys(globals), ...polyfilled],
 		plugins: [
@@ -108,14 +129,17 @@ export default function getRollupConfig(options: BundleBDOptions, pluginConfig: 
 				include: /\.module\.\S+$/,
 				modules: {
 					generateScopedName(name, file) {
-						return meta.name + "-" + path.basename(file).split(".")[0] + "-" + name;
+						return pluginMeta.name + "-" + path.basename(file).split(".")[0] + "-" + name;
 					},
 				},
 				...stylesOptions,
 			}),
 			styleLoader({ regex: stylesRegex }),
 			text(),
-			json(),
+			json({
+				preferConst: true,
+				indent: options.format.indent,
+			}),
 			image(),
 			svgr({
 				namedExport: "Component",
@@ -133,11 +157,17 @@ export default function getRollupConfig(options: BundleBDOptions, pluginConfig: 
 				},
 				jsx: "transform",
 			}),
+			constPlugin({ regex: constRegex }),
 			replace(createReplaced(globals)),
-			moduleComments({ root: entryDir }),
-			options.importAliases && alias({ entries: options.importAliases }),
+			meta(pluginMeta),
+			options.moduleComments && moduleComments({ root: entryDir, aliases: options.importAliases }),
+			options.importAliases &&
+				alias({
+					entries: createAliases(options.importAliases),
+				}),
 		],
+		onwarn: ({ message }) => Logger.warn(message),
 	};
 
-	return { rollupConfig };
+	return rollupConfig;
 }

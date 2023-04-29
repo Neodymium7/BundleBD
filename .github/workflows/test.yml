@@ -1,9 +1,9 @@
-name: Check build status
+name: Test
 
 on: [push, pull_request]
 
 jobs:
-  check-build:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -12,4 +12,4 @@ jobs:
           node-version: 16
           registry-url: https://registry.npmjs.org/
       - run: npm ci
-      - run: npm run build
+      - run: npm test

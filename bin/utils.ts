@@ -23,6 +23,6 @@ export function ensureDirExists(path: string, message?: string) {
 	}
 }
 
-export function stringify(object: unknown): string {
-	return JSON.stringify(object, null, "\t").replace(/"([^"]+)":/g, "$1:");
+export function stringify(object: unknown, indent: string): string {
+	return JSON.stringify(object, null, indent).replace(/"([^"]+)":/g, "$1:");
 }

@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import Logger from "../logger";
 import { Meta } from "bdapi";
+import { BundleBDOptions } from "./bundler";
 
 export interface ZLibraryConfig {
 	info?: any;
@@ -19,12 +20,7 @@ export interface PluginConfiguration {
 	zlibrary: boolean | ZLibraryConfig;
 }
 
-const defaultPluginMeta = {
-	name: "Plugin",
-	author: "Unknown",
-	description: "Plugin bundled with BundleBD",
-	version: "1.0.0",
-};
+const pluginConfigFileName = "plugin.json";
 
 const defaultPluginConfig = {
 	entry: "index",
@@ -46,13 +42,15 @@ const metaKeys = [
 	"source",
 ];
 
+const requiredMetaKeys = ["name", "author", "description", "version"];
+
 const pluginConfigKeys = ["entry", "installScript", "zlibrary"];
 
-export default function getPluginConfig(input: string, required = false) {
-	const pluginConfigPath = path.join(process.cwd(), input, "plugin.json");
+export default function getPluginConfig(options: BundleBDOptions) {
+	const pluginConfigPath = path.join(process.cwd(), options.input, pluginConfigFileName);
 
-	const pluginConfig: PluginConfiguration = required ? ({} as PluginConfiguration) : defaultPluginConfig;
-	const pluginMeta: Meta = defaultPluginMeta;
+	const pluginConfig: PluginConfiguration = defaultPluginConfig;
+	const pluginMeta = {} as Meta;
 
 	if (fs.existsSync(pluginConfigPath)) {
 		const config = JSON.parse(fs.readFileSync(pluginConfigPath, "utf-8"));
@@ -63,21 +61,16 @@ export default function getPluginConfig(input: string, required = false) {
 			} else if (pluginConfigKeys.includes(key)) {
 				pluginConfig[key] = config[key];
 			} else {
-				Logger.warn(`Unknown key '${key}' in plugin.json`);
+				Logger.warn(`Unknown key '${key}' in ${pluginConfigFileName}`);
 			}
 		}
-	} else if (required) {
-		Logger.error(
-			"No plugin.json found. A plugin configuration is required. Disable the 'require-config' option to use a default configuration instead."
-		);
 	} else {
-		Logger.warn("No plugin.json found. Using default configuration.");
+		Logger.error(`No ${pluginConfigFileName} found. A plugin configuration is required.`);
 	}
 
-	if (required) {
-		for (const key in defaultPluginMeta) {
-			if (!(key in pluginMeta)) Logger.error(`Missing required configuration option '${key}' in plugin.json.`);
-		}
+	for (const key of requiredMetaKeys) {
+		if (!(key in pluginMeta))
+			Logger.error(`Missing required configuration option '${key}' in ${pluginConfigFileName}.`);
 	}
 
 	return { pluginConfig, pluginMeta };

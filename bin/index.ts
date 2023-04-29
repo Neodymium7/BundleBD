@@ -1,8 +1,8 @@
 import path from "path";
 import fs from "fs";
-import { homedir } from "os";
 import { rollup, watch as rollupWatch, OutputOptions, RollupBuild } from "rollup";
-import packageInfo from "../package.json";
+import { version } from "../package.json";
+import getBundlerOptions from "./config/bundler";
 import getPluginConfig from "./config/plugin";
 import getRollupConfig from "./config/rollup";
 import Logger from "./logger";
@@ -11,90 +11,18 @@ import installScript from "./templates/installscript";
 import meta from "./templates/meta";
 import zlibrary from "./templates/zlibrary";
 
-export interface BundleBDOptions {
-	input: string;
-	output: string;
-	dev: boolean;
-	requireConfig?: boolean;
-	bdPath?: string;
-	plugin?: string;
-	importAliases?: Record<string, string>;
-	postcssPlugins?: any[];
-}
-
 const argv = process.argv.slice(2);
 
 if (argv[0] === "--version") {
-	console.log(`v${packageInfo.version}`);
+	console.log(`v${version}`);
 	process.exit(0);
 }
 
-const universalOptionKeys = ["input", "output", "requireConfig", "bdPath"];
-const configOptionKeys = [...universalOptionKeys, "importAliases", "postcssPlugins"];
-const argOptionKeys = [...universalOptionKeys, "dev", "plugin"];
+const options = getBundlerOptions(argv);
 
-const defaultOptions: BundleBDOptions = { input: "src", output: "dist", dev: false };
+const { pluginConfig, pluginMeta } = getPluginConfig(options);
 
-switch (process.platform) {
-	case "win32":
-		defaultOptions.bdPath = path.join(homedir(), "AppData", "Roaming", "BetterDiscord");
-		break;
-	case "darwin":
-		defaultOptions.bdPath = path.join(homedir(), "Library", "Application Support", "BetterDiscord");
-		break;
-	case "linux":
-		defaultOptions.bdPath = path.join(homedir(), ".config", "BetterDiscord");
-}
-
-const argOptions = argv.reduce<any>((obj, curr, i) => {
-	if (!curr.startsWith("--") && i === 0) {
-		obj.input = curr;
-	}
-
-	if (curr.startsWith("--")) {
-		const option = curr.slice(2);
-		const key = option
-			.split("-")
-			.map((item, i) => (i !== 0 ? item.charAt(0).toUpperCase() + item.substring(1) : item))
-			.join("");
-		const next = argv[i + 1];
-
-		if (argOptionKeys.includes(key) && next && !next.startsWith("--")) obj[key] = next;
-		else if (argOptionKeys.includes(key)) obj[key] = true;
-		else Logger.warn(`Unknown command option '${option}'`);
-	}
-
-	return obj;
-}, {});
-
-const configOptions = (() => {
-	const configPath = path.join(process.cwd(), "bundlebd.config.js");
-	if (!fs.existsSync(configPath)) return {};
-
-	// eslint-disable-next-line @typescript-eslint/no-var-requires
-	let config = require(configPath);
-
-	if (typeof config === "function") {
-		config = config(argOptions.plugin, argOptions.dev || false);
-	}
-
-	for (const key in config) {
-		if (!configOptionKeys.includes(key)) {
-			Logger.warn(`Unknown option '${key}' in bundlebd.config.js`);
-		}
-	}
-
-	if (config.hasOwnProperty("input") && !config.input) Logger.error("The 'input' option cannot be undefined.");
-	if (config.hasOwnProperty("output") && !config.output) Logger.error("The 'output' option cannot be undefined.");
-
-	return config;
-})();
-
-const options: BundleBDOptions = { ...defaultOptions, ...configOptions, ...argOptions };
-
-const { pluginConfig, pluginMeta } = getPluginConfig(options.input, options.requireConfig);
-
-const { rollupConfig } = getRollupConfig(options, pluginConfig, pluginMeta);
+const rollupConfig = getRollupConfig(options, pluginConfig, pluginMeta);
 
 async function bundle(bundle?: RollupBuild) {
 	try {
@@ -103,12 +31,12 @@ async function bundle(bundle?: RollupBuild) {
 
 		let code = output[0].code
 			.trimEnd()
-			.replace(/(?<=^| {2}|\t) {2}/gm, "\t")
+			.replace(/(?<=^| {2}|\t) {2}/gm, options.format.indent)
 			.replace(/\/\* @__PURE__ \*\/ /g, "")
 			.replace("\nrequire('react');\n", "\n");
 
-		if (pluginConfig.zlibrary) code = zlibrary(code, pluginMeta, pluginConfig.zlibrary);
-		if (pluginConfig.installScript) code = installScript(code);
+		if (pluginConfig.zlibrary) code = zlibrary(code, pluginMeta, pluginConfig.zlibrary, options.format.indent);
+		if (pluginConfig.installScript) code = installScript(code, options.format.indent);
 		code = meta(code, pluginMeta);
 
 		const importsZlib = /\nvar \S+ = Library;\n/.test(code);

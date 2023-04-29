@@ -1,8 +1,10 @@
+import { Plugin } from "rollup";
+
 interface StyleLoaderOptions {
 	regex: RegExp;
 }
 
-export default function styleLoader(options: StyleLoaderOptions) {
+export default function styleLoader(options: StyleLoaderOptions): Plugin {
 	return {
 		name: "style-loader",
 		transform(code: string, id: string) {
