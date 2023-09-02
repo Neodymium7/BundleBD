@@ -4,7 +4,7 @@ interface ConstOptions {
 	regex: RegExp;
 }
 
-export default function text(options: ConstOptions): Plugin {
+export default function constPlugin(options: ConstOptions): Plugin {
 	return {
 		name: "const",
 		transform(code: string, id: string) {

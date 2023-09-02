@@ -4,7 +4,7 @@
 [npm-link]: https://www.npmjs.com/package/bundlebd
 [downloads-badge]: https://img.shields.io/npm/dt/bundlebd?color=%238956ff
 
-A simple bundler for BetterDiscord plugins. Bundles plugins composed of multiple files/modules. Allows for the use of Typescript, JSX, CSS, CSS preprocessors, and more.
+A simple bundler for BetterDiscord plugins. Bundles plugins composed of multiple files/modules. Allows for the use of Typescript, JSX, CSS, CSS preprocessors, and more. Emits code that is as consistent and readable as possible for reviews and debugging.
 
 ## Installation
 

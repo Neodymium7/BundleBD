@@ -13,15 +13,15 @@ import zlibrary from "./templates/zlibrary";
 
 const argv = process.argv.slice(2);
 
+// Handle version query
 if (argv[0] === "--version") {
 	console.log(`v${version}`);
 	process.exit(0);
 }
 
+// Get configuration
 const options = getBundlerOptions(argv);
-
 const { pluginConfig, pluginMeta } = getPluginConfig(options);
-
 const rollupConfig = getRollupConfig(options, pluginConfig, pluginMeta);
 
 async function bundle(bundle?: RollupBuild) {
@@ -29,6 +29,7 @@ async function bundle(bundle?: RollupBuild) {
 		if (!bundle) bundle = await rollup(rollupConfig);
 		const { output } = await bundle.generate(rollupConfig.output as OutputOptions);
 
+		// Clean up code and add proper indent
 		let code = output[0].code
 			.trimEnd()
 			.replace(/(?<=^| {2}|\t) {2}/gm, options.format.indent)
@@ -42,7 +43,7 @@ async function bundle(bundle?: RollupBuild) {
 		const importsZlib = /\nvar \S+ = Library;\n/.test(code);
 		const importsBasePlugin = /\nvar \S+ = BasePlugin;\n/.test(code);
 
-		const outputPath: string = (rollupConfig.output as OutputOptions).file as string;
+		const outputPath: string = (rollupConfig.output as OutputOptions).file;
 
 		// Warn if importing zlib without building with zlib support
 		if ((importsZlib || importsBasePlugin) && !pluginConfig.zlibrary) {
@@ -72,6 +73,7 @@ async function bundle(bundle?: RollupBuild) {
 
 		await bundle.close();
 	} catch (error) {
+		// Clarify known errors
 		if (error.message.startsWith('"default" was specified for "output.exports",')) {
 			Logger.error("No default export found. Make sure to export your plugin as the default export");
 		} else Logger.error(error);

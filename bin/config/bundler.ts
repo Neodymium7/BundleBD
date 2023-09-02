@@ -54,16 +54,17 @@ export default function getBundlerOptions(argv: string[]): BundleBDOptions {
 
 		if (curr.startsWith("--")) {
 			const option = curr.slice(2);
+			// Convert kebab-case to camelCase
 			const key = option
 				.split("-")
 				.map((item, i) => (i !== 0 ? item.charAt(0).toUpperCase() + item.substring(1) : item))
 				.join("");
-			const next = argv[i + 1];
+			const value = argv[i + 1];
 
-			if (argOptionKeys.includes(key as keyof BundleBDOptions) && next && !next.startsWith("--")) {
-				if (next === "true") obj[key] = true;
-				else if (next === "false") obj[key] = false;
-				else obj[key] = next;
+			if (value && !value.startsWith("--") && argOptionKeys.includes(key as keyof BundleBDOptions)) {
+				if (value === "true") obj[key] = true;
+				else if (value === "false") obj[key] = false;
+				else obj[key] = value;
 			} else if (argOptionKeys.includes(key as keyof BundleBDOptions)) obj[key] = true;
 			else Logger.warn(`Unknown command option '${option}'`);
 		}
