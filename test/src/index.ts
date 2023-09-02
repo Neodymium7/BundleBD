@@ -15,7 +15,7 @@ import { doThings } from "@lib/utils";
 
 export default class TestPlugin {
 	start() {
-		console.log(start, strings.hello, text);
+		console.log(start, strings["hello-world"], text);
 		doThings();
 		doSomething();
 		console.log(name);

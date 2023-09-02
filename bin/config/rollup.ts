@@ -20,6 +20,7 @@ import text from "../plugins/text";
 import moduleComments from "../plugins/modulecomments";
 import constPlugin from "../plugins/const";
 import meta from "../plugins/meta";
+import expandedStyles from "../plugins/expandedstyles";
 
 type AliasEntry = { find: RegExp; replacement: string };
 
@@ -135,6 +136,7 @@ export default function getRollupConfig(options: BundleBDOptions, pluginConfig: 
 				...stylesOptions,
 			}),
 			styleLoader({ regex: stylesRegex }),
+			expandedStyles({ regex: stylesRegex }),
 			text(),
 			json({
 				preferConst: true,
