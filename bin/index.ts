@@ -9,7 +9,6 @@ import Logger from "./logger";
 import { checkDirExists } from "./utils";
 import installScript from "./templates/installscript";
 import meta from "./templates/meta";
-import zlibrary from "./templates/zlibrary";
 
 const argv = process.argv.slice(2);
 
@@ -36,21 +35,10 @@ async function bundle(bundle?: RollupBuild) {
 			.replace(/\/\* @__PURE__ \*\/ /g, "")
 			.replace("\nrequire('react');\n", "\n");
 
-		if (pluginConfig.zlibrary) code = zlibrary(code, pluginMeta, pluginConfig.zlibrary, options.format.indent);
 		if (pluginConfig.installScript) code = installScript(code, options.format.indent);
 		code = meta(code, pluginMeta);
 
-		const importsZlib = /\nvar \S+ = Library;\n/.test(code);
-		const importsBasePlugin = /\nvar \S+ = BasePlugin;\n/.test(code);
-
 		const outputPath: string = (rollupConfig.output as OutputOptions).file;
-
-		// Warn if importing zlib without building with zlib support
-		if ((importsZlib || importsBasePlugin) && !pluginConfig.zlibrary) {
-			Logger.warn(
-				"It appears the plugin imports ZeresPluginLibrary, but is not being built with ZeresPluginLibrary support. Did you mean to set 'zlibrary' to true in the plugin's configuration?"
-			);
-		}
 
 		fs.writeFileSync(outputPath, code);
 		Logger.log(`Done! Successfully bundled plugin '${pluginMeta.name}'`);

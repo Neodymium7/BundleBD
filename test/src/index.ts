@@ -1,6 +1,5 @@
 import { createElement } from "react";
-import { DOM, Webpack } from "betterdiscord";
-import { name } from "meta";
+import { DOM, Webpack, Meta } from "betterdiscord";
 import { start, stop } from "./utils";
 import { Component } from "./component";
 import css from "./styles/styles.css";
@@ -14,11 +13,17 @@ import { doSomething } from "@lib";
 import { doThings } from "@lib/utils";
 
 export default class TestPlugin {
+	meta: Meta;
+
+	constructor(meta: Meta) {
+		this.meta = meta;
+	}
+
 	start() {
 		console.log(start, strings["hello-world"], text);
 		doThings();
 		doSomething();
-		console.log(name);
+		console.log(this.meta.name);
 
 		const Module = Webpack.getModule((m) => m);
 		console.log("Wow this is a pretty cool module: ", Module);

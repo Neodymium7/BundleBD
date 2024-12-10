@@ -19,7 +19,6 @@ import styleLoader from "../plugins/styleloader";
 import text from "../plugins/text";
 import moduleComments from "../plugins/modulecomments";
 import constPlugin from "../plugins/const";
-import meta from "../plugins/meta";
 import expandedStyles from "../plugins/expandedstyles";
 
 type AliasEntry = { find: RegExp; replacement: string };
@@ -69,11 +68,8 @@ const createAliases = (aliases: Record<string, string>) => {
 export default function getRollupConfig(options: BundleBDOptions, pluginConfig: PluginConfiguration, pluginMeta: Meta) {
 	const globals = {
 		betterdiscord: `new BdApi("${pluginMeta.name}")`,
-		zlibrary: "Library",
-		"zlibrary/plugin": "BasePlugin",
 		react: "BdApi.React",
 		"react-dom": "BdApi.ReactDOM",
-		lodash: "_",
 	};
 
 	const entryDir = path.join(process.cwd(), options.input);
@@ -105,7 +101,7 @@ export default function getRollupConfig(options: BundleBDOptions, pluginConfig: 
 		input: entryPath,
 		output: {
 			file: outputPath,
-			format: pluginConfig.zlibrary ? "iife" : "cjs",
+			format: "cjs",
 			exports: "default",
 			globals: {
 				...globals,
@@ -161,8 +157,7 @@ export default function getRollupConfig(options: BundleBDOptions, pluginConfig: 
 			}),
 			constPlugin({ regex: constRegex }),
 			replace(createReplaced(globals)),
-			meta(pluginMeta),
-			options.moduleComments && moduleComments({ root: entryDir, aliases: options.importAliases }),
+			options.format.moduleComments && moduleComments({ root: entryDir, aliases: options.importAliases }),
 			options.importAliases &&
 				alias({
 					entries: createAliases(options.importAliases),

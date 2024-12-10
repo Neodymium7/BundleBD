@@ -12,11 +12,6 @@ type ConfigObject = {
 	output?: string;
 
 	/**
-	 * Whether or not to include comments in the bundled plugin marking imported files and modules.
-	 */
-	moduleComments?: boolean;
-
-	/**
 	 * Options for formatting the bundled plugin.
 	 */
 	format?: {
@@ -24,6 +19,11 @@ type ConfigObject = {
 		 * A string to use for indentation.
 		 */
 		indent?: string;
+
+		/**
+		 * Whether or not to include comments in the bundled plugin marking imported files and modules.
+		 */
+		moduleComments?: boolean;
 	};
 
 	/**

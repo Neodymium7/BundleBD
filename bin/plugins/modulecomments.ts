@@ -18,10 +18,6 @@ export default function moduleComments(options: ModuleCommentsOptions): Plugin {
 			else if (id.includes("node_modules")) {
 				id = id.slice(id.indexOf("node_modules") + 13).split(path.sep)[0];
 			}
-			// Meta
-			else if (id === "meta.json") {
-				id = "meta";
-			}
 			// Import aliases
 			else if (options.aliases) {
 				for (const key in options.aliases) {

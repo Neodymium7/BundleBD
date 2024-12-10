@@ -22,7 +22,3 @@ export function ensureDirExists(path: string, message?: string) {
 		Logger.error(message ?? `Cannot find directory '${path}'`);
 	}
 }
-
-export function stringify(object: unknown, indent: string): string {
-	return JSON.stringify(object, null, indent).replace(/"([^"]+)":/g, "$1:");
-}

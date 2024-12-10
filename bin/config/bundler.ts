@@ -7,8 +7,8 @@ export interface BundleBDOptions {
 	input: string;
 	output: string;
 	dev: boolean;
-	moduleComments: boolean;
 	format: {
+		moduleComments: boolean;
 		indent: string;
 	};
 	bdPath?: string;
@@ -21,7 +21,7 @@ type OptionsKeys = (keyof BundleBDOptions)[];
 
 const configFileName = "bundlebd.config.js";
 
-const universalOptionKeys: OptionsKeys = ["input", "output", "moduleComments", "bdPath"];
+const universalOptionKeys: OptionsKeys = ["input", "output", "bdPath"];
 const configOptionKeys: OptionsKeys = [...universalOptionKeys, "format", "importAliases", "postcssPlugins"];
 const argOptionKeys: OptionsKeys = [...universalOptionKeys, "dev", "plugin"];
 
@@ -29,8 +29,8 @@ const defaultOptions: BundleBDOptions = {
 	input: "src",
 	output: "dist",
 	dev: false,
-	moduleComments: true,
 	format: {
+		moduleComments: true,
 		indent: "\t",
 	},
 };
@@ -90,6 +90,8 @@ export default function getBundlerOptions(argv: string[]): BundleBDOptions {
 
 		if (config.hasOwnProperty("input") && !config.input) Logger.error("The 'input' option cannot be undefined.");
 		if (config.hasOwnProperty("output") && !config.output) Logger.error("The 'output' option cannot be undefined.");
+
+		if (config.format) config.format = { ...defaultOptions.format, ...config.format };
 
 		configOptions = config;
 	}

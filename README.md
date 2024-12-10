@@ -21,7 +21,3 @@ npm i bundlebd -D
 1.  [What?! Another Discord plugin bundler/builder/transpiler?](https://github.com/Neodymium7/BundleBD/wiki/FAQ#1-what-another-discord-plugin-bundlerbuildertranspiler-arent-there-a-few-of-those-already)
 2.  [Why are typings/autocomplete not working?](https://github.com/Neodymium7/BundleBD/wiki/FAQ#2-why-are-typingsautocomplete-not-working)
 3.  [I have a feature/change suggestion or bug to report, what should I do?](https://github.com/Neodymium7/BundleBD/wiki/FAQ#3-i-have-a-featurechange-suggestion-or-bug-to-report-what-should-i-do)
-
-## Dontate
-
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/neodymium7)

@@ -1,15 +1,51 @@
-/// <reference path="zlibrary.d.ts" />
-
 declare module "betterdiscord" {
 	import type { BoundBdApi } from "bdapi";
 	const BdApi: BoundBdApi;
 	export = BdApi;
-}
-
-declare module "meta" {
-	import { Meta } from "bdapi";
-	const meta: Meta;
-	export = meta;
+	export * from "bdapi/plugin";
+	export {
+		ContextMenuCallback,
+		ContextMenuComponents,
+		ContextMenuConfig,
+		ContextMenuGroupProps,
+		ContextMenuItemProps,
+		ContextMenuSetup,
+		AnimateOptions,
+		CreateElementOptions,
+		FetchMethod,
+		FetchOptions,
+		FetchResponse,
+		PatchAfterCallback,
+		PatchBeforeCallback,
+		PatchInsteadCallback,
+		PatchInfo,
+		GetOwnerInstanceOptions,
+		TooltipOptions,
+		Tooltip,
+		ConfirmationModalOptions,
+		NoticeOptions,
+		CloseNotice,
+		ToastOptions,
+		DialogOptions,
+		FileFilter,
+		DialogOpenOptions,
+		DialogSaveOptions,
+		DialogOpenResult,
+		DialogResult,
+		DialogSaveResult,
+		FindInTreeOptions,
+		WithOptions,
+		Module,
+		ModuleFilter,
+		BaseSearchOptions,
+		ModuleQuery,
+		ModuleResult,
+		WithKeyOptions,
+		SearchOptions,
+		ModuleBulkResult,
+		WaitForModuleOptions,
+		Cancel,
+	} from "bdapi";
 }
 
 declare module "styles" {

@@ -4,28 +4,16 @@ import Logger from "../logger";
 import { Meta } from "bdapi";
 import { BundleBDOptions } from "./bundler";
 
-export interface ZLibraryConfig {
-	info?: any;
-	changelog?: {
-		title: string;
-		type?: string;
-		items: string[];
-	}[];
-	defaultConfig?: any;
-}
-
 export interface PluginConfiguration {
 	entry: string;
 	installScript: boolean;
-	zlibrary: boolean | ZLibraryConfig;
 }
 
-const pluginConfigFileName = "plugin.json";
+const pluginConfigFileName = "manifest.json";
 
 const defaultPluginConfig = {
 	entry: "index",
 	installScript: true,
-	zlibrary: false,
 };
 
 const metaKeys = [
@@ -44,7 +32,7 @@ const metaKeys = [
 
 const requiredMetaKeys = ["name", "author", "description", "version"];
 
-const pluginConfigKeys = ["entry", "installScript", "zlibrary"];
+const pluginConfigKeys = ["entry", "installScript"];
 
 export default function getPluginConfig(options: BundleBDOptions) {
 	const pluginConfigPath = path.join(process.cwd(), options.input, pluginConfigFileName);
@@ -60,8 +48,6 @@ export default function getPluginConfig(options: BundleBDOptions) {
 				pluginMeta[key] = config[key];
 			} else if (pluginConfigKeys.includes(key)) {
 				pluginConfig[key] = config[key];
-			} else {
-				Logger.warn(`Unknown key '${key}' in ${pluginConfigFileName}`);
 			}
 		}
 	} else {
@@ -72,6 +58,8 @@ export default function getPluginConfig(options: BundleBDOptions) {
 		if (!(key in pluginMeta))
 			Logger.error(`Missing required configuration option '${key}' in ${pluginConfigFileName}.`);
 	}
+
+	if (options.dev) pluginMeta.version += "-dev";
 
 	return { pluginConfig, pluginMeta };
 }

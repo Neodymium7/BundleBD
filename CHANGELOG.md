@@ -1,3 +1,11 @@
+# v5.0.0
+
+-   Removed Zere's Plugin Library support.
+-   Plugin configurations moved to `manifest.json` file (previously `plugin.json`).
+-   Moved `module-comments` under `format` option in the bundler configuration.
+-   `betterdiscord` now exports extra utility types from BdApi typings.
+-   Style strings will be expanded instead of minified when plugins are built.
+
 # v4.0.0
 
 -   Removed library.
@@ -5,7 +13,7 @@
 -   Fixed import aliases not working properly and updated their usage (See Wiki).
 -   Added `module-comments` option.
 -   Added `format` option to configure formatting such as indentation.
--   Removed `reuire-config` option. The bundler will now always require configuration files.
+-   Removed `require-config` option. The bundler will now always require configuration files.
 -   Many other minor fixes
 
 # v3.4.0
