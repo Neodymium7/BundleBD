@@ -1,6 +1,7 @@
 declare module "betterdiscord" {
 	import type { BoundBdApi } from "bdapi";
 	const BdApi: BoundBdApi;
+	// @ts-ignore
 	export = BdApi;
 	export * from "bdapi/plugin";
 	export {

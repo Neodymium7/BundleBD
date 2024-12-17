@@ -12,7 +12,8 @@ export default function expandedStyles(options: ExpandedStylesOptions): Plugin {
 				const unescaped: string = JSON.parse(JSON.stringify(code).replace(/\\\\/g, "\\"));
 				return unescaped
 					.replace(/\t/g, "  ")
-					.replace(/css = "(.*\n.*)";/s, (_, contents) => `css = \`\n${contents.trimEnd()}\n\`;`)
+					.replace(/\n+/g, "\n")
+					.replace(/css = "(.*\n.*)";/s, (_, contents) => `css = \`\n${contents.trimEnd()}\`;`)
 					.replace(
 						/modules(.*) = ({.*});/,
 						(_, id, obj) => `modules${id} = ${JSON.stringify(JSON.parse(obj), null, "  ")};`

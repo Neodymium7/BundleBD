@@ -15,11 +15,13 @@ import replace, { RollupReplaceOptions } from "@rollup/plugin-replace";
 import svgr from "@svgr/rollup";
 import esbuild from "rollup-plugin-esbuild";
 import styles from "rollup-plugin-styles";
+import cleanup from "rollup-plugin-cleanup";
 import styleLoader from "../plugins/styleloader";
 import text from "../plugins/text";
 import moduleComments from "../plugins/modulecomments";
 import constPlugin from "../plugins/const";
 import expandedStyles from "../plugins/expandedstyles";
+import compressedTemplates from "../plugins/compressedtemplates";
 
 type AliasEntry = { find: RegExp; replacement: string };
 
@@ -157,6 +159,8 @@ export default function getRollupConfig(options: BundleBDOptions, pluginConfig: 
 			}),
 			constPlugin({ regex: constRegex }),
 			replace(createReplaced(globals)),
+			cleanup({ extensions: ["js", "ts", "jsx", "tsx"] }),
+			compressedTemplates({ regex: /(\.jsx?$)|(\.tsx?$)/ }),
 			options.format.moduleComments && moduleComments({ root: entryDir, aliases: options.importAliases }),
 			options.importAliases &&
 				alias({

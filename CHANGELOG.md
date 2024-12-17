@@ -1,3 +1,7 @@
+# v5.0.1
+
+-   Fixed a Typescript warning and minor formatting issues.
+
 # v5.0.0
 
 -   Removed Zere's Plugin Library support.

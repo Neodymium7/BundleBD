@@ -1,5 +1,7 @@
 {
 	"compilerOptions": {
+		"target": "es2022",
+		"moduleResolution": "node",
 		"resolveJsonModule": true,
 		"esModuleInterop": true,
 		"skipLibCheck": true
