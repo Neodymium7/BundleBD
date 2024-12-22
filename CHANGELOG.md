@@ -1,3 +1,8 @@
+# v5.0.2
+
+-   Updated BetterDiscord types.
+-   Fixed formatting issues.
+
 # v5.0.1
 
 -   Fixed a Typescript warning and minor formatting issues.
