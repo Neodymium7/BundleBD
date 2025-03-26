@@ -168,6 +168,9 @@ export default function getRollupConfig(options: BundleBDOptions, pluginConfig: 
 				}),
 		],
 		onwarn: ({ message }) => Logger.warn(message),
+		treeshake: {
+			moduleSideEffects: false,
+		},
 	};
 
 	return rollupConfig;

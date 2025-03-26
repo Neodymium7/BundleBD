@@ -1,5 +1,9 @@
 # v5.0.2
 
+-   Fixed bundled plugins including unused requires.
+
+# v5.0.2
+
 -   Updated BetterDiscord types.
 -   Fixed formatting issues.
 
