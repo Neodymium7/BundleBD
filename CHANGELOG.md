@@ -1,4 +1,4 @@
-# v5.0.2
+# v5.0.4
 
 -   Fixed bundled plugins including unused requires.
 
