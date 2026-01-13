@@ -21,7 +21,9 @@ export default function moduleComments(options: ModuleCommentsOptions): Plugin {
 			// Import aliases
 			else if (options.aliases) {
 				for (const key in options.aliases) {
-					const regex = new RegExp(`^${path.resolve(options.aliases[key]).replace("*", "")}(.*)$`);
+					const regex = new RegExp(
+						`^${path.resolve(options.aliases[key]).replace("*", "").replace(/\\/g, "\\\\")}(.*)$`
+					);
 					if (regex.test(id)) {
 						id = id.replace(regex, `${key.replace("*", "")}$1`);
 						break;

@@ -15,6 +15,7 @@ export interface BundleBDOptions {
 	plugin?: string;
 	importAliases?: Record<string, string>;
 	postcssPlugins?: any[];
+	generateCSSModuleScopedName?: string | ((plugin?: string, name?: string, file?: string, css?: string) => string);
 }
 
 type OptionsKeys = (keyof BundleBDOptions)[];
@@ -22,7 +23,13 @@ type OptionsKeys = (keyof BundleBDOptions)[];
 const configFileName = "bundlebd.config.js";
 
 const universalOptionKeys: OptionsKeys = ["input", "output", "bdPath"];
-const configOptionKeys: OptionsKeys = [...universalOptionKeys, "format", "importAliases", "postcssPlugins"];
+const configOptionKeys: OptionsKeys = [
+	...universalOptionKeys,
+	"format",
+	"importAliases",
+	"postcssPlugins",
+	"generateCSSModuleScopedName",
+];
 const argOptionKeys: OptionsKeys = [...universalOptionKeys, "dev", "plugin"];
 
 const defaultOptions: BundleBDOptions = {

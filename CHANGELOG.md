@@ -1,3 +1,8 @@
+# v5.1.0
+
+-   Added `generateCSSModuleScopedName` bundler option for custom scoped class names.
+-   Fixed RegEx expression errors on Windows.
+
 # v5.0.4
 
 -   Fixed bundled plugins including unused requires.

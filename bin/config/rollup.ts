@@ -60,7 +60,7 @@ const createAliases = (aliases: Record<string, string>) => {
 	const entries: AliasEntry[] = [];
 	for (const key in aliases) {
 		entries.push({
-			find: new RegExp(`^${key.replace("/*", "(.*)")}$`),
+			find: new RegExp(`^${key.replace("/*", "(.*)").replace(/\\/g, "\\\\")}$`),
 			replacement: path.resolve(aliases[key].replace("/*", "$1")),
 		});
 	}
@@ -99,6 +99,16 @@ export default function getRollupConfig(options: BundleBDOptions, pluginConfig: 
 		plugins: options.postcssPlugins,
 	};
 
+	let generateScopedName: string | ((name: string, file: string, css: string) => string);
+
+	if (options.generateCSSModuleScopedName && typeof options.generateCSSModuleScopedName == "string") {
+		generateScopedName = options.generateCSSModuleScopedName.replaceAll("[plugin]", pluginMeta.name);
+	} else if (options.generateCSSModuleScopedName && typeof options.generateCSSModuleScopedName == "function") {
+		generateScopedName = (name, file) => (options.generateCSSModuleScopedName as any)(pluginMeta.name, name, file);
+	} else {
+		generateScopedName = (name, file) => pluginMeta.name + "-" + path.basename(file).split(".")[0] + "-" + name;
+	}
+
 	const rollupConfig: RollupOptions = {
 		input: entryPath,
 		output: {
@@ -127,9 +137,7 @@ export default function getRollupConfig(options: BundleBDOptions, pluginConfig: 
 			styles({
 				include: /\.module\.\S+$/,
 				modules: {
-					generateScopedName(name, file) {
-						return pluginMeta.name + "-" + path.basename(file).split(".")[0] + "-" + name;
-					},
+					generateScopedName: generateScopedName,
 				},
 				...stylesOptions,
 			}),

@@ -40,6 +40,11 @@ type ConfigObject = {
 	 * An array of PostCSS plugins to use when bundling the plugin.
 	 */
 	postcssPlugins?: any[];
+
+	/**
+	 * Configures the generated scoped class names for CSS modules.
+	 */
+	generateCSSModuleScopedName?: string | ((plugin?: string, name?: string, file?: string, css?: string) => string);
 };
 
 type ConfigFunction = (plugin: string, dev: boolean) => ConfigObject;
