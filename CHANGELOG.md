@@ -1,3 +1,7 @@
+# v5.1.2
+
+-   Fixed CSS Modules.
+
 # v5.1.1
 
 -   Moved to `postcss-modules` for handling CSS module generation (See [#15](https://github.com/Neodymium7/BundleBD/issues/15)).

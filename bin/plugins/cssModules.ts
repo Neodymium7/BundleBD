@@ -15,7 +15,7 @@ export default function cssModules(options: CSSModulesOptions): Plugin {
 						moduleId = mid;
 						return `modules${mid} = ${options.cssModules[id]};`;
 					})
-					.replace(/export default .*;/, `export default modules${moduleId}`);
+					.replace(/export default .*;/, `export default modules${moduleId};`);
 			}
 		},
 	};
