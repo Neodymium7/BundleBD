@@ -24,6 +24,7 @@ import moduleComments from "../plugins/modulecomments";
 import constPlugin from "../plugins/const";
 import expandedStyles from "../plugins/expandedstyles";
 import compressedTemplates from "../plugins/compressedtemplates";
+import cssModulesPlugin from "../plugins/cssModules";
 
 type AliasEntry = { find: RegExp; replacement: string };
 
@@ -102,6 +103,15 @@ export default function getRollupConfig(options: BundleBDOptions, pluginConfig: 
 		generateScopedName = (name, file) => pluginMeta.name + "-" + path.basename(file).split(".")[0] + "-" + name;
 	}
 
+	const cssModules: Record<string, string> = {};
+
+	const postcssModulesPlugin = postcssModules({
+		generateScopedName,
+		getJSON: (cssFileName, jsonContent) => {
+			cssModules[cssFileName] = JSON.stringify(jsonContent);
+		},
+	});
+
 	// To stop ts from complaining
 	type StylesMode = ["inject", (varname: string, id: string) => string];
 	const stylesOptions = {
@@ -109,9 +119,7 @@ export default function getRollupConfig(options: BundleBDOptions, pluginConfig: 
 			"inject",
 			(varname: string, id: string) => `_loadStyle("${path.basename(id)}", ${varname});`,
 		] as StylesMode,
-		plugins: options.postcssPlugins
-			? [postcssModules({ generateScopedName, getJSON: () => null }), ...options.postcssPlugins]
-			: [postcssModules({ generateScopedName, getJSON: () => null })],
+		plugins: options.postcssPlugins,
 	};
 
 	const rollupConfig: RollupOptions = {
@@ -136,8 +144,19 @@ export default function getRollupConfig(options: BundleBDOptions, pluginConfig: 
 		plugins: [
 			nodeResolve({ extensions: resolveExtensions }),
 			commonjs(),
-			styles(stylesOptions),
+			styles({
+				exclude: /\.module\.\S+$/,
+				...stylesOptions,
+			}),
+			styles({
+				include: /\.module\.\S+$/,
+				...stylesOptions,
+				plugins: options.postcssPlugins
+					? [postcssModulesPlugin, ...options.postcssPlugins]
+					: [postcssModulesPlugin],
+			}),
 			styleLoader({ regex: stylesRegex }),
+			cssModulesPlugin({ cssModules }),
 			expandedStyles({ regex: stylesRegex }),
 			text(),
 			json({
