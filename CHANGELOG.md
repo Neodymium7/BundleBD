@@ -1,3 +1,8 @@
+# v5.1.1
+
+-   Moved to `postcss-modules` for handling CSS module generation (See [#15](https://github.com/Neodymium7/BundleBD/issues/15)).
+-   Fixed importing CommonJS modules.
+
 # v5.1.0
 
 -   Added `generateCSSModuleScopedName` bundler option for custom scoped class names.
