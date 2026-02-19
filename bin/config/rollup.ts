@@ -11,11 +11,13 @@ import alias from "@rollup/plugin-alias";
 import image from "@rollup/plugin-image";
 import json from "@rollup/plugin-json";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
+import commonjs from "@rollup/plugin-commonjs";
 import replace, { RollupReplaceOptions } from "@rollup/plugin-replace";
 import svgr from "@svgr/rollup";
 import esbuild from "rollup-plugin-esbuild";
 import styles from "rollup-plugin-styles";
 import cleanup from "rollup-plugin-cleanup";
+import postcssModules from "postcss-modules";
 import styleLoader from "../plugins/styleloader";
 import text from "../plugins/text";
 import moduleComments from "../plugins/modulecomments";
@@ -89,6 +91,17 @@ export default function getRollupConfig(options: BundleBDOptions, pluginConfig: 
 
 	const outputPath = path.join(outputDir, pluginMeta.name.replace(/\s/g, "") + ".plugin.js");
 
+	let generateScopedName: string | ((name: string, file: string, css: string) => string);
+
+	if (options.generateCSSModuleScopedName && typeof options.generateCSSModuleScopedName == "string") {
+		generateScopedName = options.generateCSSModuleScopedName.replaceAll("[plugin]", pluginMeta.name);
+	} else if (options.generateCSSModuleScopedName && typeof options.generateCSSModuleScopedName == "function") {
+		generateScopedName = (name, file, css) =>
+			(options.generateCSSModuleScopedName as any)(pluginMeta.name, name, file, css);
+	} else {
+		generateScopedName = (name, file) => pluginMeta.name + "-" + path.basename(file).split(".")[0] + "-" + name;
+	}
+
 	// To stop ts from complaining
 	type StylesMode = ["inject", (varname: string, id: string) => string];
 	const stylesOptions = {
@@ -96,18 +109,10 @@ export default function getRollupConfig(options: BundleBDOptions, pluginConfig: 
 			"inject",
 			(varname: string, id: string) => `_loadStyle("${path.basename(id)}", ${varname});`,
 		] as StylesMode,
-		plugins: options.postcssPlugins,
+		plugins: options.postcssPlugins
+			? [postcssModules({ generateScopedName, getJSON: () => null }), ...options.postcssPlugins]
+			: [postcssModules({ generateScopedName, getJSON: () => null })],
 	};
-
-	let generateScopedName: string | ((name: string, file: string, css: string) => string);
-
-	if (options.generateCSSModuleScopedName && typeof options.generateCSSModuleScopedName == "string") {
-		generateScopedName = options.generateCSSModuleScopedName.replaceAll("[plugin]", pluginMeta.name);
-	} else if (options.generateCSSModuleScopedName && typeof options.generateCSSModuleScopedName == "function") {
-		generateScopedName = (name, file) => (options.generateCSSModuleScopedName as any)(pluginMeta.name, name, file);
-	} else {
-		generateScopedName = (name, file) => pluginMeta.name + "-" + path.basename(file).split(".")[0] + "-" + name;
-	}
 
 	const rollupConfig: RollupOptions = {
 		input: entryPath,
@@ -130,17 +135,8 @@ export default function getRollupConfig(options: BundleBDOptions, pluginConfig: 
 		external: [...Object.keys(globals), ...polyfilled],
 		plugins: [
 			nodeResolve({ extensions: resolveExtensions }),
-			styles({
-				exclude: /\.module\.\S+$/,
-				...stylesOptions,
-			}),
-			styles({
-				include: /\.module\.\S+$/,
-				modules: {
-					generateScopedName: generateScopedName,
-				},
-				...stylesOptions,
-			}),
+			commonjs(),
+			styles(stylesOptions),
 			styleLoader({ regex: stylesRegex }),
 			expandedStyles({ regex: stylesRegex }),
 			text(),

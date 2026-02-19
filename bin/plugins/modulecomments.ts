@@ -10,6 +10,9 @@ export default function moduleComments(options: ModuleCommentsOptions): Plugin {
 	return {
 		name: "module-comments",
 		transform(code: string, id: string) {
+			if (id[0] === "\0") {
+				id = id.slice(1);
+			}
 			// Plugin files
 			if (id.startsWith(options.root)) {
 				id = path.relative(options.root, id).replace(/\\/g, "/");

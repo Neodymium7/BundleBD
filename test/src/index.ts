@@ -11,6 +11,7 @@ import strings from "./strings.json";
 import text from "./text.txt";
 import { doSomething } from "@lib";
 import { doThings } from "@lib/utils";
+import helloWorld from "@lib/otherFile";
 
 export default class TestPlugin {
 	meta: Meta;
@@ -28,7 +29,7 @@ export default class TestPlugin {
 		const Module = Webpack.getModule((m) => m);
 		console.log("Wow this is a pretty cool module: ", Module);
 
-		BdApi.UI.showToast("Hello World!");
+		BdApi.UI.showToast(helloWorld);
 
 		DOM.addStyle(css + scss + less + stylus + moduleCss);
 		console.log(module.class);
