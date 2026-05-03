@@ -49,7 +49,7 @@ const stylesRegex = /(\.css$)|(\.s[ac]ss$)|(\.less$)|(\.styl$)/;
 const constRegex = new RegExp(stylesRegex.source + "|(\\.svg$)|(\\.png$)|(\\.jpg$)|(\\.jpeg$)|(\\.gif$)|(\\.webp$)");
 
 const createReplaced = (globals: Record<string, string>): RollupReplaceOptions => {
-	const replaced = {
+	const replaced: any = {
 		delimiters: ["= ", ";"] as [string, string],
 		preventAssignment: true,
 	};

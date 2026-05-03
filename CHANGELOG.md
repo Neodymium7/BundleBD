@@ -1,3 +1,7 @@
+# v5.1.3
+
+-   Added support for `runAt` in plugin meta.
+
 # v5.1.2
 
 -   Fixed CSS Modules.

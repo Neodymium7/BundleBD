@@ -65,10 +65,10 @@ export default function getBundlerOptions(argv: string[]): BundleBDOptions {
 			const key = option
 				.split("-")
 				.map((item, i) => (i !== 0 ? item.charAt(0).toUpperCase() + item.substring(1) : item))
-				.join("");
+				.join("") as keyof BundleBDOptions;
 			const value = argv[i + 1];
 
-			if (value && !value.startsWith("--") && argOptionKeys.includes(key as keyof BundleBDOptions)) {
+			if (value && !value.startsWith("--") && argOptionKeys.includes(key)) {
 				if (value === "true") obj[key] = true;
 				else if (value === "false") obj[key] = false;
 				else obj[key] = value;
@@ -77,7 +77,7 @@ export default function getBundlerOptions(argv: string[]): BundleBDOptions {
 		}
 
 		return obj;
-	}, {} as BundleBDOptions);
+	}, {} as any);
 
 	let configOptions = {};
 	const configPath = path.join(process.cwd(), configFileName);
@@ -91,7 +91,7 @@ export default function getBundlerOptions(argv: string[]): BundleBDOptions {
 
 		for (const key in config) {
 			if (!configOptionKeys.includes(key as keyof BundleBDOptions)) {
-				Logger.warn(`Unknown option '${key}' in ${configFileName}}`);
+				Logger.warn(`Unknown option '${key}' in ${configFileName}`);
 			}
 		}
 

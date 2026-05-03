@@ -38,7 +38,7 @@ async function bundle(bundle?: RollupBuild) {
 		if (pluginConfig.installScript) code = installScript(code, options.format.indent);
 		code = meta(code, pluginMeta);
 
-		const outputPath: string = (rollupConfig.output as OutputOptions).file;
+		const outputPath: string = (rollupConfig.output as OutputOptions).file as string;
 
 		fs.writeFileSync(outputPath, code);
 		Logger.log(`Done! Successfully bundled plugin '${pluginMeta.name}'`);
@@ -60,7 +60,7 @@ async function bundle(bundle?: RollupBuild) {
 		}
 
 		await bundle.close();
-	} catch (error) {
+	} catch (error: any) {
 		// Clarify known errors
 		if (error.message.startsWith('"default" was specified for "output.exports",')) {
 			Logger.error("No default export found. Make sure to export your plugin as the default export");

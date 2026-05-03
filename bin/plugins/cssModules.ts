@@ -9,7 +9,7 @@ export default function cssModules(options: CSSModulesOptions): Plugin {
 		name: "css-modules",
 		transform(code: string, id: string) {
 			if (id in options.cssModules) {
-				let moduleId: string;
+				let moduleId = "";
 				return code
 					.replace(/modules(.*) = .*;/, (_, mid) => {
 						moduleId = mid;

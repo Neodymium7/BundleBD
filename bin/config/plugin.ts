@@ -46,9 +46,9 @@ export default function getPluginConfig(options: BundleBDOptions) {
 
 		for (const key in config) {
 			if (metaKeys.includes(key)) {
-				pluginMeta[key] = config[key];
+				(pluginMeta as any)[key] = config[key];
 			} else if (pluginConfigKeys.includes(key)) {
-				pluginConfig[key] = config[key];
+				(pluginConfig as any)[key] = config[key];
 			}
 		}
 	} else {
