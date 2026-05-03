@@ -28,6 +28,7 @@ const metaKeys = [
 	"patreon",
 	"website",
 	"source",
+	"runAt",
 ];
 
 const requiredMetaKeys = ["name", "author", "description", "version"];
