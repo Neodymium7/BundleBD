@@ -23,12 +23,11 @@ import text from "../plugins/text";
 import moduleComments from "../plugins/modulecomments";
 import constPlugin from "../plugins/const";
 import expandedStyles from "../plugins/expandedstyles";
-import compressedTemplates from "../plugins/compressedtemplates";
 import cssModulesPlugin from "../plugins/cssModules";
 
 type AliasEntry = { find: RegExp; replacement: string };
 
-const resolveExtensions = [".js", ".ts", ".jsx", ".tsx"];
+const resolveExtensions = [".js", ".ts", ".jsx", ".tsx", ".mjs", ".cjs"];
 
 const polyfilled = [
 	"request",
@@ -183,7 +182,6 @@ export default function getRollupConfig(options: BundleBDOptions, pluginConfig: 
 			constPlugin({ regex: constRegex }),
 			replace(createReplaced(globals)),
 			cleanup({ comments: [/[@#]__((PURE)|(NO_SIDE_EFFECTS))__/], extensions: ["js", "ts", "jsx", "tsx"] }),
-			compressedTemplates({ regex: /(\.jsx?$)|(\.tsx?$)/ }),
 			options.format.moduleComments && moduleComments({ root: entryDir, aliases: options.importAliases }),
 			options.importAliases &&
 				alias({
