@@ -1,3 +1,10 @@
+# v5.1.5
+
+-   Fixed unnecessary minification of template literals
+-   Fixed issues with parsing escape sequences
+-   Improved error messages to include stacktraces and file locations
+-   Improved module comments to more clearly distinguish between plugin files and bundled package files
+
 # v5.1.3
 
 -   Added support for `runAt` in plugin meta.
