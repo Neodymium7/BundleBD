@@ -15,11 +15,11 @@ export default function moduleComments(options: ModuleCommentsOptions): Plugin {
 			}
 			// Plugin files
 			if (id.startsWith(options.root)) {
-				id = path.relative(options.root, id).replace(/\\/g, "/");
+				id = "./" + path.relative(options.root, id).replace(/\\/g, "/");
 			}
 			// Node modules
 			else if (id.includes("node_modules")) {
-				id = id.slice(id.indexOf("node_modules") + 13).split(path.sep)[0];
+				id = id.slice(id.indexOf("node_modules") + 13);
 			}
 			// Import aliases
 			else if (options.aliases) {

@@ -64,7 +64,12 @@ async function bundle(bundle?: RollupBuild) {
 		// Clarify known errors
 		if (error.message.startsWith('"default" was specified for "output.exports",')) {
 			Logger.error("No default export found. Make sure to export your plugin as the default export");
-		} else Logger.error(error);
+		} else {
+			const location = error.loc?.file
+				? `\n    location: ${error.loc.file}:${error.loc.line}:${error.loc.column}`
+				: "";
+			Logger.error(error.stack + location);
+		}
 	}
 }
 
