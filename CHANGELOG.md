@@ -1,3 +1,7 @@
+# v5.2.0
+
+-   Updated types to use BetterDiscord's official types package
+
 # v5.1.5
 
 -   Fixed unnecessary minification of template literals

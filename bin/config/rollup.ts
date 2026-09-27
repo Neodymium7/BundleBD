@@ -1,7 +1,6 @@
 import fs from "fs";
 import path from "path";
 import { RollupOptions } from "rollup";
-import { Meta } from "bdapi";
 import { checkDirExists, ensureDirExists, ensureFileExists } from "../utils";
 import Logger from "../logger";
 import { BundleBDOptions } from "./bundler";
@@ -10,6 +9,7 @@ import { PluginConfiguration } from "./plugin";
 import alias from "@rollup/plugin-alias";
 import image from "@rollup/plugin-image";
 import json from "@rollup/plugin-json";
+// @ts-expect-error Package types not specified
 import { nodeResolve } from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 import replace, { RollupReplaceOptions } from "@rollup/plugin-replace";
@@ -69,7 +69,11 @@ const createAliases = (aliases: Record<string, string>) => {
 	return entries;
 };
 
-export default function getRollupConfig(options: BundleBDOptions, pluginConfig: PluginConfiguration, pluginMeta: Meta) {
+export default function getRollupConfig(
+	options: BundleBDOptions,
+	pluginConfig: PluginConfiguration,
+	pluginMeta: BetterDiscord.Addon
+) {
 	const globals = {
 		betterdiscord: `new BdApi("${pluginMeta.name}")`,
 		react: "BdApi.React",

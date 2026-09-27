@@ -1,7 +1,6 @@
 import fs from "fs";
 import path from "path";
 import Logger from "../logger";
-import { Meta } from "bdapi";
 import { BundleBDOptions } from "./bundler";
 
 export interface PluginConfiguration {
@@ -39,7 +38,7 @@ export default function getPluginConfig(options: BundleBDOptions) {
 	const pluginConfigPath = path.join(process.cwd(), options.input, pluginConfigFileName);
 
 	const pluginConfig: PluginConfiguration = defaultPluginConfig;
-	const pluginMeta = {} as Meta;
+	const pluginMeta = {} as BetterDiscord.Addon;
 
 	if (fs.existsSync(pluginConfigPath)) {
 		const config = JSON.parse(fs.readFileSync(pluginConfigPath, "utf-8"));

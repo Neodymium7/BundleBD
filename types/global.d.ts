@@ -1,99 +1,62 @@
+/// <reference types="@betterdiscord/types" />
+
 declare module "betterdiscord" {
-	import type { BoundBdApi } from "bdapi";
-	const BdApi: BoundBdApi;
-	// @ts-ignore
-	export = BdApi;
-	export {
-		ContextMenuCallback,
-		ContextMenuComponents,
-		ContextMenuConfig,
-		ContextMenuGroupProps,
-		ContextMenuItemProps,
-		ContextMenuSetup,
-		AnimateOptions,
-		CreateElementOptions,
-		FetchMethod,
-		FetchOptions,
-		FetchResponse,
-		PatchAfterCallback,
-		PatchBeforeCallback,
-		PatchInsteadCallback,
-		PatchInfo,
-		GetOwnerInstanceOptions,
-		TooltipOptions,
-		Tooltip,
-		ConfirmationModalOptions,
-		NoticeOptions,
-		CloseNotice,
-		ToastOptions,
-		DialogOptions,
-		FileFilter,
-		DialogOpenOptions,
-		DialogSaveOptions,
-		DialogOpenResult,
-		DialogResult,
-		DialogSaveResult,
-		FindInTreeOptions,
-		WithOptions,
-		Module,
-		ModuleFilter,
-		BaseSearchOptions,
-		ModuleQuery,
-		WithKeyOptions,
-		SearchOptions,
-		ModuleBulkResult,
-		WaitForModuleOptions,
-		Cancel,
-		BaseSetting,
-		ButtonColors,
-		ButtonLooks,
-		ButtonProps,
-		ButtonSizes,
-		CategorySetting,
-		ChangelogModalOptions,
-		Changes,
-		ColorInputProps,
-		ColorSetting,
-		CustomSetting,
-		DropdownInputProps,
-		DropdownSetting,
-		ErrorBoundaryProps,
-		FileInputProps,
-		FileSetting,
-		FlexAlign,
-		FlexDirection,
-		FlexJustify,
-		FlexProps,
-		FlexWrap,
-		KeybindInputProps,
-		KeybindSetting,
-		Meta,
-		ModuleKey,
-		NumberInputProps,
-		NumberSetting,
-		Plugin,
-		PluginCallback,
-		PluginClass,
-		RadioInputProps,
-		RadioSetting,
-		SearchInputProps,
-		Setting,
-		SettingGroupProps,
-		SettingItemProps,
-		SettingType,
-		SettingsPanelOptions,
-		SettingsPanelSetting,
-		SliderInputProps,
-		SliderSetting,
-		SwitchInputProps,
-		SwitchSetting,
-		TextColors,
-		TextInputProps,
-		TextProps,
-		TextSetting,
-		TextSizes,
-		WithKeyResult,
-	} from "bdapi";
+	import * as react_dom from "react-dom";
+	import * as react from "react";
+
+	/** The React module being used inside Discord */
+	export const React: typeof react;
+
+	/** The ReactDOM module being used inside Discord */
+	export const ReactDOM: typeof react_dom & typeof react_dom_client;
+
+	/** A reference string for BD's version */
+	export const version: string;
+
+	/** A set of react components plugins can make use of */
+	export const Components: BetterDiscord.Components;
+
+	/** An instance of {@link BetterDiscord.Net} for using network related tools */
+	export const Net: BetterDiscord.Net;
+
+	/** An instance of {@link BetterDiscord.Webpack} to search for modules */
+	export const Webpack: BetterDiscord.Webpack;
+
+	/** An instance of {@link BetterDiscord.AddonAPI} to access plugins */
+	export const Plugins: BetterDiscord.AddonAPI;
+
+	/** An instance of {@link BetterDiscord.AddonAPI} to access themes */
+	export const Themes: BetterDiscord.AddonAPI;
+
+	/** An instance of {@link BetterDiscord.Utils} for general utility functions */
+	export const Utils: BetterDiscord.Utils;
+
+	/** An instance of {@link BetterDiscord.UI} to create interfaces */
+	export const UI: BetterDiscord.UI;
+
+	/** An instance of {@link BetterDiscord.ReactUtils} to work with React */
+	export const ReactUtils: BetterDiscord.ReactUtils;
+
+	/** An instance of {@link BetterDiscord.ContextMenu} for interacting with context menus */
+	export const ContextMenu: BetterDiscord.ContextMenu;
+
+	/** An instance of {@link BetterDiscord.Patcher} to monkey patch functions */
+	export const Patcher: BetterDiscord.BoundPatcher;
+
+	/** An instance of {@link BetterDiscord.Data} to manage data */
+	export const Data: BetterDiscord.BoundData;
+
+	/** An instance of {@link BetterDiscord.DOM} to interact with the DOM */
+	export const DOM: BetterDiscord.BoundDOM;
+
+	/** An instance of {@link BetterDiscord.Logger} for logging information */
+	export const Logger: BetterDiscord.BoundLogger;
+
+	/** An instance of {@link BetterDiscord.CommandAPI} for adding slash commands */
+	export const Commands: BetterDiscord.BoundCommandAPI;
+
+	/** An instance of {@link BetterDiscord.Hooks} for react hooks */
+	export const Hooks: BetterDiscord.BoundHooks;
 }
 
 declare module "styles" {

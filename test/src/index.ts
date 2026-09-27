@@ -1,5 +1,5 @@
 import { createElement } from "react";
-import { DOM, Webpack, Meta } from "betterdiscord";
+import { DOM, Webpack } from "betterdiscord";
 import { start, stop } from "./utils";
 import { Component } from "./component";
 import css from "./styles/styles.css";
@@ -14,9 +14,9 @@ import { doThings } from "@lib/utils";
 import helloWorld from "@lib/otherFile";
 
 export default class TestPlugin {
-	meta: Meta;
+	meta: BetterDiscord.Addon;
 
-	constructor(meta: Meta) {
+	constructor(meta: BetterDiscord.Addon) {
 		this.meta = meta;
 	}
 
