@@ -1,3 +1,7 @@
+# v5.2.1
+
+-   Updated BetterDiscord types
+
 # v5.2.0
 
 -   Updated types to use BetterDiscord's official types package

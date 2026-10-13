@@ -38,7 +38,7 @@
 		"typescript": "^6.0.3"
 	},
 	"dependencies": {
-		"@betterdiscord/types": "^1.14.1",
+		"@betterdiscord/types": "^1.14.3",
 		"@rollup/plugin-alias": "^4.0.2",
 		"@rollup/plugin-commonjs": "^29.0.0",
 		"@rollup/plugin-image": "^3.0.0",
